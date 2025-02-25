@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#FBE3E3"> <!-- لون Ripple أحمر فاتح -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#FDB5B5" /> <!-- اللون الأحمر -->
+            <stroke
+                android:width="3dp"
+                android:color="@color/icon_color" />
+        </shape>
+    </item>
+</ripple>

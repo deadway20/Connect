@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="locale"
+    android:fillViewport="true"
+    android:orientation="vertical">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ServerFragment">
+
+    <!-- اسم السيرفر -->
+    <ImageView
+        android:id="@+id/sql_img"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/image_border"
+        android:contentDescription="SQL_Server_img"
+        android:focusable="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sql_server_ico"
+        app:layout_constraintBottom_toTopOf="@+id/ServerIP_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <!--Server Address Text Card-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ServerIP_card"
+        style="@style/CustomTextInputLayout"
+        android:hint="@string/serverAddress_Card"
+        app:endIconMode="clear_text"
+        app:helperText="required"
+        app:layout_constraintBottom_toTopOf="@+id/ServerPort_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sql_img">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ServerIP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ServerPort_card"
+        style="@style/CustomTextInputLayout"
+        android:hint="@string/serverPort_hint"
+        app:endIconMode="clear_text"
+        app:helperText="required"
+        app:layout_constraintBottom_toTopOf="@+id/ServerUsername_Card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ServerIP_card">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ServerPort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- اسم المستخدم -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ServerUsername_Card"
+        style="@style/CustomTextInputLayout"
+        android:hint="@string/username_hint"
+        app:endIconMode="clear_text"
+        app:helperText="required"
+        app:layout_constraintBottom_toTopOf="@+id/ServerPassWord_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ServerUsername_Card">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ServerUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- كلمة المرور -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ServerPassWord_card"
+        style="@style/CustomTextInputLayout"
+        android:hint="@string/password_hint"
+        app:endIconMode="clear_text"
+        app:helperText="required"
+        app:layout_constraintBottom_toTopOf="@+id/saveCheckBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ServerUsername_Card">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ServerPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- خيار الحفظ -->
+
+    <CheckBox
+        android:id="@+id/saveCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/save_sql_server_credentials"
+        app:layout_constraintBottom_toTopOf="@+id/Connect_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ServerPassWord_card" />
+
+    <!-- زر الاتصال -->
+
+    <Button
+        android:id="@+id/Connect_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/connect_to_server"
+        app:layout_constraintBottom_toTopOf="@+id/SNextBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/saveCheckBox" />
+
+    <!-- زر ألتقدم -->
+    <Button
+        android:id="@+id/SNextBtn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/Next_txt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Connect_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

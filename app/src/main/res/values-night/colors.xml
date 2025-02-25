@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue">#2196F3</color> <!-- اللون الأساسي -->
+    <color name="blue_dark">#1976D2</color> <!-- لون أغمق -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#424242</color>
+    <color name="lite_black">#383838</color>
+    <color name="red_ripple">#FDB5B5</color>
+    <color name="green_ripple">#037E08</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="orange">#FF5722</color>
+    <color name="dark">#424242</color>
+    <color name="pink">#FFD0FE</color>
+    <color name="red">#D12123</color>
+    <color name="green">#23DA0D</color>
+    <color name="bg_color">#ecf0f3</color>
+    <color name="lite">#4003DAC6</color>
+    <color name="lite_blue">#4003DAC6</color>
+    <color name="lite_pink">#40FFD0FE</color>
+    <color name="lite_red">#33D12123</color>
+    <color name="lite_orange">#80FF57</color>
+    <color name="light_grey">#424242</color>
+    <color name="light_gray">#808080</color>
+    <color name="btn_txt_color">#858281</color>
+    <color name="img_frame_color">#F0F0F0</color> <!-- لون غامق للوضع الليلي -->
+    <color name="emp_img_tint">#000000</color>
+    <color name="icon_color">#FFFFFF</color>
+
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#BB86FC</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="primaryColor">#BB86FC</color>
+    <color name="primaryDarkColor">#3700B3</color>
+
+    <!-- Secondary Colors -->
+    <color name="colorSecondary">#03DAC6</color>
+    <color name="colorOnSecondary">#000000</color>
+
+    <!-- Background & Surface -->
+    <color name="colorBackground">#F5F5F5</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorSurfaceVariant">#E7E0EC</color>
+
+    <!-- Outline -->
+    <color name="colorOutline">#CAC4D0</color>
+
+    <!-- Text Colors -->
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorOnSurfaceVariant">#49454F</color>
+
+    <!-- Button Colors -->
+    <color name="colorButtonBackground">#6750A4</color>
+    <color name="colorButtonIcon">#FFFFFF</color>
+</resources>
