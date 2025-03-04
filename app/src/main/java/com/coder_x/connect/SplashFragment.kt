@@ -25,13 +25,13 @@ class SplashFragment : Fragment() {
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, 1.2f, 1f)
 
         val animator = ObjectAnimator.ofPropertyValuesHolder(binding.logo, scaleX, scaleY)
-        animator.duration = 1500
-        animator.repeatCount = 3
+        animator.duration = 1000
+        animator.repeatCount = 2
         animator.interpolator = AccelerateDecelerateInterpolator()
         animator.start()
 
         binding.logo.postDelayed({
             (activity as? SetupActivity)?.nextPage()
-        }, 4000)
+        }, 3000)
     }
 }

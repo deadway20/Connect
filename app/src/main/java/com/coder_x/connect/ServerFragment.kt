@@ -1,7 +1,5 @@
 package com.coder_x.connect
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,34 +13,23 @@ import kotlin.concurrent.thread
 class ServerFragment : Fragment() {
 
     private lateinit var binding: FragmentServerBinding
-    private lateinit var sharedPreferences: SharedPreferences
-    private val Server_Username = "sa"
-    private val Server_Password = "12345678"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+        val prefsHelper = SharedPrefsHelper(requireContext())
         binding = FragmentServerBinding.inflate(inflater, container, false)
-        binding.ServerUsername.setText(Server_Username)
-        binding.ServerPassword.setText(Server_Password)
-        sharedPreferences =
-            requireActivity().getSharedPreferences("ServerPrefs", Context.MODE_PRIVATE)
+        binding.ServerUsername.setText(prefsHelper.getUserName())
+        binding.ServerPassword.setText(prefsHelper.getPassword())
         loadServerSettings()
-
-
-        binding.saveCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) saveServerSettings()
-        }
 
 
         binding.ConnectBtn.setOnClickListener {
             val ip = binding.ServerIP.text.toString().trim()
             val port = binding.ServerPort.text.toString().trim()
 
-            sharedPreferences.edit()
-                .putString("serverAddress", ip)
-                .putString("serverPort", port)
-                .apply()
+            prefsHelper.putServerAddress(ip)
+            prefsHelper.putServerPort(port)
 
 
             if (ip.isEmpty() || port.isEmpty()) {
@@ -52,7 +39,7 @@ class ServerFragment : Fragment() {
             }
 
             thread {
-                val connection = DataBaseHelper.connect(ip, port)
+                val connection = DataBaseHelper.connect(requireContext(), ip, port)
                 activity?.runOnUiThread {
                     if (connection != null) {
                         Toast.makeText(
@@ -67,29 +54,43 @@ class ServerFragment : Fragment() {
             }
         }
 
-
-
-
         binding.SNextBtn.setOnClickListener {
             (activity as? SetupActivity)?.nextPage()
+        }
+
+        if (binding.saveCheckBox.isChecked) {
+            saveServerSettings()
+        } else {
+            prefsHelper.clearPrefs()
+
         }
 
         return binding.root
     }
 
     private fun saveServerSettings() {
-        with(sharedPreferences.edit()) {
-            putString("IP", binding.ServerIP.text.toString())
-            putString("PORT", binding.ServerPort.text.toString())
-            apply()
+        val prefsHelper = SharedPrefsHelper(requireContext())
+        val ip = binding.ServerIP.text.toString().trim()
+        val port = binding.ServerPort.text.toString().trim()
+
+        if (ip.isEmpty() || port.isEmpty()) {
+            Toast.makeText(requireContext(), "يرجى إدخال الـ IP والـ Port", Toast.LENGTH_SHORT)
+                .show()
+            return
         }
+        prefsHelper.putServerAddress(ip)
+        prefsHelper.putServerPort(port)
+        prefsHelper.setSetupCompleted(true)
+        (activity as? SetupActivity)?.nextPage()
+
     }
 
     private fun loadServerSettings() {
-        binding.ServerIP.setText(sharedPreferences.getString("IP", ""))
-        binding.ServerPort.setText(sharedPreferences.getString("PORT", ""))
-        binding.ServerUsername.setText(sharedPreferences.getString("USERNAME", ""))
-        binding.ServerPassword.setText(sharedPreferences.getString("PASSWORD", ""))
+        val prefsHelper = SharedPrefsHelper(requireContext())
+        binding.ServerIP.setText(prefsHelper.getServerAddress())
+        binding.ServerPort.setText(prefsHelper.getServerPort())
+        binding.ServerUsername.setText(prefsHelper.getUserName())
+        binding.ServerPassword.setText(prefsHelper.getPassword())
     }
 
 }

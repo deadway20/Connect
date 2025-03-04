@@ -1,6 +1,8 @@
 package com.coder_x.connect
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import java.sql.Connection
@@ -8,146 +10,112 @@ import java.sql.DriverManager
 import java.sql.SQLException
 
 object DataBaseHelper {
-
     private const val DB_NAME = "Connect"
-    private const val USER = "sa"
-    private const val PASSWORD = "12345678"
+    private const val DRIVER_CLASS = "net.sourceforge.jtds.jdbc.Driver"
+    private lateinit var SERVER_ADDRESS: String
+    private lateinit var SERVER_PORT: String
+    private const val SQL_CONNECTION_TAG = "SQLConnection"
 
-    fun connect(serverAddress: String, serverPort: String): Connection? {
+    //🔹 دالة لإنشاء اتصال بقاعدة البيانات
+    fun connect(
+        context: Context, serverAddress: String, serverPort: String
+    ): Connection? {
         return try {
-            Class.forName("net.sourceforge.jtds.jdbc.Driver")
-            val url =
-                "jdbc:jtds:sqlserver://$serverAddress:$serverPort/$DB_NAME"  // استخدام الـ serverPort من المستخدم
-            DriverManager.getConnection(url, USER, PASSWORD)
+
+            val prefsHelper = SharedPrefsHelper(context)
+            Class.forName(DRIVER_CLASS)
+            val url = "jdbc:jtds:sqlserver://$serverAddress:$serverPort/$DB_NAME"
+            DriverManager.getConnection(url, prefsHelper.getUserName(), prefsHelper.getPassword())
         } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
+            Log.e(SQL_CONNECTION_TAG, "لم يتم العثور على JDBC Driver", e)
             null
         } catch (e: SQLException) {
-            e.printStackTrace()
+            Log.e(SQL_CONNECTION_TAG, "خطأ في الاتصال بقاعدة البيانات", e)
             null
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(SQL_CONNECTION_TAG, "خطأ غير متوقع أثناء الاتصال", e)
             null
         }
     }
 
-
-//    fun insertEmployeeSimple(
-//        context: Context,
-//        name: String,
-//        department: String,
-//        mobile: String,
-//        workHours: Int
-//    ) {
-//        try {
-//            // استرجاع بيانات السيرفر من SharedPreferences باستخدام Context
-//            val sharedPreferences =
-//                context.getSharedPreferences("ServerPrefs", Context.MODE_PRIVATE)
-//            val serverAddress = sharedPreferences.getString("serverAddress", "") ?: ""
-//            val serverPort = sharedPreferences.getString("serverPort", "") ?: ""
-//
-//            // التحقق إذا كانت القيم فارغة
-//            if (serverAddress.isEmpty() || serverPort.isEmpty()) {
-//                Toast.makeText(
-//                    context,
-//                    "❌ يرجى الرجوع وإدخال عنوان السيرفر والمنفذ في الإعدادات",
-//                    Toast.LENGTH_LONG
-//                ).show()
-//                return
-//            }
-//
-//            // الاتصال بالسيرفر
-//            val connection = connect(serverAddress, serverPort)
-//
-//            if (connection == null) {
-//                Toast.makeText(
-//                    context,
-//                    "❌ فشل الاتصال بالسيرفر، تحقق من الإعدادات",
-//                    Toast.LENGTH_LONG
-//                ).show()
-//                return
-//            }
-//            // الاتصال بالسيرفر باستخدام القيم المخزنة
-//            val query =
-//                "INSERT INTO EmpInfo (Name,Department,Mobile,WorkHours) VALUES('$name', '$department', '$mobile', '$workHours')"
-//            val statement = connection.createStatement()
-//            statement?.executeUpdate(query)
-//            connection.close()
-//
-//            Toast.makeText(context, "تم حفظ البيانات في السيرفر بنجاح ✅", Toast.LENGTH_SHORT).show()
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            Toast.makeText(
-//                context,
-//                "❌ حدث خطأ أثناء إدخال البيانات: ${e.message}",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
-//    }
-
-
-    fun insertEmployeeSimple(
+    //🔹 دالة لإدراج بيانات موظف جديد في قاعدة البيانات
+    fun insertEmployee(
         context: Context, name: String, department: String, mobile: String, workHours: Int
     ) {
-        try {
-            // استرجاع بيانات السيرفر من SharedPreferences
-            val sharedPreferences =
-                context.getSharedPreferences("ServerPrefs", Context.MODE_PRIVATE)
-            val serverAddress = sharedPreferences.getString("serverAddress", "") ?: ""
-            val serverPort = sharedPreferences.getString("serverPort", "") ?: ""
+        Thread {
+            try {
+                val prefsHelper = SharedPrefsHelper(context)
+                SERVER_ADDRESS = prefsHelper.getServerAddress()
+                SERVER_PORT = prefsHelper.getServerPort()
 
-            // طباعة تفاصيل الاتصال بالسيرفر
-            Log.d("mylogd", "Server Address: $serverAddress , Server Port: $serverPort")
-            // التحقق إذا كانت القيم فارغة
-            if (serverAddress.isEmpty() || serverPort.isEmpty()) {
-                Toast.makeText(
-                    context, "❌ يرجى إدخال عنوان السيرفر والمنفذ في الإعدادات", Toast.LENGTH_LONG
-                ).show()
-                return
+                val connection = connect(context, SERVER_ADDRESS, SERVER_PORT)
+                if (connection == null) {
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(context, "❌ فشل الاتصال بقاعدة البيانات!", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                    return@Thread
+                }
+
+                connection.use { conn ->
+                    val query =
+                        "INSERT INTO EmpInfo (Name, Department, Mobile, WorkHours) VALUES (?, ?, ? ,?)"
+                    val statement =
+                        conn.prepareStatement(query, java.sql.Statement.RETURN_GENERATED_KEYS)
+                    statement.setString(1, name)
+                    statement.setString(2, department)
+                    statement.setString(3, mobile)
+                    statement.setInt(4, workHours)
+
+                    val rowsInserted = statement.executeUpdate()
+
+
+                    if (rowsInserted > 0) {
+                        val resultSet = statement.generatedKeys
+                        if (resultSet.next()) {
+                            // الحصول على `Emp_ID`
+                            val empID = resultSet.getInt(1)
+                            // حفظ `Emp_ID` في SharedPreferences
+                            prefsHelper.putEmpID(empID)
+
+                            Handler(Looper.getMainLooper()).post {
+                                Toast.makeText(
+                                    context, " ✅ تم حفظ البيانات بنجاح!$empID", Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            Handler(Looper.getMainLooper()).post {
+                                Toast.makeText(
+                                    context,
+                                    "⚠️ لم يتم العثور على الـ ID بعد الإدخال!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    } else {
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(
+                                context, "⚠️ لم يتم إدخال أي بيانات!", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                }
+            } catch (e: SQLException) {
+                Log.e(SQL_CONNECTION_TAG, "خطأ SQL", e)
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(
+                        context, " ❌ خطأ في إدخال البيانات: ${e.message}", Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Log.e(SQL_CONNECTION_TAG, "خطأ غير متوقع", e)
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(context, " ❌ خطأ غير متوقع: ${e.message}", Toast.LENGTH_LONG)
+                        .show()
+                }
             }
-
-            // الاتصال بالسيرفر
-            val connection = connect(serverAddress, serverPort)
-            if (connection == null) {
-                Toast.makeText(
-                    context, "❌ فشل الاتصال بالسيرفر، تحقق من الإعدادات", Toast.LENGTH_LONG
-                ).show()
-                return
-            }
-
-            // تجهيز الاستعلام
-            val query =
-                "INSERT INTO EmpInfo (Name, Department, Mobile, WorkHours) VALUES (?, ?, ?, ?)"
-            val preparedStatement = connection.prepareStatement(query)
-
-            // تعيين القيم في الاستعلام لتجنب مشاكل SQL Injection
-            preparedStatement.setString(1, name)
-            preparedStatement.setString(2, department)
-            preparedStatement.setString(3, mobile)
-            preparedStatement.setInt(4, workHours)
-
-            // تنفيذ الاستعلام ومعرفة عدد الصفوف المتأثرة
-            val rowsAffected = preparedStatement.executeUpdate()
-
-            // إغلاق الاتصال
-            preparedStatement.close()
-            connection.close()
-
-            // التحقق مما إذا كان الإدراج ناجحًا
-            if (rowsAffected > 0) {
-                Toast.makeText(context, "✅ تم حفظ البيانات في السيرفر بنجاح!", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(
-                    context, "⚠️ لم يتم حفظ أي بيانات، تحقق من صحة الاستعلام", Toast.LENGTH_LONG
-                ).show()
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(context, "❌ خطأ أثناء إدخال البيانات: ${e.message}", Toast.LENGTH_LONG)
-                .show()
-        }
+        }.start()
     }
 
 }

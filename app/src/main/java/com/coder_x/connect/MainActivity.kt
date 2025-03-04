@@ -5,30 +5,30 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.RippleDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.coder_x.connect.databinding.ActivityMainBinding
 import com.coder_x.connect.databinding.CustomToolbarBinding
-import kotlin.concurrent.thread
 
 // فئة النشاط الرئيسي التي تدير واجهة المستخدم وتفاعلاتها
 class MainActivity : AppCompatActivity() {
 
     // ربط متغيرات تخطيط النشاط الرئيسي
     private lateinit var binding: ActivityMainBinding
-    // ربط متغيرات تخطيط شريط الأدوات المخصص
     private lateinit var toolbarBinding: CustomToolbarBinding
 
     // دالة تُستدعى عند إنشاء النشاط
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // تفعيل ViewBinding وربط تخطيط النشاط
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,9 +36,36 @@ class MainActivity : AppCompatActivity() {
         // ربط تخطيط شريط الأدوات المخصص
         toolbarBinding = CustomToolbarBinding.bind(binding.toolbar.root)
 
+        // ستيراد بيانات الموظف المحفوظه أستخدام SharedPreference
+        val prefsHelper = SharedPrefsHelper(this)
+        val name = prefsHelper.getEmpName()
+        val department = prefsHelper.getEmpDepart()
+        val id = prefsHelper.getEmpID()
+
+        binding.empName.text = name
+        binding.empDepart.text = department
+        binding.empIdTxt.text = "$id"
+
+        // استرجاع صورة الموظف
+        val empImgPath = prefsHelper.getEmpImagePath()
+        if (empImgPath != null) {
+            try {
+                // تحويل URI إلى Bitmap
+                val imageUri = Uri.parse(empImgPath)
+                binding.employeeImage.setImageURI(imageUri)
+
+
+            } catch (e: Exception) {
+                // معالجة الأخطاء المحتملة
+                Log.e("MainActivity", "Error loading image: ${e.message}")
+                // يمكنك وضع صورة افتراضية في حالة حدوث خطأ
+                binding.employeeImage.setImageResource(R.drawable.emp_img)
+            }
+        }
+
         // إنشاء تأثير Ripple برمجيًا وتحديد لونه
         val rippleColor = Color.parseColor("#80FFFFFF")
-        val rippleDrawable = RippleDrawable(
+        RippleDrawable(
             ColorStateList.valueOf(rippleColor),
             ColorDrawable(Color.BLUE),  // لون خلفية الزر الافتراضي
             null
@@ -47,10 +74,7 @@ class MainActivity : AppCompatActivity() {
         // تعيين مستمع النقر على زر تسجيل الدخول
         binding.checkInButton.setOnClickListener {
             animateButton(it)
-            // تحديث البيانات المعروضة
-            binding.empName.text = "Mohamed Mustafa"
-            binding.empDepart.text = "Hello"
-            binding.empIdTxt.text = "#1000123"
+
         }
         // تعيين مستمع النقر على زر تسجيل الخروج
         binding.checkOutButton.setOnClickListener {
@@ -81,8 +105,7 @@ class MainActivity : AppCompatActivity() {
     // دالة للحصول على اللغة الحالية من الـ SharedPreferences
     private fun getCurrentLanguage(): String {
         // استرجاع اللغة من الإعدادات، القيمة الافتراضية هي الإنجليزية
-        return getSharedPreferences("Settings", MODE_PRIVATE)
-            .getString("My_Lang", "en") ?: "en"
+        return getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "en") ?: "en"
     }
 
     // دالة لحفظ اللغة الجديدة في الـ SharedPreferences
@@ -96,9 +119,7 @@ class MainActivity : AppCompatActivity() {
     private fun animateButton(view: View) {
         val scaleAnimation = ScaleAnimation(
             // تعريف مقياس الزر عند النقر
-            1f, 1.2f, 1f, 1.2f,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f
+            1f, 1.2f, 1f, 1.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
         )
         scaleAnimation.duration = 200
         scaleAnimation.repeatCount = 1
