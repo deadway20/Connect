@@ -1,5 +1,6 @@
 package com.coder_x.connect
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.Color
@@ -21,23 +22,40 @@ import com.coder_x.connect.databinding.CustomToolbarBinding
 // فئة النشاط الرئيسي التي تدير واجهة المستخدم وتفاعلاتها
 class MainActivity : AppCompatActivity() {
 
+    override fun attachBaseContext(baseContext: Context) {
+        super.attachBaseContext(LocaleHelper.getLocalizedContext(baseContext))
+    }
+
     // ربط متغيرات تخطيط النشاط الرئيسي
     private lateinit var binding: ActivityMainBinding
     private lateinit var toolbarBinding: CustomToolbarBinding
+    private lateinit var prefsHelper: SharedPrefsHelper
 
     // دالة تُستدعى عند إنشاء النشاط
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        prefsHelper = SharedPrefsHelper(this)
 
-        // تفعيل ViewBinding وربط تخطيط النشاط
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         // ربط تخطيط شريط الأدوات المخصص
+
         toolbarBinding = CustomToolbarBinding.bind(binding.toolbar.root)
 
+
+        // زر تغيير اللغة
+        binding.toolbar.langIco.setOnClickListener {
+            val currentLang = getCurrentLanguage()   // تحديد اللغة الجديدة
+            val newLanguage = if (currentLang == "en") "ar" else "en"
+            LocaleHelper.setLocale(this, newLanguage)   // تطبيق اللغة
+            saveLanguagePreference(newLanguage)    // حفظ اللغة
+            recreate()   // إعادة تحميل النشاط
+        }
+
+
         // ستيراد بيانات الموظف المحفوظه أستخدام SharedPreference
-        val prefsHelper = SharedPrefsHelper(this)
         val name = prefsHelper.getEmpName()
         val department = prefsHelper.getEmpDepart()
         val id = prefsHelper.getEmpID()
@@ -91,29 +109,19 @@ class MainActivity : AppCompatActivity() {
             }
             recreate()
         }
-        // تغيير اللغة بين العربية والإنجليزية عند النقر على أيقونة اللغة
-        binding.toolbar.langIco.setOnClickListener {
-            // تحديد اللغة الجديدة وعرضها
-            val newLanguage = if (getCurrentLanguage() == "en") "ar" else "en"
-            LocaleHelper.setLocale(this, newLanguage)
-            saveLanguagePreference(newLanguage) // حفظ اللغة المختارة
-            recreate() // إعادة تشغيل النشاط لتحديث اللغة
-        }
 
     }
 
-    // دالة للحصول على اللغة الحالية من الـ SharedPreferences
+    // دالة للحصول على اللغة الحالية
     private fun getCurrentLanguage(): String {
-        // استرجاع اللغة من الإعدادات، القيمة الافتراضية هي الإنجليزية
-        return getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "en") ?: "en"
+        val prefsHelper = SharedPrefsHelper(this)
+        return prefsHelper.getLanguage()
     }
 
-    // دالة لحفظ اللغة الجديدة في الـ SharedPreferences
+    // دالة لحفظ اللغة الجديدة
     private fun saveLanguagePreference(language: String) {
-        // حفظ اللغة في الإعدادات
-        val editor = getSharedPreferences("Settings", MODE_PRIVATE).edit()
-        editor.putString("My_Lang", language)
-        editor.apply()
+        val prefsHelper = SharedPrefsHelper(this)
+        prefsHelper.setLanguage(language)
     }
 
     private fun animateButton(view: View) {
@@ -134,37 +142,4 @@ class MainActivity : AppCompatActivity() {
         // تطبيق التأثير على الزر
         view.startAnimation(animationSet)
     }
-
-    // دالة لتطبيق تأثير الموجات على الزر
-//    private fun applyAnimation(button: Button) {
-//        // إضافة مستمع النقر على الزر
-//        button.setOnClickListener {
-//            // إنشاء تأثيرات التحجيم
-//            val scaleX = ObjectAnimator.ofFloat(button, View.SCALE_X, 1f, 1.5f, 0.9f, 1.3f, 1f)
-//            // إنشاء تأثيرات التحجيم
-//            val scaleY = ObjectAnimator.ofFloat(button, View.SCALE_Y, 1f, 1.5f, 0.9f, 1.3f, 1f)
-//
-//            scaleX.duration = 800
-//            scaleY.duration = 800
-//            scaleX.interpolator = AccelerateDecelerateInterpolator()
-//            scaleY.interpolator = AccelerateDecelerateInterpolator()
-//
-//            // دمج التأثيرين
-//            val animatorSet = AnimatorSet()
-//            animatorSet.playTogether(scaleX, scaleY)
-//            animatorSet.start()
-//            // الحصول على تأثير الـ Ripple من خلفية الزر
-//            // تشغيل تأثير الـ Ripple يدويًا مباشرةً
-//            val rippleDrawable = button.background as? RippleDrawable
-//            rippleDrawable?.setHotspot(button.width / 2f, button.height / 2f)
-//            button.isPressed = true
-//            button.invalidate() // يجبر النظام على إعادة رسم التأثير
-//            button.postDelayed(
-//                { button.isPressed = false },
-//                200
-//            ) // يزيل الضغط بعد 200ms لجعل التأثير طبيعيًا
-//        }
-//    }
-
-
 }

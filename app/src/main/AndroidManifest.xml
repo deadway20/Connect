@@ -23,26 +23,27 @@
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="31">
         <activity
-            android:name=".SetupActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Connect">
+            android:name=".SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SetupActivity"
+            android:theme="@style/Theme.Connect">
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.Connect">
         </activity>
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            tools:ignore="DiscouragedApi" />
     </application>
 
 </manifest>
