@@ -12,7 +12,7 @@ class SharedPrefsHelper(context: Context) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     companion object {
-        private const val PREFS_NAME = "AppPrefs"  // اسم الـ SharedPreferences
+        private const val PREFS_NAME = "AppPrefs"
         private const val SERVER_ADDRESS_KEY = "ServerAddress"
         private const val SERVER_PORT_KEY = "ServerPort"
         private const val EMP_ID_KEY: String = "EmpID"
@@ -162,20 +162,22 @@ class SharedPrefsHelper(context: Context) {
         return PASSWORD
     }
 
-    // دالة لحفظ مسار صورة الموظف
+    //🔹 دالة لحفظ مسار صورة الموظف
     fun putEmpImagePath(path: String) {
         sharedPreferences.edit().putString(KEY_EMP_IMAGE_PATH, path).apply()
     }
 
-    // دالة لاسترجاع مسار صورة الموظف (مفيدة في المستقبل)
+    //🔹 دالة لاسترجاع مسار صورة الموظف (مفيدة في المستقبل)
     fun getEmpImagePath(): String? {
         return sharedPreferences.getString(KEY_EMP_IMAGE_PATH, null)
     }
 
+    //🔹 دالة لحفظ لغة التطبيق
     fun setLanguage(language: String) {
         sharedPreferences.edit().putString("language", language).apply()
     }
 
+    //🔹 دالة لاسترجاع لغة التطبيق
     fun getLanguage(): String {
         return sharedPreferences.getString("language", "en") ?: "en"
     }

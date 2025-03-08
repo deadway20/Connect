@@ -49,4 +49,5 @@
     <string name="work_hours">Work Hours</string>
     <string name="finsh_btn">Finish</string>
     <string name="serverAddress_Card">Server Address</string>
+    <string name="Monthly_calendar">Monthly Attend Days</string>
 </resources>

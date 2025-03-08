@@ -49,4 +49,5 @@
     <string name="work_hours">عدد ساغات العمل</string>
     <string name="finsh_btn">إنهاء</string>
     <string name="serverAddress_Card">عنوان السيرفر</string>
+    <string name="Monthly_calendar">أيام الحضور الشهرية</string>
 </resources>

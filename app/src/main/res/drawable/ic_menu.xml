@@ -4,8 +4,8 @@
     android:height="24dp"
     android:viewportWidth="960"
     android:viewportHeight="960"
-    android:tint="@color/icon_color">
+    android:tint="@color/theme_color">
   <path
-      android:fillColor="@color/icon_color"
+      android:fillColor="@color/theme_color"
       android:pathData="M120,720L120,640L840,640L840,720L120,720ZM120,520L120,440L840,440L840,520L120,520ZM120,320L120,240L840,240L840,320L120,320Z"/>
 </vector>

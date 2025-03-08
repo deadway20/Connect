@@ -49,8 +49,10 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.jtds)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
+    implementation(libs.glide)
+    implementation(libs.material.calendar.view)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.junit)
     implementation(libs.ucrop)
 }

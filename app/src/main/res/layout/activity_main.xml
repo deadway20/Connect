@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -14,6 +15,7 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/custom_toolbar" />
+
 
     <!-- كارت بيانات الموظف -->
     <LinearLayout
@@ -128,6 +130,7 @@
 
         <!-- كارت الحضور -->
         <LinearLayout
+            android:id="@+id/attend_time"
             android:layout_width="0dp"
             android:layout_height="110dp"
             android:layout_gravity="start|center_vertical"
@@ -136,7 +139,8 @@
             android:background="@drawable/main_green_card"
             android:layoutDirection="locale"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:clickable="true">
 
             <ImageView
                 android:layout_width="40dp"
@@ -189,6 +193,7 @@
 
         <!-- كارت الانصراف -->
         <LinearLayout
+            android:id="@+id/depart_time"
             android:layout_width="0dp"
             android:layout_height="110dp"
             android:layout_gravity="end|center_vertical"
@@ -198,7 +203,8 @@
             android:backgroundTint="@null"
             android:layoutDirection="locale"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/chk_out_clock"
@@ -265,6 +271,7 @@
 
         <!--Overtime Card-->
         <LinearLayout
+            android:id="@+id/overtime"
             android:layout_width="0dp"
             android:layout_height="110dp"
             android:layout_gravity="start|center_vertical"
@@ -272,7 +279,8 @@
             android:layout_weight="1"
             android:background="@drawable/main_green_card"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/overtime_clock"
@@ -330,6 +338,7 @@
 
         <!-- كارت التأخيرات -->
         <LinearLayout
+            android:id="@+id/delays"
             android:layout_width="0dp"
             android:layout_height="110dp"
             android:layout_gravity="end|center_vertical"
@@ -337,7 +346,8 @@
             android:layout_weight="1"
             android:background="@drawable/main_red_card"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:clickable="true">
 
             <ImageView
                 android:layout_width="40dp"
@@ -400,6 +410,7 @@
 
         <!-- كارت أيام الحضور -->
         <LinearLayout
+            android:id="@+id/attend_days"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
@@ -407,7 +418,8 @@
             android:layout_weight="1"
             android:background="@drawable/main_green_card"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:clickable="true">
 
             <!-- Layout 1 -->
             <LinearLayout
@@ -587,6 +599,7 @@
 
         <!-- كارت أيام الغياب -->
         <LinearLayout
+            android:id="@+id/absence_days"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
@@ -594,7 +607,8 @@
             android:layout_weight="1"
             android:background="@drawable/main_red_card"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:clickable="true">
 
             <!-- Layout 1 -->
             <LinearLayout
@@ -806,4 +820,5 @@
             app:iconSize="40dp"
             app:iconTint="@color/lite_black" />
     </LinearLayout>
+
 </LinearLayout>

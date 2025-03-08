@@ -110,6 +110,12 @@ class MainActivity : AppCompatActivity() {
             recreate()
         }
 
+        binding.attendDays.setOnClickListener {
+            animateButton(it)
+            // Show the calendar dialog fragment
+            val dialogFragment = CalendarFragment()
+            dialogFragment.show(supportFragmentManager, "calendar")
+        }
     }
 
     // دالة للحصول على اللغة الحالية
