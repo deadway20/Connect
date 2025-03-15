@@ -51,8 +51,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.glide)
     implementation(libs.material.calendar.view)
+    implementation(libs.androidx.ui.text.android)
+    implementation(libs.ucrop)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)
-    implementation(libs.ucrop)
+
 }

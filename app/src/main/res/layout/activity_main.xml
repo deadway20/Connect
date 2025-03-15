@@ -21,9 +21,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
         android:padding="3dp">
 
         <!-- اسم الموظف والقسم والـ ID -->
@@ -32,9 +32,9 @@
             android:layout_height="90dp"
             android:layout_gravity="start"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:paddingStart="7dp"
-            android:paddingEnd="5dp"
-            android:orientation="vertical">
+            android:paddingEnd="5dp">
 
             <!-- اسم الموظف -->
             <TextView
@@ -55,16 +55,17 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:paddingStart="7dp"
-                android:paddingEnd="5dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="7dp"
+                android:paddingEnd="5dp">
 
                 <TextView
                     style="@style/CardView.Light"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="start|end|center_vertical"
+                    android:paddingHorizontal="5dp"
                     android:text="@string/emp_department"
                     android:textSize="16sp" />
 
@@ -130,17 +131,17 @@
 
         <!-- كارت الحضور -->
         <LinearLayout
-            android:id="@+id/attend_time"
+            android:id="@+id/attend_time_card"
             android:layout_width="0dp"
             android:layout_height="110dp"
             android:layout_gravity="start|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/main_green_card"
+            android:clickable="true"
             android:layoutDirection="locale"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:clickable="true">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -154,46 +155,37 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/tajawal_medium"
                 android:text="@string/attendance_time_title"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/tajawal_medium"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
-                android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/hours"
-                android:textColor="@color/lite_black"
-                android:textSize="14sp"
-                android:padding="4dp"/>
+                android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/attend_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:minHeight="25dp"
-                    android:layout_gravity="center_vertical"
+                    android:padding="2dp"
                     android:text="@string/attend_time"
                     android:textColor="@color/lite_black"
-                    android:textSize="14sp"
-                    android:padding="2dp"/>
+                    android:textSize="14sp" />
 
-        </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- كارت الانصراف -->
         <LinearLayout
-            android:id="@+id/depart_time"
+            android:id="@+id/Depart_time_card"
             android:layout_width="0dp"
             android:layout_height="110dp"
             android:layout_gravity="end|center_vertical"
@@ -201,10 +193,10 @@
             android:layout_weight="1"
             android:background="@drawable/main_red_card"
             android:backgroundTint="@null"
+            android:clickable="true"
             android:layoutDirection="locale"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:clickable="true">
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/chk_out_clock"
@@ -220,39 +212,31 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/tajawal_medium"
                 android:text="@string/departed_time_title"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/tajawal_medium"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/hours"
-                    android:textColor="@color/lite_black"
-                    android:textSize="14sp"
-                    android:padding="4dp"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/depart_time"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:minHeight="25dp"
-                    android:layout_gravity="center_vertical"
+                    android:padding="2dp"
                     android:text="@string/depart_time"
                     android:textColor="@color/lite_black"
-                    android:textSize="14sp"
-                    android:padding="2dp"/>
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -278,9 +262,9 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/main_green_card"
+            android:clickable="true"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:clickable="true">
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/overtime_clock"
@@ -297,40 +281,42 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/tajawal_medium"
                 android:gravity="center_horizontal"
                 android:text="@string/overtime_title"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/tajawal_medium"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/overtime_hours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:text="@string/hours"
+                    android:minHeight="25dp"
+                    android:padding="2dp"
+                    android:text="@string/overtime_time"
                     android:textColor="@color/lite_black"
-                    android:textSize="14sp"
-                    android:padding="4dp"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="2dp"
                     android:gravity="center"
-                    android:minHeight="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/overtime_time"
+                    android:padding="4dp"
+                    android:text="@string/hours"
                     android:textColor="@color/lite_black"
-                    android:textSize="14sp"
-                    android:padding="2dp"/>
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -345,9 +331,9 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/main_red_card"
+            android:clickable="true"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:clickable="true">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -361,39 +347,41 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/marhey_medium"
                 android:text="@string/delays_title"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/marhey_medium"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/delays_hours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:text="@string/hours"
+                    android:minHeight="25dp"
+                    android:padding="2dp"
+                    android:text="@string/delays_time"
                     android:textColor="@color/lite_black"
-                    android:textSize="14sp"
-                    android:padding="4dp"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="2dp"
                     android:gravity="center"
-                    android:minHeight="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/delays_time"
+                    android:padding="4dp"
+                    android:text="@string/hours"
                     android:textColor="@color/lite_black"
-                    android:textSize="14sp"
-                    android:padding="2dp"/>
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -402,24 +390,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="130dp"
         android:baselineAligned="false"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
 
         <!-- كارت أيام الحضور -->
         <LinearLayout
             android:id="@+id/attend_days"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/main_green_card"
+            android:clickable="true"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:clickable="true">
+            android:padding="5dp">
 
             <!-- Layout 1 -->
             <LinearLayout
@@ -432,17 +419,17 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|start"
                     android:layout_weight="1"
+                    android:fontFamily="@font/marhey_medium"
                     android:gravity="center"
                     android:minHeight="23dp"
                     android:text="@string/Attendance_days"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:fontFamily="@font/marhey_medium"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:contentDescription="@string/ico_description"
@@ -484,63 +471,11 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/image_border"
                     android:gravity="center"
                     android:minHeight="25dp"
                     android:text="@string/isAttend_yes"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
-            </LinearLayout>
-
-            <!-- خط فاصل -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:background="@color/black" />
-
-            <!-- Layout 3 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginEnd="3dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:layout_weight="3"
-                    android:gravity="center"
-                    android:text="@string/attend_days_in_week_title"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/days_count_in_week"
-                    android:layout_width="0dp"
-                    android:layout_height="22dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@drawable/image_border"
-                    android:gravity="center"
-                    android:minHeight="25dp"
-                    android:text="@string/attend_days_count_in_week"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:minHeight="25dp"
-                    android:text="@string/days"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
             </LinearLayout>
 
             <!-- خط فاصل -->
@@ -572,10 +507,10 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="22dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
                     android:background="@drawable/image_border"
                     android:gravity="center"
                     android:minHeight="25dp"
@@ -601,19 +536,20 @@
         <LinearLayout
             android:id="@+id/absence_days"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/main_red_card"
+            android:clickable="true"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:clickable="true">
+            android:padding="5dp">
 
             <!-- Layout 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -621,17 +557,17 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|start"
                     android:layout_weight="1"
+                    android:fontFamily="@font/marhey_medium"
                     android:gravity="center"
                     android:minHeight="23dp"
                     android:text="@string/absence_days"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:fontFamily="@font/marhey_medium"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:contentDescription="@string/ico_description"
@@ -650,7 +586,8 @@
             <!-- Layout 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
                 android:orientation="horizontal">
@@ -673,7 +610,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
-                    android:background="@drawable/image_border"
                     android:gravity="center"
                     android:minHeight="25dp"
                     android:text="@string/isAttend_no"
@@ -689,62 +625,12 @@
                 android:layout_marginBottom="2dp"
                 android:background="@color/black" />
 
-            <!-- Layout 3 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginEnd="3dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:minHeight="25dp"
-                    android:text="@string/attend_days_in_week_title"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/absence_days_count_in_week"
-                    android:layout_width="0dp"
-                    android:layout_height="22dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@drawable/image_border"
-                    android:gravity="center"
-                    android:minHeight="25dp"
-                    android:text="@string/absence_days_count_in_week"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:minHeight="25dp"
-                    android:text="@string/days"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- خط فاصل -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:background="@color/black" />
 
             <!-- Layout 4 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
@@ -799,9 +685,9 @@
             style="@style/MyButtonStyle"
             android:layout_marginEnd="20dp"
             android:background="@drawable/button_green_ripple"
+            android:fontFamily="@font/marhey_medium"
             android:text="@string/Atten_btn_txt"
             android:textStyle="bold"
-            android:fontFamily="@font/marhey_medium"
             app:icon="@drawable/check_in"
             app:iconGravity="textTop"
             app:iconSize="40dp"
@@ -812,13 +698,12 @@
             style="@style/MyButtonStyle"
             android:layout_marginStart="20dp"
             android:background="@drawable/button_red_ripple"
+            android:fontFamily="@font/marhey_medium"
             android:text="@string/Depar_btn_txt"
             android:textStyle="bold"
-            android:fontFamily="@font/marhey_medium"
             app:icon="@drawable/check_out"
             app:iconGravity="textTop"
             app:iconSize="40dp"
             app:iconTint="@color/lite_black" />
     </LinearLayout>
-
 </LinearLayout>

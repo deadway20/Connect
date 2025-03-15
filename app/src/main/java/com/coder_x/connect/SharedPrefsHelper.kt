@@ -5,6 +5,7 @@ package com.coder_x.connect
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import androidx.core.content.edit
 
 class SharedPrefsHelper(context: Context) {
 
@@ -181,4 +182,48 @@ class SharedPrefsHelper(context: Context) {
     fun getLanguage(): String {
         return sharedPreferences.getString("language", "en") ?: "en"
     }
+
+
+    fun saveData(data: EmpData) {
+        sharedPreferences.edit() {
+            putString("recordDate", data.recordDate)
+            putString("checkInTime", data.checkInTime)
+            putString("checkOutTime", data.checkOutTime)
+            putString("delayInMinutes", data.delayInMinutes)
+            putString("overtimeInMinutes", data.overtimeInMinutes)
+            putBoolean("isAbsent", data.isAbsent)
+        }
+    }
+
+    fun getSavedData(): EmpData? {
+        val recordDate = sharedPreferences.getString("recordDate", null) ?: return null
+        val checkInTime = sharedPreferences.getString("checkInTime", "00:00")!!
+        val checkOutTime = sharedPreferences.getString("checkOutTime", "00:00")!!
+        val workHours = sharedPreferences.getString("workHours", "00:00")!!
+        val delayInMinutes = sharedPreferences.getString("delayInMinutes", "00:00")!!
+        val overtimeInMinutes = sharedPreferences.getString("overtimeInMinutes", "00:00")!!
+        val isAbsent = sharedPreferences.getBoolean("isAbsent", false)
+
+        return EmpData(
+            recordDate,
+            checkInTime,
+            checkOutTime,
+            workHours,
+            delayInMinutes,
+            overtimeInMinutes,
+            isAbsent
+        )
+    }
+
+    fun clearData() {
+        sharedPreferences.edit() {
+            remove("recordDate")
+            remove("checkInTime")
+            remove("checkOutTime")
+            remove("delayInMinutes")
+            remove("overtimeInMinutes")
+            remove("isAbsent")
+        }
+    }
+
 }

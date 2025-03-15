@@ -5,10 +5,10 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray">#424242</color>
-    <color name="lite_black">#383838</color>
+    <color name="lite_black">#161616</color>
     <color name="red_ripple">#FDB5B5</color>
     <color name="green_ripple">#037E08</color>
-    <color name="purple_200">#000000</color>
+    <color name="purple_200">#e5d5f6</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
@@ -33,17 +33,17 @@
     <color name="cal_theme">#000000</color>
 
     <!-- Primary Colors -->
-    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimary">@color/purple_500</color>
     <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="primaryColor">#000000</color>
-    <color name="primaryDarkColor">#000000</color>
+    <color name="primaryColor">@color/purple_500</color>
+    <color name="primaryDarkColor">#000008</color>
 
     <!-- Secondary Colors -->
     <color name="colorSecondary">#03DAC6</color>
     <color name="colorOnSecondary">#000000</color>
 
     <!-- Background & Surface -->
-    <color name="colorBackground">#F5F5F5</color>
+    <color name="colorBackground">#FFFFFF</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorSurfaceVariant">#E7E0EC</color>
 
