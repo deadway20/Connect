@@ -5,6 +5,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:layoutDirection="locale"
@@ -18,107 +19,94 @@
 
 
     <!-- كارت بيانات الموظف -->
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:clipChildren="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="3dp">
 
-        <!-- اسم الموظف والقسم والـ ID -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="90dp"
-            android:layout_gravity="start"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="7dp"
-            android:paddingEnd="5dp">
-
-            <!-- اسم الموظف -->
-            <TextView
-                android:id="@+id/emp_name"
-                style="@style/CardView.Light"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="start"
-                android:layout_weight="1"
-                android:paddingStart="7dp"
-                android:paddingEnd="5dp"
-                android:text="@string/emp_name"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-
-            <!-- إطار حول القسم -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingStart="7dp"
-                android:paddingEnd="5dp">
-
-                <TextView
-                    style="@style/CardView.Light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start|end|center_vertical"
-                    android:paddingHorizontal="5dp"
-                    android:text="@string/emp_department"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/emp_depart"
-                    style="@style/CardView.Light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start|end|center_vertical"
-                    android:text="@string/emp_dapartment_txt"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- إطار حول الـ ID -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/CardView.Light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|end"
-                    android:paddingHorizontal="5dp"
-                    android:text="@string/emp_id_title"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/emp_id_txt"
-                    style="@style/CardView.Light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/emp_id_txt"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
         <!-- الصورة الدائرية -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/employee_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginEnd="32dp"
-            android:background="@color/img_frame_color"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/main_green_card"
             android:contentDescription="employee_img"
-            android:padding="3dp"
+            android:padding="2dp"
             android:src="@drawable/emp_img"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/CircleImageView"
             app:strokeWidth="2dp"
             tools:ignore="HardcodedText" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/greeting"
+            style="@style/CardView.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:padding="5dp"
+            android:text="@string/morning_greeting"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/employee_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/emp_name"
+            style="@style/CardView.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/emp_name"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/greeting"
+            app:layout_constraintStart_toEndOf="@+id/greeting"
+            app:layout_constraintTop_toTopOf="@+id/greeting" />
+
+        <TextView
+            android:id="@+id/greeting_icon"
+            style="@style/CardView.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/morning_icon"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/emp_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.074"
+            app:layout_constraintStart_toEndOf="@+id/emp_name"
+            app:layout_constraintTop_toTopOf="@+id/emp_name" />
+
+        <TextView
+            android:id="@+id/quotes_text"
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="4dp"
+            android:padding="3dp"
+            android:text="Stay positive, work hard, make it happen."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/employee_image"
+            app:layout_constraintTop_toBottomOf="@+id/greeting"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -137,7 +125,7 @@
             android:layout_gravity="start|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/main_green_card"
+            android:background="@drawable/attend_card"
             android:clickable="true"
             android:layoutDirection="locale"
             android:orientation="vertical"
@@ -177,13 +165,14 @@
                     android:minHeight="25dp"
                     android:padding="2dp"
                     android:text="@string/attend_time"
-                    android:textColor="@color/lite_black"
+                    android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
             </LinearLayout>
         </LinearLayout>
 
         <!-- كارت الانصراف -->
+
         <LinearLayout
             android:id="@+id/Depart_time_card"
             android:layout_width="0dp"
@@ -191,7 +180,7 @@
             android:layout_gravity="end|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/main_red_card"
+            android:background="@drawable/depart_card"
             android:backgroundTint="@null"
             android:clickable="true"
             android:layoutDirection="locale"
@@ -214,7 +203,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/tajawal_medium"
                 android:text="@string/departed_time_title"
-                android:textColor="@color/black"
+                android:textColor="@color/lite_black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -254,6 +243,8 @@
         android:orientation="horizontal">
 
         <!--Overtime Card-->
+
+        <!-- كارت التأخيرات -->
         <LinearLayout
             android:id="@+id/overtime"
             android:layout_width="0dp"
@@ -261,7 +252,7 @@
             android:layout_gravity="start|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/main_green_card"
+            android:background="@drawable/overtime_card"
             android:clickable="true"
             android:orientation="vertical"
             android:padding="5dp">
@@ -310,10 +301,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="2dp"
                     android:gravity="center"
-                    android:padding="4dp"
+                    android:padding="2dp"
                     android:text="@string/hours"
                     android:textColor="@color/lite_black"
                     android:textSize="14sp" />
@@ -322,7 +313,6 @@
 
         </LinearLayout>
 
-        <!-- كارت التأخيرات -->
         <LinearLayout
             android:id="@+id/delays"
             android:layout_width="0dp"
@@ -330,7 +320,7 @@
             android:layout_gravity="end|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/main_red_card"
+            android:background="@drawable/delays_card"
             android:clickable="true"
             android:orientation="vertical"
             android:padding="5dp">
@@ -375,10 +365,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="2dp"
                     android:gravity="center"
-                    android:padding="4dp"
+                    android:padding="2dp"
                     android:text="@string/hours"
                     android:textColor="@color/lite_black"
                     android:textSize="14sp" />
@@ -403,7 +393,7 @@
             android:layout_gravity="start|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/main_green_card"
+            android:background="@drawable/attend_counter_card"
             android:clickable="true"
             android:orientation="vertical"
             android:padding="5dp">
@@ -505,13 +495,13 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/attend_days_count"
                     android:layout_width="0dp"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/image_border"
                     android:gravity="center"
                     android:minHeight="25dp"
                     android:text="@string/attend_days_count_in_week"
@@ -540,7 +530,7 @@
             android:layout_gravity="start|center_vertical"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/main_red_card"
+            android:background="@drawable/absence_counter_card"
             android:clickable="true"
             android:orientation="vertical"
             android:padding="5dp">
@@ -587,9 +577,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -630,10 +620,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -647,12 +637,12 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/absence_days_count"
                     android:layout_width="0dp"
                     android:layout_height="22dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
-                    android:background="@drawable/image_border"
                     android:gravity="center"
                     android:minHeight="25dp"
                     android:text="@string/absence_days_count_in_month"
@@ -673,7 +663,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- الأزرار -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
@@ -705,5 +694,56 @@
             app:iconGravity="textTop"
             app:iconSize="40dp"
             app:iconTint="@color/lite_black" />
+
     </LinearLayout>
+
+    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
+
+    <!--        <com.google.android.material.bottomappbar.BottomAppBar-->
+    <!--            android:id="@+id/bottomNavigationAppBar"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="90dp"-->
+    <!--            android:layout_marginStart="10dp"-->
+    <!--            android:layout_marginTop="50dp"-->
+    <!--            android:layout_marginEnd="10dp"-->
+    <!--            android:layout_marginBottom="10dp"-->
+    <!--            android:background="@drawable/bottom_app_bg"-->
+    <!--            android:gravity="bottom"-->
+    <!--            app:backgroundTint="@color/black"-->
+    <!--            app:fabCradleMargin="10dp"-->
+    <!--            app:fabCradleRoundedCornerRadius="30dp"-->
+    <!--            app:fabCradleVerticalOffset="1dp">-->
+
+    <!--            <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_marginEnd="16dp"-->
+    <!--                android:background="@color/transparent"-->
+    <!--                android:elevation="0dp"-->
+    <!--                app:elevation="0dp"-->
+    <!--                app:itemIconTint="@color/white"-->
+    <!--                app:labelVisibilityMode="unlabeled"-->
+    <!--                app:menu="@menu/bottom_navigation_menu" >-->
+
+    <!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="center_horizontal"-->
+    <!--                    android:background="@drawable/home_24px"-->
+    <!--                    android:scaleType="center"-->
+    <!--                    android:layout_marginBottom="10dp"-->
+    <!--                    android:src="@drawable/home_24px"-->
+    <!--                    android:tint="@color/white"-->
+    <!--                    app:backgroundTint="@color/teal_200" />-->
+    <!--            </com.google.android.material.bottomnavigation.BottomNavigationView>-->
+    <!--        </com.google.android.material.bottomappbar.BottomAppBar>-->
+
+    <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
 </LinearLayout>

@@ -10,9 +10,9 @@
     <string name="Attendance_days">Attend Days</string>
     <string name="emp_id_title">ID :</string>
     <string name="departed_time_title">Departed Time</string>
-    <string name="emp_name">Employee Name</string>
+    <string name="morning_greeting">Good Mornning ,</string>
     <string name="delays_title">Delays</string>
-    <string name="emp_dapartment_txt">Computer</string>
+    <string name="emp_dapartment_txt">Department</string>
     <string name="register_employee">Register Employee</string>
     <string name="connect_to_server">Connect to Server</string>
     <string name="hours">Hours</string>
@@ -50,4 +50,10 @@
     <string name="finsh_btn">Finish</string>
     <string name="serverAddress_Card">Server Address</string>
     <string name="Monthly_calendar">Monthly Attend Days</string>
+    <string name="emp_name">name</string>
+    <string name="evening_greeting">Good_evening ,</string>
+    <string name="night_greeting">Good night ,</string>
+    <string name="morning_icon">🌞</string>
+    <string name="evening_icon">☀️</string>
+    <string name="night_icon">🌙</string>
 </resources>

@@ -7,8 +7,10 @@ data class EmpData(
     val workHours: String,
     val delayInMinutes: String,
     val overtimeInMinutes: String,
-    var isAbsent: Boolean
-
+    var isAttend: Boolean,
+    var isAbsence: Boolean,
+    var absenceCount: Int,
+    var attendCount: Int
 )
 
 

@@ -9,7 +9,6 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 object DataBaseHelper {
@@ -116,7 +115,9 @@ object DataBaseHelper {
         }
     }.start()
 
+    fun updateEmployee(context: Context, name: String, department: String, mobile: String) {
 
+    }
     fun checkInEmployee(context: Context, callback: (Boolean, String) -> Unit) {
         Thread {
             try {
@@ -149,19 +150,21 @@ object DataBaseHelper {
                     return@Thread
                 }
 
-                // ✅ **تهيئة القيم الافتراضية في كوتلين**
-                val checkInTime = getCurrentTime() // دالة لجلب الوقت الحالي
-                val absenceStatus = 0
+                val isAttend = 1
+                val isAbsence = 0
 
 
                 // ✅ **إدخال القيم المحسوبة مسبقًا إلى قاعدة البيانات**
                 val insertQuery = """
-                INSERT INTO Daily (EmpID ,RecordDate, CheckInTime, AbsenceStatus) 
-                VALUES (?,CONVERT(VARCHAR, GETDATE(), 23), CONVERT(VARCHAR, GETDATE(), 108),?)
-            """
+                INSERT INTO Daily (EmpID ,RecordDate, CheckInTime, IsAttend, IsAbsence) 
+                VALUES (?,CONVERT(VARCHAR, GETDATE(), 23), CONVERT(VARCHAR, GETDATE(), 108),?,?);
+                USE Connect;
+                    """.trimIndent()
                 val insertStatement = connection.prepareStatement(insertQuery)
                 insertStatement.setInt(1, EMP_ID)
-                insertStatement.setInt(2, absenceStatus)
+                insertStatement.setInt(2, isAttend)
+                insertStatement.setInt(3, isAbsence)
+                insertStatement.setInt(4, EMP_ID)
 
                 val rowsAffected = insertStatement.executeUpdate()
 
@@ -270,7 +273,10 @@ object DataBaseHelper {
                             CASE WHEN d.CheckOutTime IS NOT NULL THEN RIGHT('0' + CAST((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) / 60) AS VARCHAR), 2) + ':' + RIGHT('0' + CAST((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) % 60) AS VARCHAR), 2) ELSE '00:00' END AS WorkHours,
                             CASE WHEN DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) > (e.WorkHours * 60) THEN RIGHT('0' + CAST(((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) - (e.WorkHours * 60)) / 60) AS VARCHAR), 2) + ':' + RIGHT('0' + CAST(((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) - (e.WorkHours * 60)) % 60) AS VARCHAR), 2) ELSE '00:00' END AS Overtime,
                             CASE WHEN DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) < (e.WorkHours * 60) THEN RIGHT('0' + CAST((((e.WorkHours * 60) - DATEDIFF(minute, d.CheckInTime, d.CheckOutTime)) / 60) AS VARCHAR), 2) + ':' + RIGHT('0' + CAST((((e.WorkHours * 60) - DATEDIFF(minute, d.CheckInTime, d.CheckOutTime)) % 60) AS VARCHAR), 2) ELSE '00:00' END AS DelayMinutes,
-	                        d.AbsenceStatus
+                            d.IsAttend,
+	                        d.IsAbsence,
+                            (SELECT SUM(CASE WHEN IsAttend = 1 THEN 1 ELSE 0 END) FROM Daily WHERE EmpID = d.EmpID) AS attendCount,
+                            (SELECT SUM(CASE WHEN IsAbsence = 1 THEN 1 ELSE 0 END) FROM Daily WHERE EmpID = d.EmpID) AS absenceCount
                          FROM Daily d
                          JOIN EmpInfo e ON d.EmpID = e.EmpID
                          WHERE d.EmpID = ? AND d.RecordDate = CONVERT(VARCHAR, GETDATE(), 23);
@@ -291,7 +297,10 @@ object DataBaseHelper {
                                 workHours = resultSet.getString("WorkHours") ?: "00:00",
                                 overtimeInMinutes = resultSet.getString("Overtime") ?: "00:00",
                                 delayInMinutes = resultSet.getString("DelayMinutes") ?: "00:00",
-                                isAbsent = resultSet.getBoolean("AbsenceStatus")
+                                isAttend = resultSet.getBoolean("IsAttend"),
+                                isAbsence = resultSet.getBoolean("IsAbsence"),
+                                absenceCount = resultSet.getInt("absenceCount"),
+                                attendCount = resultSet.getInt("attendCount")
                             )
 
                             // ✅ **حفظ البيانات في `SharedPreferences` بعد جلبها**
@@ -332,11 +341,5 @@ object DataBaseHelper {
             Log.e("formatTimeWithAmPm", "خطأ في تحويل الوقت: ${e.message}")
             "00:00"
         }
-    }
-
-
-    private fun getCurrentTime(): String {
-        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-        return dateFormat.format(Date())
     }
 }

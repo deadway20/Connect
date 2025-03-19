@@ -41,7 +41,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/Emp_name_card"
             style="@style/CustomTextInputLayout"
-            android:hint="@string/emp_name"
+            android:hint="@string/morning_greeting"
             android:textColor="@color/white"
             android:textColorHint="@color/gray"
             app:endIconMode="clear_text"

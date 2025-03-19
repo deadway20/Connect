@@ -10,9 +10,9 @@
     <string name="Attendance_days">أيام الحضور</string>
     <string name="emp_id_title">الهوية :</string>
     <string name="departed_time_title">وقت الانصراف</string>
-    <string name="emp_name">أسم الموظف</string>
+    <string name="morning_greeting">صباح الخير ,</string>
     <string name="delays_title">التأخيرات</string>
-    <string name="emp_dapartment_txt">الحاسبات</string>
+    <string name="emp_dapartment_txt">Department</string>
     <string name="register_employee">تسجيل الموظف</string>
     <string name="connect_to_server">الاتصال بالسيرفر</string>
     <string name="hours">ساعات</string>
@@ -50,4 +50,10 @@
     <string name="finsh_btn">إنهاء</string>
     <string name="serverAddress_Card">عنوان السيرفر</string>
     <string name="Monthly_calendar">أيام الحضور الشهرية</string>
+    <string name="emp_name">name</string>
+    <string name="evening_greeting">مساء الخير ,</string>
+    <string name="night_greeting">مساء الخير ,</string>
+    <string name="morning_icon">🌞</string>
+    <string name="evening_icon">☀️</string>
+    <string name="night_icon">🌙</string>
 </resources>

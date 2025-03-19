@@ -6,7 +6,7 @@
             <solid android:color="#FDB5B5" /> <!-- اللون الأحمر -->
             <stroke
                 android:width="3dp"
-                android:color="@color/theme_color" />
+                android:color="#C8FF8080" />
         </shape>
     </item>
 </ripple>

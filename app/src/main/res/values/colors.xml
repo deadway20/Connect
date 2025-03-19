@@ -31,6 +31,7 @@
     <color name="emp_img_tint">#000000</color>
     <color name="theme_color">#000000</color>
     <color name="cal_theme">#FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <!-- Primary Colors -->
     <color name="colorPrimary">#000000</color>

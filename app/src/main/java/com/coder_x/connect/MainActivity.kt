@@ -18,6 +18,7 @@ import com.coder_x.connect.DataBaseHelper.checkOutEmployee
 import com.coder_x.connect.databinding.ActivityMainBinding
 import com.coder_x.connect.databinding.CustomToolbarBinding
 import java.time.LocalDate
+import java.time.LocalTime
 
 // فئة النشاط الرئيسي التي تدير واجهة المستخدم وتفاعلاتها
 class MainActivity : AppCompatActivity() {
@@ -40,6 +41,22 @@ class MainActivity : AppCompatActivity() {
 
         prefsHelper = SharedPrefsHelper(this)
 
+        //change wallpaper when shake the phone
+        var background = listOf(
+            R.drawable.background,
+            R.drawable.backgroung1,
+            R.drawable.backgroung10,
+            R.drawable.backgroung11,
+            R.drawable.backgroung2,
+            R.drawable.backgroung3,
+            R.drawable.backgroung4,
+            R.drawable.backgroung5,
+            R.drawable.backgroung6,
+            R.drawable.backgroung7,
+            R.drawable.backgroung8,
+            R.drawable.backgroung9,
+        )
+        binding.root.setBackgroundResource(background.random())
 
         // تحميل البيانات من السيرفر
         getDataFromServer()
@@ -48,8 +65,6 @@ class MainActivity : AppCompatActivity() {
         // ستيراد بيانات الموظف المحفوظه أستخدام SharedPreference
         displayEmpInfo(
             prefsHelper.getEmpName(),
-            prefsHelper.getEmpDepart(),
-            prefsHelper.getEmpID(),
             prefsHelper.getEmpImagePath()
         )
 
@@ -69,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun animateAttendCard(view: View) {
+    private fun animateAttendCard(view: View) {
         view.setOnClickListener {
             animateCard(binding.attendDays)
             val dialogFragment = CalendarFragment()
@@ -101,9 +116,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkInButton(view: View) {
-        binding.checkInButton.setOnClickListener {
+        view.setOnClickListener {
             animateButton(it) // تشغيل الأنيميشن عند الضغط
-
             checkInEmployee(this) { success, message ->
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
                 if (success) {
@@ -219,10 +233,37 @@ class MainActivity : AppCompatActivity() {
         binding.isAttend.text = "✖"
     }
 
-    private fun displayEmpInfo(name: String, department: String, id: Int, empImgPath: String?) {
-        binding.empName.text = name
-        binding.empDepart.text = department
-        binding.empIdTxt.text = id.toString()
+    private fun displayEmpInfo(name: String, empImgPath: String?) {
+        val currentTime = LocalTime.now()
+        val morning = LocalTime.of(6, 0) // 6:00 AM
+        val evening = LocalTime.of(12, 0) // 12:00 PM
+        val night = LocalTime.of(18, 0) // 6:00 PM
+        val goodnight_greeting = resources.getString(R.string.night_greeting)
+        val morning_greeting = resources.getString(R.string.morning_greeting)
+        val evening_greeting = resources.getString(R.string.evening_greeting)
+
+        binding.greeting.text = when {
+            currentTime.isAfter(night) -> goodnight_greeting
+            currentTime.isAfter(evening) -> evening_greeting
+            else -> morning_greeting
+        }
+        binding.greetingIcon.text = when {
+            currentTime.isAfter(night) -> resources.getString(R.string.night_icon)
+            currentTime.isAfter(evening) -> resources.getString(R.string.evening_icon)
+            currentTime.isAfter(morning) -> resources.getString(R.string.morning_icon)
+            else -> resources.getString(R.string.morning_icon)
+        }
+
+        val firstName = name.split(" ").firstOrNull()
+        if (!firstName.isNullOrEmpty()){
+            binding.empName.text = firstName
+        }
+
+        if(prefsHelper.getLanguage() == "ar"){
+            binding.quotesText.text = QuotesList.arabicQuotes.random()
+        }else{
+            binding.quotesText.text = QuotesList.englishQuotes.random()
+        }
         // استرجاع صورة الموظف
         if (empImgPath != null) {
             try {
@@ -246,12 +287,18 @@ class MainActivity : AppCompatActivity() {
         binding.departTime.text = data.checkOutTime
         binding.delaysHours.text = data.delayInMinutes
         binding.overtimeHours.text = data.overtimeInMinutes
-        if (data.isAbsent) {
-            binding.isAbsence.text = "✔"
-            binding.isAttend.text = "✖"
-        } else {
-            binding.isAbsence.text = "✖"
-            binding.isAttend.text = "✔"
+        binding.attendDaysCount.text = data.attendCount.toString()
+        binding.absenceDaysCount.text = data.absenceCount.toString()
+        when {
+            data.isAbsence -> {
+                binding.isAbsence.text = "✔"
+                binding.isAttend.text = "✖"
+            }
+            else -> {
+                binding.isAbsence.text = "✖"
+                binding.isAttend.text = "✔"
+            }
         }
+        Log.d("My log", "data: $data ")
     }
 }

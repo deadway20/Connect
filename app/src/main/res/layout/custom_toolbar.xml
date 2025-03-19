@@ -2,29 +2,29 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="40dp"
     android:layout_marginTop="8dp"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     android:background="@drawable/toolbar_fram"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <!-- زر القائمة الجانبية -->
+    <!-- زر تغيير الثيم -->
     <ImageView
-        android:id="@+id/menu_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="end"
-        android:contentDescription="@string/menu_ico"
+        android:id="@+id/theme_ico"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/change_theme"
         android:padding="8dp"
-        android:src="@drawable/ic_menu" />
+        android:src="@drawable/ic_theme" />
 
     <!-- مكان فارغ لدفع الأيقونات إلى اليمين -->
     <TextView
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="10dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/re3aya"
@@ -34,23 +34,16 @@
         android:textStyle="bold"
         android:maxHeight="50dp"/>
 
-    <!-- زر تغيير الثيم -->
-    <ImageView
-        android:id="@+id/theme_ico"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:contentDescription="@string/change_theme"
-        android:padding="8dp"
-        android:src="@drawable/ic_theme" />
+
 
     <!-- زر تغيير اللغة -->
     <ImageView
         android:id="@+id/lang_ico"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:contentDescription="@string/change_language"
         android:padding="8dp"
         android:src="@drawable/ic_language" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:shapeable="http://schemas.android.com/apk/res-auto"
-    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu"
+    style="@style/Theme.Design.NoActionBar"
     tools:context=".SplashScreen">
 
     <ImageView

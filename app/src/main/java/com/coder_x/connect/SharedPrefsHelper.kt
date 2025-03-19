@@ -32,7 +32,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 حفظ عنوان السيرفر
     fun putServerAddress(address: String) {
-        sharedPreferences.edit().putString(SERVER_ADDRESS_KEY, address).apply()
+        sharedPreferences.edit() { putString(SERVER_ADDRESS_KEY, address) }
     }
 
     // 🔹 استرجاع عنوان السيرفر
@@ -42,7 +42,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 حفظ منفذ السيرفر
     fun putServerPort(port: String) {
-        sharedPreferences.edit().putString(SERVER_PORT_KEY, port).apply()
+        sharedPreferences.edit() { putString(SERVER_PORT_KEY, port) }
     }
 
     // 🔹 استرجاع منفذ السيرفر
@@ -52,7 +52,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 حفظ ID الموظف
     fun putEmpID(empID: Int) {
-        sharedPreferences.edit().putInt(EMP_ID_KEY, empID).apply()
+        sharedPreferences.edit() { putInt(EMP_ID_KEY, empID) }
     }
 
     // 🔹 استرجاع ID الموظف
@@ -62,7 +62,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 حفظ أسم الموظف
     fun putEmpName(name: String) {
-        sharedPreferences.edit().putString(EMP_NAME_KEY, name).apply()
+        sharedPreferences.edit() { putString(EMP_NAME_KEY, name) }
     }
 
     // 🔹 إسترجاع أسم الموظف
@@ -72,7 +72,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 حفظ قسم الموظف
     fun putEmpDepart(depart: String) {
-        sharedPreferences.edit().putString(EMP_DEPART_KEY, depart).apply()
+        sharedPreferences.edit() { putString(EMP_DEPART_KEY, depart) }
     }
 
     // 🔹 إسترجاع أسم الموظف
@@ -82,7 +82,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 حفظ موبيل الموظف
     fun putEmpMobile(mobile: String) {
-        sharedPreferences.edit().putString(EMP_MOBILE_KEY, mobile).apply()
+        sharedPreferences.edit() { putString(EMP_MOBILE_KEY, mobile) }
     }
 
     // 🔹 إسترجاع موبيل الموظف
@@ -93,7 +93,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 حفظ ساعات العمل للموظف
     fun putEmpHours(hours: Int) {
-        sharedPreferences.edit().putInt(EMP_HOURS_KEY, hours).apply()
+        sharedPreferences.edit() { putInt(EMP_HOURS_KEY, hours) }
     }
 
     // 🔹 إسترجاع  ساعات العمل الموظف
@@ -108,7 +108,7 @@ class SharedPrefsHelper(context: Context) {
             img.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
             val encoded = android.util.Base64.encodeToString(byteArray, android.util.Base64.DEFAULT)
-            sharedPreferences.edit().putString(EMP_IMG, encoded).apply()
+            sharedPreferences.edit() { putString(EMP_IMG, encoded) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -135,7 +135,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 لمسح جميع البيانات المحفوظة
     fun clearPrefs() {
-        sharedPreferences.edit().clear().apply()
+        sharedPreferences.edit() { clear() }
     }
 
     //🔹 للتحقق من إتمام الإعدادات
@@ -145,7 +145,7 @@ class SharedPrefsHelper(context: Context) {
 
     //🔹 لتعيين حالة إتمام الإعدادات
     fun setSetupCompleted(completed: Boolean) {
-        sharedPreferences.edit().putBoolean("isSetupCompleted", completed).apply()
+        sharedPreferences.edit() { putBoolean("isSetupCompleted", completed) }
     }
 
     // 🔹 لاسترجاع حالة أتمام الاعدادات
@@ -165,7 +165,7 @@ class SharedPrefsHelper(context: Context) {
 
     //🔹 دالة لحفظ مسار صورة الموظف
     fun putEmpImagePath(path: String) {
-        sharedPreferences.edit().putString(KEY_EMP_IMAGE_PATH, path).apply()
+        sharedPreferences.edit() { putString(KEY_EMP_IMAGE_PATH, path) }
     }
 
     //🔹 دالة لاسترجاع مسار صورة الموظف (مفيدة في المستقبل)
@@ -175,7 +175,7 @@ class SharedPrefsHelper(context: Context) {
 
     //🔹 دالة لحفظ لغة التطبيق
     fun setLanguage(language: String) {
-        sharedPreferences.edit().putString("language", language).apply()
+        sharedPreferences.edit() { putString("language", language) }
     }
 
     //🔹 دالة لاسترجاع لغة التطبيق
@@ -191,7 +191,8 @@ class SharedPrefsHelper(context: Context) {
             putString("checkOutTime", data.checkOutTime)
             putString("delayInMinutes", data.delayInMinutes)
             putString("overtimeInMinutes", data.overtimeInMinutes)
-            putBoolean("isAbsent", data.isAbsent)
+            putBoolean("isAttend", data.isAttend)
+            putBoolean("isAbsence", data.isAbsence)
         }
     }
 
@@ -202,7 +203,10 @@ class SharedPrefsHelper(context: Context) {
         val workHours = sharedPreferences.getString("workHours", "00:00")!!
         val delayInMinutes = sharedPreferences.getString("delayInMinutes", "00:00")!!
         val overtimeInMinutes = sharedPreferences.getString("overtimeInMinutes", "00:00")!!
-        val isAbsent = sharedPreferences.getBoolean("isAbsent", false)
+        val isAttend = sharedPreferences.getBoolean("isAttend", false)
+        val isAbsence = sharedPreferences.getBoolean("isAbsence", false)
+        val attendCount = sharedPreferences.getInt("attendCount", 0)
+        val absenceCount = sharedPreferences.getInt("absenceCount", 0)
 
         return EmpData(
             recordDate,
@@ -211,7 +215,11 @@ class SharedPrefsHelper(context: Context) {
             workHours,
             delayInMinutes,
             overtimeInMinutes,
-            isAbsent
+            isAttend,
+            isAbsence,
+            attendCount,
+            absenceCount
+
         )
     }
 
@@ -222,7 +230,7 @@ class SharedPrefsHelper(context: Context) {
             remove("checkOutTime")
             remove("delayInMinutes")
             remove("overtimeInMinutes")
-            remove("isAbsent")
+            remove("isAbsence")
         }
     }
 

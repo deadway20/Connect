@@ -31,6 +31,7 @@
     <color name="emp_img_tint">#000000</color>
     <color name="theme_color">#FFFFFF</color>
     <color name="cal_theme">#000000</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <!-- Primary Colors -->
     <color name="colorPrimary">@color/purple_500</color>
@@ -43,7 +44,7 @@
     <color name="colorOnSecondary">#000000</color>
 
     <!-- Background & Surface -->
-    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorBackground">#1E1F22</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorSurfaceVariant">#E7E0EC</color>
 
@@ -57,4 +58,5 @@
     <!-- Button Colors -->
     <color name="colorButtonBackground">#6750A4</color>
     <color name="colorButtonIcon">#FFFFFF</color>
+
 </resources>
