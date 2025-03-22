@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/theme"
+        android:icon="@drawable/ic_theme"
+        android:title="" />
+    <item
+        android:id="@+id/lang"
+        android:icon="@drawable/ic_language"
+        android:title="" />
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home_24px"
+        android:title="" />
 
     <item
         android:id="@+id/calendar"
-        android:icon="@drawable/calendar_add_ico"
-        android:title=""
-        app:showAsAction="always"/>
-
-    <item
-        android:title=""
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/calendar_ico"
+        android:title="" />
 
     <item
         android:id="@+id/profile"
         android:icon="@drawable/profile_24px"
-        android:title=""
-        app:showAsAction="ifRoom"/>
+        android:title="" />
 
 
 </menu>

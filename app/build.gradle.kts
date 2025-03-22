@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.material.calendar.view)
     implementation(libs.androidx.ui.text.android)
     implementation(libs.ucrop)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)

@@ -184,11 +184,11 @@ class SharedPrefsHelper(context: Context) {
     }
 
 
-    fun saveData(data: EmpData) {
+    fun saveData(data: EmployeeData) {
         sharedPreferences.edit() {
             putString("recordDate", data.recordDate)
-            putString("checkInTime", data.checkInTime)
-            putString("checkOutTime", data.checkOutTime)
+            putString("clockIn", data.clockIn)
+            putString("clockOut", data.clockOut)
             putString("delayInMinutes", data.delayInMinutes)
             putString("overtimeInMinutes", data.overtimeInMinutes)
             putBoolean("isAttend", data.isAttend)
@@ -196,11 +196,11 @@ class SharedPrefsHelper(context: Context) {
         }
     }
 
-    fun getSavedData(): EmpData? {
+    fun getSavedData(): EmployeeData? {
         val recordDate = sharedPreferences.getString("recordDate", null) ?: return null
-        val checkInTime = sharedPreferences.getString("checkInTime", "00:00")!!
-        val checkOutTime = sharedPreferences.getString("checkOutTime", "00:00")!!
-        val workHours = sharedPreferences.getString("workHours", "00:00")!!
+        val clockIn = sharedPreferences.getString("clockIn", "00:00")!!
+        val clockOut = sharedPreferences.getString("clockOut", "00:00")!!
+        val totalHours = sharedPreferences.getString("totalHours", "00:00")!!
         val delayInMinutes = sharedPreferences.getString("delayInMinutes", "00:00")!!
         val overtimeInMinutes = sharedPreferences.getString("overtimeInMinutes", "00:00")!!
         val isAttend = sharedPreferences.getBoolean("isAttend", false)
@@ -208,13 +208,13 @@ class SharedPrefsHelper(context: Context) {
         val attendCount = sharedPreferences.getInt("attendCount", 0)
         val absenceCount = sharedPreferences.getInt("absenceCount", 0)
 
-        return EmpData(
+        return EmployeeData(
             recordDate,
-            checkInTime,
-            checkOutTime,
-            workHours,
-            delayInMinutes,
+            clockIn,
+            clockOut,
+            totalHours,
             overtimeInMinutes,
+            delayInMinutes,
             isAttend,
             isAbsence,
             attendCount,
@@ -226,8 +226,9 @@ class SharedPrefsHelper(context: Context) {
     fun clearData() {
         sharedPreferences.edit() {
             remove("recordDate")
-            remove("checkInTime")
-            remove("checkOutTime")
+            remove("clockIn")
+            remove("clockOut")
+            remove("workHours")
             remove("delayInMinutes")
             remove("overtimeInMinutes")
             remove("isAbsence")

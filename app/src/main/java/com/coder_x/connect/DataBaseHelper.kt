@@ -61,7 +61,7 @@ object DataBaseHelper {
             }
             connection.use { conn ->
                 val query =
-                    "INSERT INTO EmpInfo (Name, Department, Mobile, WorkHours) VALUES (?, ?, ? ,?)"
+                    "INSERT INTO EmpInfo (Name, Department, Mobile, TotalHours) VALUES (?, ?, ? ,?)"
                 val statement =
                     conn.prepareStatement(query, java.sql.Statement.RETURN_GENERATED_KEYS)
                 statement.setString(1, name)
@@ -164,7 +164,6 @@ object DataBaseHelper {
                 insertStatement.setInt(1, EMP_ID)
                 insertStatement.setInt(2, isAttend)
                 insertStatement.setInt(3, isAbsence)
-                insertStatement.setInt(4, EMP_ID)
 
                 val rowsAffected = insertStatement.executeUpdate()
 
@@ -219,7 +218,7 @@ object DataBaseHelper {
 
                 val updateQuery = """
                 UPDATE Daily 
-                SET CheckOutTime = CONVERT(VARCHAR, GETDATE(), 108), WorkHours = DATEDIFF(minute, CheckInTime, CONVERT(VARCHAR, GETDATE(), 108)) / 60.0 
+                SET CheckOutTime = CONVERT(VARCHAR, GETDATE(), 108), TotalHours = DATEDIFF(minute, CheckInTime, CONVERT(VARCHAR, GETDATE(), 108)) / 60.0 
                 WHERE EmpID = ? AND RecordDate = CONVERT(VARCHAR, GETDATE(), 23);
             """
                 connection.autoCommit = false  // تعطيل AutoCommit
@@ -247,7 +246,7 @@ object DataBaseHelper {
     }
 
 
-    fun getAttendanceData(context: Context, callback: (EmpData?) -> Unit) {
+    fun getAttendanceData(context: Context, callback: (EmployeeData?) -> Unit) {
         Thread {
             try {
                 val prefsHelper = SharedPrefsHelper(context)
@@ -270,7 +269,7 @@ object DataBaseHelper {
                             d.CheckInTime,
                             d.CheckOutTime,
                             e.WorkHours AS RequiredHours,
-                            CASE WHEN d.CheckOutTime IS NOT NULL THEN RIGHT('0' + CAST((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) / 60) AS VARCHAR), 2) + ':' + RIGHT('0' + CAST((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) % 60) AS VARCHAR), 2) ELSE '00:00' END AS WorkHours,
+                            CASE WHEN d.CheckOutTime IS NOT NULL THEN RIGHT('0' + CAST((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) / 60) AS VARCHAR), 2) + ':' + RIGHT('0' + CAST((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) % 60) AS VARCHAR), 2) ELSE '00:00' END AS TotalHours,
                             CASE WHEN DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) > (e.WorkHours * 60) THEN RIGHT('0' + CAST(((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) - (e.WorkHours * 60)) / 60) AS VARCHAR), 2) + ':' + RIGHT('0' + CAST(((DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) - (e.WorkHours * 60)) % 60) AS VARCHAR), 2) ELSE '00:00' END AS Overtime,
                             CASE WHEN DATEDIFF(minute, d.CheckInTime, d.CheckOutTime) < (e.WorkHours * 60) THEN RIGHT('0' + CAST((((e.WorkHours * 60) - DATEDIFF(minute, d.CheckInTime, d.CheckOutTime)) / 60) AS VARCHAR), 2) + ':' + RIGHT('0' + CAST((((e.WorkHours * 60) - DATEDIFF(minute, d.CheckInTime, d.CheckOutTime)) % 60) AS VARCHAR), 2) ELSE '00:00' END AS DelayMinutes,
                             d.IsAttend,
@@ -286,15 +285,15 @@ object DataBaseHelper {
                     statement.setInt(1, EMP_ID) // استخدام `employeeId` بدلاً من `EMP_ID`
                     statement.executeQuery().use { resultSet ->
                         if (resultSet.next()) {
-                            val data = EmpData(
+                            val data = EmployeeData(
                                 recordDate = resultSet.getString("RecordDate"),
-                                checkInTime = formatTimeWithAmPm(
+                                clockIn = formatTimeWithAmPm(
                                     resultSet.getString("CheckInTime") ?: "00:00"
                                 ),
-                                checkOutTime = formatTimeWithAmPm(
+                                clockOut = formatTimeWithAmPm(
                                     resultSet.getString("CheckOutTime") ?: "00:00"
                                 ),
-                                workHours = resultSet.getString("WorkHours") ?: "00:00",
+                                totalHours = resultSet.getString("TotalHours") ?: "00:00",
                                 overtimeInMinutes = resultSet.getString("Overtime") ?: "00:00",
                                 delayInMinutes = resultSet.getString("DelayMinutes") ?: "00:00",
                                 isAttend = resultSet.getBoolean("IsAttend"),

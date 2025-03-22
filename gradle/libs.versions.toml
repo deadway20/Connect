@@ -16,6 +16,8 @@ navigationFragmentKtx = "2.8.9"
 navigationUiKtx = "2.8.9"
 ucrop = "2.2.10"
 uiTextAndroid = "1.7.8"
+lifecycleLivedataKtx = "2.6.1"
+lifecycleViewmodelKtx = "2.6.1"
 
 
 
@@ -35,6 +37,8 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 material-calendar-view = { module = "com.applandeo:material-calendar-view", version.ref = "materialCalendarView" }
 ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version.ref = "uiTextAndroid" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 
 
 

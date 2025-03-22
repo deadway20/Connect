@@ -39,24 +39,41 @@
     <color name="primaryColor">@color/purple_500</color>
     <color name="primaryDarkColor">#000008</color>
 
-    <!-- Secondary Colors -->
-    <color name="colorSecondary">#03DAC6</color>
-    <color name="colorOnSecondary">#000000</color>
-
     <!-- Background & Surface -->
     <color name="colorBackground">#1E1F22</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorSurfaceVariant">#E7E0EC</color>
 
-    <!-- Outline -->
-    <color name="colorOutline">#CAC4D0</color>
+    <!-- Dark Theme Colors -->
+    <color name="background">#121212</color>
+    <color name="card_background">#2F2F2F</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#000000</color>
+    <color name="header_start">#1565C0</color>
+    <color name="header_end">#1976D2</color>
 
-    <!-- Text Colors -->
-    <color name="colorOnSurface">#000000</color>
-    <color name="colorOnSurfaceVariant">#FFFFFF</color>
+    <!-- Status Card Colors - Dark Theme -->
+    <color name="early_leaves_bg">#0D47A1</color>
+    <color name="early_leaves_text">#90CAF9</color>
 
-    <!-- Button Colors -->
-    <color name="colorButtonBackground">#6750A4</color>
-    <color name="colorButtonIcon">#FFFFFF</color>
+    <color name="absents_bg">#424242</color>
+    <color name="absents_text">#E0E0E0</color>
+
+    <color name="late_in_bg">#E65100</color>
+    <color name="late_in_text">#FFCC80</color>
+
+    <color name="leaves_bg">#1B5E20</color>
+    <color name="leaves_text">#A5D6A7</color>
+
+    <color name="visits_bg">#4A148C</color>
+    <color name="visits_text">#E1BEE7</color>
+
+    <color name="rewards_bg">#BF360C</color>
+    <color name="rewards_text">#FFAB91</color>
+
+    <!-- Summary Icons Colors - Dark Theme -->
+    <color name="team_icon">#64B5F6</color>
+    <color name="tasks_icon">#81C784</color>
+    <color name="rewards_icon">#FFD54F</color>
 
 </resources>

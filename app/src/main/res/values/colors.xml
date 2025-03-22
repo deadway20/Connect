@@ -24,7 +24,7 @@
     <color name="lite_pink">#40FFD0FE</color>
     <color name="lite_red">#33D12123</color>
     <color name="lite_orange">#80FF57</color>
-    <color name="light_grey">#424242</color>
+    <color name="_light__grey">#424242</color>
     <color name="light_gray">#B0B0B0</color>
     <color name="btn_txt_color">#858281</color>
     <color name="img_frame_color">#F0E6E6</color> <!-- لون فاتح للوضع النهاري -->
@@ -33,29 +33,36 @@
     <color name="cal_theme">#FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
 
-    <!-- Primary Colors -->
-    <color name="colorPrimary">#000000</color>
-    <color name="colorOnPrimary">#000000</color>
-    <color name="primaryColor">#000000</color>
-    <color name="primaryDarkColor">#000000</color>
-
-    <!-- Secondary Colors -->
-    <color name="colorSecondary">#03DAC6</color>
-    <color name="colorOnSecondary">#000000</color>
 
     <!-- Background & Surface -->
     <color name="colorBackground">#F5F5F5</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorSurfaceVariant">#E7E0EC</color>
 
-    <!-- Outline -->
-    <color name="colorOutline">#CAC4D0</color>
+    <!-- Light Theme Colors -->
+    <color name="background">#F5F5F5</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#FFFFFF</color>
+    <color name="header_start">#2196F3</color>
+    <color name="header_end">#42A5F5</color>
+    <!-- Status Card Colors - Light Theme -->
+    <color name="early_leaves_bg">#E6F0FF</color>
+    <color name="early_leaves_text">#2196F3</color>
+    <color name="absents_bg">#F0F0F0</color>
+    <color name="absents_text">#757575</color>
+    <color name="late_in_bg">#FFF4E5</color>
+    <color name="late_in_text">#FF9800</color>
+    <color name="leaves_bg">#E8F5E9</color>
+    <color name="leaves_text">#4CAF50</color>
+    <color name="visits_bg">#F3E5F5</color>
+    <color name="visits_text">#9C27B0</color>
+    <color name="rewards_bg">#FFF3E0</color>
+    <color name="rewards_text">#FF5722</color>
 
-    <!-- Text Colors -->
-    <color name="colorOnSurface">#1C1B1F</color>
-    <color name="colorOnSurfaceVariant">#49454F</color>
+    <!-- Summary Icons Colors - Light Theme -->
+    <color name="team_icon">#2196F3</color>
+    <color name="tasks_icon">#4CAF50</color>
+    <color name="rewards_icon">#FFC107</color>
 
-    <!-- Button Colors -->
-    <color name="colorButtonBackground">#6750A4</color>
-    <color name="colorButtonIcon">#FFFFFF</color>
 </resources>

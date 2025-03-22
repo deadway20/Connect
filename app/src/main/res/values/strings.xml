@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Depar_btn_txt">Departed</string>
-    <string name="Atten_btn_txt">Attendance</string>
+    <string name="Atten_btn_txt">Clock In</string>
     <string name="emp_id_txt">#000000</string>
     <string name="overtime_title">OverTime</string>
     <string name="absence_days">Absence Days</string>
     <string name="emp_department">Depart :</string>
-    <string name="attendance_time_title">Attendance Time</string>
+    <string name="clock_in_txt">Clock In</string>
     <string name="Attendance_days">Attend Days</string>
     <string name="emp_id_title">ID :</string>
-    <string name="departed_time_title">Departed Time</string>
+    <string name="clock_out_txt">clock out</string>
     <string name="morning_greeting">Good Mornning ,</string>
     <string name="delays_title">Delays</string>
     <string name="emp_dapartment_txt">Department</string>
@@ -56,4 +56,7 @@
     <string name="morning_icon">🌞</string>
     <string name="evening_icon">☀️</string>
     <string name="night_icon">🌙</string>
+    <string name="total_hours_txt">Total hrs</string>
+    <string name="total_hours">00:00</string>
+    <string name="attendance_for_this_month">Attendance For This Month</string>
 </resources>

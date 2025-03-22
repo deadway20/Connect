@@ -1,6 +1,7 @@
 package com.coder_x.connect
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -17,8 +18,11 @@ import com.coder_x.connect.DataBaseHelper.checkInEmployee
 import com.coder_x.connect.DataBaseHelper.checkOutEmployee
 import com.coder_x.connect.databinding.ActivityMainBinding
 import com.coder_x.connect.databinding.CustomToolbarBinding
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
 import java.time.LocalDate
 import java.time.LocalTime
+
 
 // فئة النشاط الرئيسي التي تدير واجهة المستخدم وتفاعلاتها
 class MainActivity : AppCompatActivity() {
@@ -42,21 +46,21 @@ class MainActivity : AppCompatActivity() {
         prefsHelper = SharedPrefsHelper(this)
 
         //change wallpaper when shake the phone
-        var background = listOf(
-            R.drawable.background,
-            R.drawable.backgroung1,
-            R.drawable.backgroung10,
-            R.drawable.backgroung11,
-            R.drawable.backgroung2,
-            R.drawable.backgroung3,
-            R.drawable.backgroung4,
-            R.drawable.backgroung5,
-            R.drawable.backgroung6,
-            R.drawable.backgroung7,
-            R.drawable.backgroung8,
-            R.drawable.backgroung9,
-        )
-        binding.root.setBackgroundResource(background.random())
+//        var background = listOf(
+//            R.drawable.background,
+//            R.drawable.backgroung1,
+//            R.drawable.backgroung10,
+//            R.drawable.backgroung11,
+//            R.drawable.backgroung2,
+//            R.drawable.backgroung3,
+//            R.drawable.backgroung4,
+//            R.drawable.backgroung5,
+//            R.drawable.backgroung6,
+//            R.drawable.backgroung7,
+//            R.drawable.backgroung8,
+//            R.drawable.backgroung9,
+//        )
+//        binding.root.setBackgroundResource(background.random())
 
         // تحميل البيانات من السيرفر
         getDataFromServer()
@@ -68,16 +72,24 @@ class MainActivity : AppCompatActivity() {
             prefsHelper.getEmpImagePath()
         )
 
+        val bottomBarBackground = binding.bottomNavigatioView.background as MaterialShapeDrawable
+        bottomBarBackground.shapeAppearanceModel =
+            bottomBarBackground.shapeAppearanceModel.toBuilder().apply {
+                setAllCorners(CornerFamily.ROUNDED, 75f)
+            }.build()
+
+
+
 
         // تعيين مستمع النقر على زر تسجيل الدخول
-        checkInButton(binding.checkInButton)
+        checkInButton(binding.clockInBtn)
 
 
         // تعيين مستمع النقر على زر تسجيل الخروج
-        checkOutButton(binding.checkOutButton)
+        checkOutButton(binding.clockOutBtn)
 
         // كارت تعيين مستمع النقر على كارت أيام الحضور
-        animateAttendCard(binding.attendDays)
+        animateAttendCard(binding.attendanceCard)
 
         // تبديل الثيم بين النهاري والداكن
         setTheme(binding.toolbar.themeIco)
@@ -86,9 +98,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun animateAttendCard(view: View) {
         view.setOnClickListener {
-            animateCard(binding.attendDays)
-            val dialogFragment = CalendarFragment()
-            dialogFragment.show(supportFragmentManager, "calendar")
+            animateCard(binding.attendanceCard)
+            val intent = Intent(this, Calendar::class.java)
+            startActivity(intent)
         }
     }
 
@@ -179,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         scaleAnimation.repeatCount = 1
         scaleAnimation.repeatMode = Animation.REVERSE
 
-        val alphaAnimation = AlphaAnimation(1f, 0.8f)
+        val alphaAnimation = AlphaAnimation(.5f, 0.3f)
         alphaAnimation.duration = 100
         alphaAnimation.repeatCount = 1
         alphaAnimation.repeatMode = Animation.REVERSE
@@ -225,12 +237,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun clearUi() {
         // display default data in UI
-        binding.attendTime.text = "--:--"
-        binding.departTime.text = "--:--"
+        binding.clockIn.text = "--:--"
+        binding.clockOut.text = "--:--"
         binding.delaysHours.text = "--:--"
         binding.overtimeHours.text = "--:--"
-        binding.isAbsence.text = "✖"
-        binding.isAttend.text = "✖"
     }
 
     private fun displayEmpInfo(name: String, empImgPath: String?) {
@@ -238,14 +248,14 @@ class MainActivity : AppCompatActivity() {
         val morning = LocalTime.of(6, 0) // 6:00 AM
         val evening = LocalTime.of(12, 0) // 12:00 PM
         val night = LocalTime.of(18, 0) // 6:00 PM
-        val goodnight_greeting = resources.getString(R.string.night_greeting)
-        val morning_greeting = resources.getString(R.string.morning_greeting)
-        val evening_greeting = resources.getString(R.string.evening_greeting)
+        val nightGreeting = resources.getString(R.string.night_greeting)
+        val morningGreeting = resources.getString(R.string.morning_greeting)
+        val eveningGreeting = resources.getString(R.string.evening_greeting)
 
         binding.greeting.text = when {
-            currentTime.isAfter(night) -> goodnight_greeting
-            currentTime.isAfter(evening) -> evening_greeting
-            else -> morning_greeting
+            currentTime.isAfter(night) -> nightGreeting
+            currentTime.isAfter(evening) -> eveningGreeting
+            else -> morningGreeting
         }
         binding.greetingIcon.text = when {
             currentTime.isAfter(night) -> resources.getString(R.string.night_icon)
@@ -282,23 +292,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     // دالة لعرض البيانات في الواجهة
-    private fun displayAttendanceData(data: EmpData) {
-        binding.attendTime.text = data.checkInTime
-        binding.departTime.text = data.checkOutTime
+    private fun displayAttendanceData(data: EmployeeData) {
+        binding.clockIn.text = data.clockIn
+        binding.clockOut.text = data.clockOut
+        binding.totalHours.text = data.totalHours
         binding.delaysHours.text = data.delayInMinutes
         binding.overtimeHours.text = data.overtimeInMinutes
         binding.attendDaysCount.text = data.attendCount.toString()
         binding.absenceDaysCount.text = data.absenceCount.toString()
-        when {
-            data.isAbsence -> {
-                binding.isAbsence.text = "✔"
-                binding.isAttend.text = "✖"
-            }
-            else -> {
-                binding.isAbsence.text = "✖"
-                binding.isAttend.text = "✔"
-            }
-        }
+
         Log.d("My log", "data: $data ")
     }
 }

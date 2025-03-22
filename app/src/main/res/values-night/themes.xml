@@ -1,10 +1,9 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Connect" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Connect" parent="Theme.MaterialComponents.NoActionBar">
         <!-- اللون الأساسي -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="background">@drawable/background</item>
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
@@ -20,16 +19,16 @@
 
     <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="backgroundTint">@null</item>
-        <item name="android:layout_width">130dp</item>
-        <item name="android:layout_height">130dp</item>
+        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_height">110dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/lite_black</item>
+        <item name="android:textColor">@color/text_secondary</item>
     </style>
 
     <style name="CircleImageView">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+        <item name="cornerSize">20dp</item>
     </style>
 
     <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -39,5 +38,10 @@
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="BottomAppBarCornerStyle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
     </style>
 </resources>

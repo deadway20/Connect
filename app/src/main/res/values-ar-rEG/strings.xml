@@ -6,13 +6,13 @@
     <string name="overtime_title">الوقت الاضافى</string>
     <string name="absence_days">أيام الغياب</string>
     <string name="emp_department">القسم :</string>
-    <string name="attendance_time_title">وقت الحضور</string>
+    <string name="clock_in_txt">وقت الحضور</string>
     <string name="Attendance_days">أيام الحضور</string>
     <string name="emp_id_title">الهوية :</string>
-    <string name="departed_time_title">وقت الانصراف</string>
+    <string name="clock_out_txt">وقت الانصراف</string>
     <string name="morning_greeting">صباح الخير ,</string>
     <string name="delays_title">التأخيرات</string>
-    <string name="emp_dapartment_txt">Department</string>
+    <string name="emp_dapartment_txt">القسم</string>
     <string name="register_employee">تسجيل الموظف</string>
     <string name="connect_to_server">الاتصال بالسيرفر</string>
     <string name="hours">ساعات</string>
@@ -56,4 +56,7 @@
     <string name="morning_icon">🌞</string>
     <string name="evening_icon">☀️</string>
     <string name="night_icon">🌙</string>
+    <string name="total_hours_txt">Total hrs</string>
+    <string name="total_hours">00:00</string>
+    <string name="attendance_for_this_month">حضور هذا الشهر</string>
 </resources>
