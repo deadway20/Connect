@@ -33,21 +33,12 @@
     <color name="cal_theme">#000000</color>
     <color name="transparent">#00FFFFFF</color>
 
-    <!-- Primary Colors -->
-    <color name="colorPrimary">@color/purple_500</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="primaryColor">@color/purple_500</color>
-    <color name="primaryDarkColor">#000008</color>
-
-    <!-- Background & Surface -->
-    <color name="colorBackground">#1E1F22</color>
-    <color name="colorSurface">#FFFFFF</color>
-    <color name="colorSurfaceVariant">#E7E0EC</color>
 
     <!-- Dark Theme Colors -->
-    <color name="background">#121212</color>
-    <color name="card_background">#2F2F2F</color>
-    <color name="text_primary">#FFFFFF</color>
+    <!--    <color name="background">#121212</color>-->
+    <color name="background">#282A36</color>
+    <color name="card_background">#44475A</color>
+    <color name="text_primary">#E9FAFD</color>
     <color name="text_secondary">#000000</color>
     <color name="header_start">#1565C0</color>
     <color name="header_end">#1976D2</color>

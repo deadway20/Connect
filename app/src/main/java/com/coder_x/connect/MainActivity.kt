@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbarBinding = CustomToolbarBinding.bind(binding.toolbar.root)
+        toolbarBinding = CustomToolbarBinding.bind(binding.topBar.root)
 
         prefsHelper = SharedPrefsHelper(this)
 
@@ -65,14 +65,14 @@ class MainActivity : AppCompatActivity() {
         // تحميل البيانات من السيرفر
         getDataFromServer()
         // تعيين مستمع النقر على زر تغيير اللغة
-        setLangIconClickListener(binding.toolbar.langIco)
+        setLangIconClickListener(binding.topBar.langIco)
         // ستيراد بيانات الموظف المحفوظه أستخدام SharedPreference
         displayEmpInfo(
             prefsHelper.getEmpName(),
             prefsHelper.getEmpImagePath()
         )
 
-        val bottomBarBackground = binding.bottomNavigatioView.background as MaterialShapeDrawable
+        val bottomBarBackground = binding.bottomNavigation.background as MaterialShapeDrawable
         bottomBarBackground.shapeAppearanceModel =
             bottomBarBackground.shapeAppearanceModel.toBuilder().apply {
                 setAllCorners(CornerFamily.ROUNDED, 75f)
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         animateAttendCard(binding.attendanceCard)
 
         // تبديل الثيم بين النهاري والداكن
-        setTheme(binding.toolbar.themeIco)
+        setTheme(binding.topBar.themeIco)
 
     }
 

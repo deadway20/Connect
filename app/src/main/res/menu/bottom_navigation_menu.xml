@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@drawable/home_24px"
+        android:enabled="false"
         android:title="" />
 
     <item

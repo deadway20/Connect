@@ -59,4 +59,5 @@
     <string name="total_hours_txt">Total hrs</string>
     <string name="total_hours">00:00</string>
     <string name="attendance_for_this_month">Attendance For This Month</string>
+    <string name="your_activity_this_day">Your Activity in this day</string>
 </resources>
