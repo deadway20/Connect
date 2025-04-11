@@ -17,43 +17,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/toolbar_fram"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/arrow_back_24" />
-
     <!-- Calendar Layout -->
     <androidx.cardview.widget.CardView
         android:id="@+id/calendarCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginHorizontal="16dp"
         android:elevation="8dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/card_background"
             android:backgroundTint="@color/card_background"
             tools:layout_editor_absoluteY="72dp" />
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/attendanceProgressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:textColor="@color/text_primary"
+        android:layout_marginTop="4dp"
+        android:text="15/30"
+        app:layout_constraintTop_toBottomOf="@id/calendarCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/activityCard"
@@ -90,15 +87,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calendarCardView" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@color/card_background"
                 android:orientation="horizontal">
-                <!-- Appointment Cards - Row 1 -->
+
+                <!-- Appointment Cards - Row 2 -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/overtimeCard"
+                    android:id="@+id/cal_clockIn_Card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -122,18 +121,19 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/clock_plus"
+                            android:src="@drawable/check_in"
                             app:tint="#7999FA" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/overtime_title"
+                            android:text="@string/clock_in_txt"
                             android:textColor="@android:color/white"
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/cal_clockin_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -144,7 +144,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/delaysCard"
+                    android:id="@+id/cal_clockOut_card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -169,18 +169,19 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/clock_minus"
+                            android:src="@drawable/check_out"
                             app:tint="#e83e8c" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/delays_title"
+                            android:text="@string/clock_out_txt"
                             android:textColor="@android:color/white"
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/cal_clockout_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -200,7 +201,7 @@
 
                 <!-- Activity Cards - Row 2 -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/attendanceCard"
+                    android:id="@+id/cal_attendance_days_card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -224,14 +225,14 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/calendar_plus"
+                            android:src="@drawable/clock_plus"
                             app:tint="#ffc107" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/Attendance_days"
+                            android:text="@string/overtime_title"
                             android:textColor="@android:color/white"
                             android:textSize="12sp" />
 
@@ -247,7 +248,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/absenceCard"
+                    android:id="@+id/cal_absence_days_card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -271,14 +272,14 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/calendar_minus"
+                            android:src="@drawable/clock_minus"
                             app:tint="#20c997" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/absence_days"
+                            android:text="@string/delays_time"
                             android:textColor="@android:color/white"
                             android:textSize="12sp" />
 

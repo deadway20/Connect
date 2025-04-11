@@ -65,4 +65,6 @@
     <color name="tasks_icon">#4CAF50</color>
     <color name="rewards_icon">#FFC107</color>
 
+    <color name="icon_color">#0057FF</color>
+
 </resources>

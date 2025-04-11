@@ -61,7 +61,7 @@ object DataBaseHelper {
             }
             connection.use { conn ->
                 val query =
-                    "INSERT INTO EmpInfo (Name, Department, Mobile, TotalHours) VALUES (?, ?, ? ,?)"
+                    "INSERT INTO EmpInfo (Name, Department, Mobile, WorkHours) VALUES (?, ?, ? ,?)"
                 val statement =
                     conn.prepareStatement(query, java.sql.Statement.RETURN_GENERATED_KEYS)
                 statement.setString(1, name)

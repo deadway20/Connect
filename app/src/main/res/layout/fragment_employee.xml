@@ -16,6 +16,8 @@
 
 
         <!-- صورة الموظف -->
+
+        <!-- اسم الموظف -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/emp_image"
             android:layout_width="90dp"
@@ -31,13 +33,13 @@
             android:src="@drawable/emp_img"
             app:layout_constraintBottom_toTopOf="@id/Emp_name_card"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/CircleImageView"
             app:strokeWidth="2dp"
             tools:ignore="HardcodedText" />
 
-        <!-- اسم الموظف -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/Emp_name_card"
             style="@style/CustomTextInputLayout"

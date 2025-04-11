@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Connect" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.Connect" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- اللون الأساسي -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -43,5 +43,32 @@
     <style name="BottomAppBarCornerStyle" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
+    </style>
+
+    <!-- Profile Detail Row Style -->
+    <style name="ProfileDetailRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <!-- Profile Detail Icon Style -->
+    <style name="ProfileDetailIcon">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:tint">@color/icon_color</item>
+    </style>
+
+    <!-- Profile Detail Text Style -->
+    <style name="ProfileDetailText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 </resources>

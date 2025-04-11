@@ -2,7 +2,6 @@ package com.coder_x.connect
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +19,12 @@ import com.coder_x.connect.databinding.ActivityMainBinding
 import com.coder_x.connect.databinding.CustomToolbarBinding
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -40,27 +45,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+
+        prefsHelper = SharedPrefsHelper(this)
+        val myTheme = prefsHelper.getTheme()
+        if (myTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+
         setContentView(binding.root)
         toolbarBinding = CustomToolbarBinding.bind(binding.topBar.root)
 
         prefsHelper = SharedPrefsHelper(this)
 
-        //change wallpaper when shake the phone
-//        var background = listOf(
-//            R.drawable.background,
-//            R.drawable.backgroung1,
-//            R.drawable.backgroung10,
-//            R.drawable.backgroung11,
-//            R.drawable.backgroung2,
-//            R.drawable.backgroung3,
-//            R.drawable.backgroung4,
-//            R.drawable.backgroung5,
-//            R.drawable.backgroung6,
-//            R.drawable.backgroung7,
-//            R.drawable.backgroung8,
-//            R.drawable.backgroung9,
-//        )
-//        binding.root.setBackgroundResource(background.random())
+
+        getCurrentDate()
 
         // تحميل البيانات من السيرفر
         getDataFromServer()
@@ -78,9 +80,6 @@ class MainActivity : AppCompatActivity() {
                 setAllCorners(CornerFamily.ROUNDED, 75f)
             }.build()
 
-
-
-
         // تعيين مستمع النقر على زر تسجيل الدخول
         checkInButton(binding.clockInBtn)
 
@@ -91,8 +90,11 @@ class MainActivity : AppCompatActivity() {
         // كارت تعيين مستمع النقر على كارت أيام الحضور
         animateAttendCard(binding.attendanceCard)
 
-        // تبديل الثيم بين النهاري والداكن
-        setTheme(binding.topBar.themeIco)
+        binding.employeeImage.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+        
 
     }
 
@@ -149,18 +151,6 @@ class MainActivity : AppCompatActivity() {
                     getDataFromServer()
                 }
             }
-        }
-    }
-
-    private fun setTheme(view: View) {
-        view.setOnClickListener {
-            val nightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            if (nightMode == Configuration.UI_MODE_NIGHT_YES) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            }
-            recreate()
         }
     }
 
@@ -302,5 +292,21 @@ class MainActivity : AppCompatActivity() {
         binding.absenceDaysCount.text = data.absenceCount.toString()
 
         Log.d("My log", "data: $data ")
+    }
+
+    // دالة لتعيين صورة الخلفية
+    private fun getCurrentDate() {
+        // تحديث الوقت كل ثانية
+        CoroutineScope(Dispatchers.Main).launch {
+            while (isActive) {
+                binding.timeDisplay.text =
+                    SimpleDateFormat("hh:mm:ss a").format(System.currentTimeMillis())
+                delay(1000)
+            }
+        }
+
+        // تعيين التاريخ الحالي
+        binding.dateDisplay.text =
+            SimpleDateFormat("EEEE dd - MMMM - yyyy").format(System.currentTimeMillis())
     }
 }

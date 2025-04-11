@@ -60,4 +60,9 @@
     <string name="total_hours">00:00</string>
     <string name="attendance_for_this_month">حضور هذا الشهر</string>
     <string name="your_activity_this_day">نشاطك هذا اليوم</string>
+
+    <string-array name="language_array">
+        <item>الانجليزية</item>
+        <item>العربية</item>
+    </string-array>
 </resources>

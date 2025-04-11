@@ -91,7 +91,7 @@ class EmployeeFragment : Fragment(), ImageHelper.OnImageSelectedListener {
     private fun saveEmployeeData() {
         // حفظ البيانات في SharedPreferences
         prefsHelper.putEmpName(empName)
-        prefsHelper.putEmpDepart(empDepartment)
+        prefsHelper.putEmpDepartment(empDepartment)
         prefsHelper.putEmpMobile(empMobile)
         prefsHelper.putEmpHours(workHours)
         prefsHelper.putEmpID(0)

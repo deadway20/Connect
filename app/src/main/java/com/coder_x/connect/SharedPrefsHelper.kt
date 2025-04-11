@@ -27,6 +27,7 @@ class SharedPrefsHelper(context: Context) {
         private const val EMP_IMG = "EmpImg"
         private const val KEY_EMP_IMAGE_PATH = "emp_image_path"
         private const val MY_LANG = "SetLang"
+        private const val MY_THEME = "SetTheme"
 
     }
 
@@ -71,12 +72,12 @@ class SharedPrefsHelper(context: Context) {
     }
 
     // 🔹 حفظ قسم الموظف
-    fun putEmpDepart(depart: String) {
+    fun putEmpDepartment(depart: String) {
         sharedPreferences.edit() { putString(EMP_DEPART_KEY, depart) }
     }
 
     // 🔹 إسترجاع أسم الموظف
-    fun getEmpDepart(): String {
+    fun getEmpDepartment(): String {
         return sharedPreferences.getString(EMP_DEPART_KEY, "") ?: ""
     }
 
@@ -183,6 +184,15 @@ class SharedPrefsHelper(context: Context) {
         return sharedPreferences.getString("language", "en") ?: "en"
     }
 
+    // 🔹 دالة لحفظ الثيم
+    fun setTheme(isDarkTheme: Boolean) {
+        sharedPreferences.edit() { putBoolean("theme", isDarkTheme) }
+    }
+
+    // 🔹 دالة لاسنرجاع الثيم
+    fun getTheme(): Boolean {
+        return sharedPreferences.getBoolean("theme", false)
+    }
 
     fun saveData(data: EmployeeData) {
         sharedPreferences.edit() {
