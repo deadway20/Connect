@@ -30,7 +30,6 @@
     <string name="change_theme">Change Theme</string>
     <string name="change_language">Change Language</string>
     <string name="re3aya">Re3aya Lab</string>
-    <string name="menu_ico">Menu_ICO</string>
     <string name="absence_days_count_in_month">0</string>
     <string name="attend_days_count_in_month">0</string>
     <string name="is_absence_in_day">Absence :</string>
@@ -50,7 +49,7 @@
     <string name="finsh_btn">Finish</string>
     <string name="serverAddress_Card">Server Address</string>
     <string name="Monthly_calendar">Monthly Attend Days</string>
-    <string name="emp_name">name</string>
+    <string name="emp_name">emp name</string>
     <string name="evening_greeting">Good_evening ,</string>
     <string name="night_greeting">Good night ,</string>
     <string name="morning_icon">🌞</string>
@@ -60,6 +59,10 @@
     <string name="total_hours">00:00</string>
     <string name="attendance_for_this_month">Attendance For This Month</string>
     <string name="your_activity_this_day">Your Activity in this day</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="server_setting">Server Setting</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="language">Language</string>
 
     <string-array name="language_array">
         <item>English</item>

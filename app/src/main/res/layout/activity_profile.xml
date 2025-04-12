@@ -10,51 +10,72 @@
     android:layoutDirection="locale"
     tools:context=".ProfileActivity">
 
+    <!-- Circular Image -->
+
 
     <!-- Employee Profile Section -->
-    <LinearLayout
-        android:id="@+id/employee_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/settings_card"
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="460dp"
+        android:layout_height="250dp"
+        android:background="@drawable/header_profile"
+        android:layoutDirection="locale"
+        android:rotation="-20"
+        android:transformPivotX="0dp"
+        android:transformPivotY="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/employee_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/text_primary"
+        android:contentDescription="employee_img"
+        android:elevation="4dp"
+        android:padding="6dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/emp_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        app:strokeWidth="2dp"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:id="@+id/emp_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:orientation="vertical"
+        android:padding="6dp"
+        app:layout_constraintEnd_toStartOf="@id/employee_image"
+        app:layout_constraintHorizontal_bias="0.339"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <!-- Circular Image -->
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/employee_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:background="@drawable/emp_img"
-            android:contentDescription="employee_img"
-            android:elevation="4dp"
-            android:padding="2dp"
-            android:src="@drawable/emp_img"
-            app:shapeAppearanceOverlay="@style/CircleImageView"
-            app:strokeWidth="2dp"
-            tools:ignore="HardcodedText" />
 
         <!-- Employee Name -->
         <TextView
             android:id="@+id/employee_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Employee Name"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/emp_name"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <!-- Employee ID -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal"
             android:padding="4dp">
 
@@ -62,18 +83,18 @@
                 android:id="@+id/profile_id_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:text="ID_"
-                android:textColor="@color/text_primary"
+                android:text="@string/emp_id_title"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/profile_id"
                 android:layout_width="wrap_content"
-                android:layout_height="18dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="3dp"
                 android:text="@string/emp_id_txt"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
         <!-- Department Name -->
@@ -81,9 +102,10 @@
             android:id="@+id/department_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/emp_department"
-            android:textColor="?attr/colorOnSurface"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:text="@string/emp_dapartment_txt"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -93,13 +115,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="50dp"
         app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/employee_profile">
+        app:layout_constraintTop_toBottomOf="@id/emp_info"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,22 +140,19 @@
                 android:paddingVertical="16dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:elevation="4dp"
-                    android:padding="8dp"
-                    android:src="@drawable/home_24px"
-                    app:shapeAppearance="@style/CircleImageView"
-                    app:strokeWidth="2dp"
-                    tools:ignore="HardcodedText" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@color/purple_500"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/edit_profile"
+                    app:shapeAppearanceOverlay="@style/CircleImageView" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
@@ -159,20 +179,20 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp">
 
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/image_border"
-                    android:padding="5dp"
-                    android:src="@drawable/home_24px" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="#E0A907"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sql_setting"
+                    app:shapeAppearanceOverlay="@style/CircleImageView" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="Server Setting"
+                    android:text="@string/server_setting"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
@@ -199,20 +219,21 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp">
 
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/image_border"
-                    android:padding="5dp"
-                    android:src="@drawable/home_24px" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@color/black"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/dark_mode"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="Dark Mode"
+                    android:text="@string/dark_mode"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
@@ -238,17 +259,18 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp">
 
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/image_border"
-                    android:padding="5dp"
-                    android:src="@drawable/home_24px" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="#C86464"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/dark_mode"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:text="Notifications"
@@ -277,20 +299,21 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="16dp">
 
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/image_border"
-                    android:padding="5dp"
-                    android:src="@drawable/home_24px" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="#AD7A2F"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_language"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="Language"
+                    android:text="@string/language"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
@@ -298,6 +321,7 @@
                     android:id="@+id/languageSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:text="English"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:textSize="14sp" />

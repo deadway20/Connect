@@ -30,7 +30,6 @@
     <string name="change_theme">تغيير الثيم</string>
     <string name="change_language">تغيير اللغة</string>
     <string name="re3aya">رعاية لاب</string>
-    <string name="menu_ico">Menu_ICO</string>
     <string name="absence_days_count_in_month">0</string>
     <string name="attend_days_count_in_month">0</string>
     <string name="is_absence_in_day">غياب :</string>
@@ -50,16 +49,20 @@
     <string name="finsh_btn">إنهاء</string>
     <string name="serverAddress_Card">عنوان السيرفر</string>
     <string name="Monthly_calendar">أيام الحضور الشهرية</string>
-    <string name="emp_name">name</string>
+    <string name="emp_name">أسم الموظف</string>
     <string name="evening_greeting">مساء الخير ,</string>
     <string name="night_greeting">مساء الخير ,</string>
     <string name="morning_icon">🌞</string>
     <string name="evening_icon">☀️</string>
     <string name="night_icon">🌙</string>
-    <string name="total_hours_txt">Total hrs</string>
+    <string name="total_hours_txt">إجمالى الساعات</string>
     <string name="total_hours">00:00</string>
     <string name="attendance_for_this_month">حضور هذا الشهر</string>
     <string name="your_activity_this_day">نشاطك هذا اليوم</string>
+    <string name="edit_profile">تعديل الصفحة الشخصية</string>
+    <string name="server_setting">إعدادات السيرفر</string>
+    <string name="dark_mode">الوضع المظلم</string>
+    <string name="language">اللغة</string>
 
     <string-array name="language_array">
         <item>الانجليزية</item>

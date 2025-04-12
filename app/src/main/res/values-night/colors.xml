@@ -35,9 +35,8 @@
 
 
     <!-- Dark Theme Colors -->
-    <!--    <color name="background">#121212</color>-->
-    <color name="background">#282A36</color>
-    <color name="card_background">#44475A</color>
+    <color name="background">#121212</color>
+    <color name="card_background">#202020</color>
     <color name="text_primary">#E9FAFD</color>
     <color name="text_secondary">#000000</color>
     <color name="header_start">#1565C0</color>
@@ -46,21 +45,10 @@
     <!-- Status Card Colors - Dark Theme -->
     <color name="early_leaves_bg">#0D47A1</color>
     <color name="early_leaves_text">#90CAF9</color>
-
     <color name="absents_bg">#424242</color>
     <color name="absents_text">#E0E0E0</color>
-
     <color name="late_in_bg">#E65100</color>
     <color name="late_in_text">#FFCC80</color>
-
-    <color name="leaves_bg">#1B5E20</color>
-    <color name="leaves_text">#A5D6A7</color>
-
-    <color name="visits_bg">#4A148C</color>
-    <color name="visits_text">#E1BEE7</color>
-
-    <color name="rewards_bg">#BF360C</color>
-    <color name="rewards_text">#FFAB91</color>
 
     <!-- Summary Icons Colors - Dark Theme -->
     <color name="team_icon">#64B5F6</color>

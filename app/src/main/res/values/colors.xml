@@ -24,7 +24,7 @@
     <color name="lite_pink">#40FFD0FE</color>
     <color name="lite_red">#33D12123</color>
     <color name="lite_orange">#80FF57</color>
-    <color name="_light__grey">#424242</color>
+    <color name="light_grey">#424242</color>
     <color name="light_gray">#B0B0B0</color>
     <color name="btn_txt_color">#858281</color>
     <color name="img_frame_color">#F0E6E6</color> <!-- لون فاتح للوضع النهاري -->
@@ -53,12 +53,6 @@
     <color name="absents_text">#757575</color>
     <color name="late_in_bg">#FFF4E5</color>
     <color name="late_in_text">#FF9800</color>
-    <color name="leaves_bg">#E8F5E9</color>
-    <color name="leaves_text">#4CAF50</color>
-    <color name="visits_bg">#F3E5F5</color>
-    <color name="visits_text">#9C27B0</color>
-    <color name="rewards_bg">#FFF3E0</color>
-    <color name="rewards_text">#FF5722</color>
 
     <!-- Summary Icons Colors - Light Theme -->
     <color name="team_icon">#2196F3</color>
