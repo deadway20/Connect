@@ -10,9 +10,6 @@
     android:layoutDirection="locale"
     tools:context=".ProfileActivity">
 
-    <!-- Circular Image -->
-
-
     <!-- Employee Profile Section -->
 
 
@@ -21,9 +18,8 @@
         android:layout_width="460dp"
         android:layout_height="250dp"
         android:background="@drawable/header_profile"
-        android:layoutDirection="locale"
         android:rotation="-20"
-        android:transformPivotX="0dp"
+        android:transformPivotX="-70dp"
         android:transformPivotY="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
@@ -32,9 +28,9 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/employee_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="50dp"
         android:background="@color/text_primary"
         android:contentDescription="employee_img"
@@ -159,8 +155,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:layoutDirection="locale"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:src="@drawable/ic_arrow_right"
+                    app:tint="@color/text_primary" />
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -199,8 +195,8 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layoutDirection="locale"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:src="@drawable/ic_arrow_right"
+                    app:tint="@color/text_primary" />
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -273,14 +269,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="Notifications"
+                    android:text="@string/change_language"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/notificationSwitch"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="48dp" />
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -320,7 +316,7 @@
                 <Spinner
                     android:id="@+id/languageSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_marginStart="10dp"
                     android:text="English"
                     android:textColor="?attr/colorOnSurfaceVariant"

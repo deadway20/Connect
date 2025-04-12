@@ -3,6 +3,7 @@ package com.coder_x.connect
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -24,6 +25,11 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         prefsHelper = SharedPrefsHelper(this)
+        var myLang = prefsHelper.getLanguage()
+        Log.d("myTag", "system Language is :$myLang ")
+
+
+        viewDirection(binding.view)
 
         // استرجاع صورة الموظف
         val imagePath = prefsHelper.getEmpImagePath()
@@ -73,5 +79,20 @@ class ProfileActivity : AppCompatActivity() {
             binding.languageSpinner.adapter = adapter
         }
 
+    }
+
+
+    private fun viewDirection(view: View) {
+        prefsHelper = SharedPrefsHelper(this)
+        if (prefsHelper.getLanguage() == "en") {
+            view.rotation = -20f
+            view.pivotX = -50f
+            view.pivotY = 80f
+
+        } else {
+            view.rotation = 20f
+            view.pivotX = 1500f
+            view.pivotY = 80f
+        }
     }
 }

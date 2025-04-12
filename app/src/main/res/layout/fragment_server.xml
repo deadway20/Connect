@@ -13,35 +13,18 @@
     android:layout_height="match_parent"
     tools:context=".ServerFragment">
 
-    <!-- اسم السيرفر -->
-    <ImageView
-        android:id="@+id/sql_img"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/image_border"
-        android:contentDescription="SQL_Server_img"
-        android:focusable="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/sql_server_ico"
-        app:layout_constraintBottom_toTopOf="@+id/ServerIP_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
-
     <!--Server Address Text Card-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ServerIP_card"
         style="@style/CustomTextInputLayout"
+        android:layout_marginTop="32dp"
         android:hint="@string/serverAddress_Card"
         app:endIconMode="clear_text"
         app:helperText="required"
         app:layout_constraintBottom_toTopOf="@+id/ServerPort_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sql_img">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ServerIP"
