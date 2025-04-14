@@ -63,6 +63,8 @@
     <string name="server_setting">Server Setting</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="language">Language</string>
+    <string name="date_of_birth">date of birth</string>
+    <string name="email_address">email address</string>
 
     <string-array name="language_array">
         <item>English</item>

@@ -5,14 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true"
     android:layoutDirection="locale"
     tools:context=".ProfileActivity">
 
     <!-- Employee Profile Section -->
-
-
     <View
         android:id="@+id/view"
         android:layout_width="460dp"
@@ -144,19 +140,23 @@
                     app:shapeAppearanceOverlay="@style/CircleImageView" />
 
                 <TextView
+                    android:id="@+id/edit_profile_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:text="@string/edit_profile"
                     android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:clickable="true" />
 
                 <ImageView
+                    android:id="@+id/edit_profile_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_arrow_right"
-                    app:tint="@color/text_primary" />
+                    android:src="@drawable/ic_arrow"
+                    app:tint="@color/text_primary"
+                    android:clickable="true" />
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -184,18 +184,22 @@
                     app:shapeAppearanceOverlay="@style/CircleImageView" />
 
                 <TextView
+                    android:id="@+id/server_setting_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:text="@string/server_setting"
                     android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:clickable="true" />
 
                 <ImageView
+                    android:id="@+id/server_setting_arrow"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_arrow_right"
+                    android:clickable="true"
+                    android:src="@drawable/ic_arrow"
                     app:tint="@color/text_primary" />
             </LinearLayout>
 
@@ -257,10 +261,10 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_height="wrap_content"
                     android:background="#C86464"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/dark_mode"
+                    android:src="@drawable/ic_notification"
                     app:shapeAppearanceOverlay="@style/CircleImageView"
                     app:tint="@color/white" />
 

@@ -88,7 +88,7 @@ class SharedPrefsHelper(context: Context) {
 
     // 🔹 إسترجاع موبيل الموظف
     @Suppress("unused", "unused", "unused", "unused", "unused", "unused")
-    fun getEmpMobile(): String {
+    fun getMobileNumber(): String {
         return sharedPreferences.getString(EMP_MOBILE_KEY, "") ?: ""
     }
 

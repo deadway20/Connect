@@ -1,6 +1,7 @@
 package com.coder_x.connect
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,8 +26,22 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         prefsHelper = SharedPrefsHelper(this)
-        var myLang = prefsHelper.getLanguage()
-        Log.d("myTag", "system Language is :$myLang ")
+
+
+        val clickableViews = listOf(binding.editProfileArrow, binding.editProfileText)
+        clickableViews.forEach { view ->
+            view.setOnClickListener {
+                startActivity(Intent(this, EditProfileActivity::class.java))
+            }
+        }
+        val clickableViews2 = listOf(binding.serverSettingArrow, binding.serverSettingText)
+        clickableViews2.forEach { view ->
+            view.setOnClickListener {
+                startActivity(Intent(this, ServerSettingActivity::class.java))
+            }
+        }
+
+
 
 
         viewDirection(binding.view)
