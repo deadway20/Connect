@@ -65,7 +65,8 @@
     <string name="language">اللغة</string>
     <string name="date_of_birth">تاريخ الميلاد</string>
     <string name="email_address">البريد الاليكترونى</string>
-
+    <string name="profile">تعديل البروفايل</string>
+    <string name="save">حفظ</string>
     <string-array name="language_array">
         <item>الانجليزية</item>
         <item>العربية</item>

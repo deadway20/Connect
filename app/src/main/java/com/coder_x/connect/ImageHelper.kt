@@ -1,3 +1,5 @@
+package com.coder_x.connect
+
 import android.Manifest
 import android.app.Activity
 import android.content.Intent

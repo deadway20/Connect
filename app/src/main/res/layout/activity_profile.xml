@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:layoutDirection="locale"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true"
     tools:context=".ProfileActivity">
 
     <!-- Employee Profile Section -->
@@ -21,6 +23,27 @@
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:titleTextColor="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/profile"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/employee_image"
@@ -57,7 +80,7 @@
             android:id="@+id/employee_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="start"
             android:text="@string/emp_name"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -67,7 +90,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="start"
             android:orientation="horizontal"
             android:padding="4dp">
 
@@ -94,7 +117,7 @@
             android:id="@+id/department_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="start"
             android:layout_marginTop="4dp"
             android:text="@string/emp_dapartment_txt"
             android:textColor="@color/white"
@@ -132,12 +155,12 @@
                 android:paddingVertical="16dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    android:scaleType="centerCrop"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:background="@color/purple_500"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/edit_profile"
-                    app:shapeAppearanceOverlay="@style/CircleImageView" />
+                    android:src="@drawable/edit_profile" />
 
                 <TextView
                     android:id="@+id/edit_profile_text"

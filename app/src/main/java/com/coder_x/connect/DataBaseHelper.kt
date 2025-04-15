@@ -44,7 +44,7 @@ object DataBaseHelper {
 
     //🔹 دالة لإدراج بيانات موظف جديد في قاعدة البيانات
     fun insertEmployee(
-        context: Context, name: String, department: String, mobile: String, workHours: Int
+        context: Context, name: String, department: String, mobile: String, workHours: Int,
     ) = Thread {
         try {
             val prefsHelper = SharedPrefsHelper(context)
@@ -115,9 +115,78 @@ object DataBaseHelper {
         }
     }.start()
 
-    fun updateEmployee(context: Context, name: String, department: String, mobile: String) {
+    fun updateEmployeeInfo(
+        context: Context, name: String, department: String, mobile: String,
+    ) = Thread {
 
-    }
+        try {
+            val prefsHelper = SharedPrefsHelper(context)
+            SERVER_ADDRESS = prefsHelper.getServerAddress()
+            SERVER_PORT = prefsHelper.getServerPort()
+            EMP_ID = prefsHelper.getEmpID()
+
+            val connection = connect(context, SERVER_ADDRESS, SERVER_PORT)
+
+            if (connection == null) {
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(context, "❌ فشل الاتصال بقاعدة البيانات!", Toast.LENGTH_LONG)
+                        .show()
+                }
+                return@Thread
+            }
+            connection.use { conn ->
+                val query =
+                    "UPDATE EmpInfo SET Name = ?, Department = ?, Mobile = ? WHERE EmpID = ?"
+                val statement = conn.prepareStatement(query)
+                statement.setString(1, name)
+                statement.setString(2, department)
+                statement.setString(3, mobile)
+                statement.setInt(4, EMP_ID)
+
+                val rowsUpdated = statement.executeUpdate()
+                if (rowsUpdated > 0) {
+                    val resultSet = statement.generatedKeys
+                    if (resultSet.next()) {
+                        // الحصول على `Emp_ID`
+                        EMP_ID = resultSet.getInt(1)
+                        prefsHelper.putEmpID(EMP_ID)
+
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(
+                                context, " ✅ تم حفظ البيانات بنجاح!", Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(
+                                context,
+                                "⚠️ لم يتم العثور على الـ ID بعد الإدخال!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                } else {
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(
+                            context, "⚠️ لم يتم إدخال أي بيانات!", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+            }
+        } catch (e: SQLException) {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(
+                    context, " ❌ خطأ في إدخال البيانات: ${e.message}", Toast.LENGTH_LONG
+                ).show()
+            }
+        } catch (e: Exception) {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(context, " ❌ خطأ غير متوقع: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }.start()
+
     fun checkInEmployee(context: Context, callback: (Boolean, String) -> Unit) {
         Thread {
             try {
@@ -209,7 +278,9 @@ object DataBaseHelper {
 
                 if (!resultSet.next()) {
                     Handler(Looper.getMainLooper()).post {
-                        callback(false, "❌ لا يوجد تسجيل حضور لهذا اليوم، لا يمكنك تسجيل الانصراف!")
+                        callback(
+                            false, "❌ لا يوجد تسجيل حضور لهذا اليوم، لا يمكنك تسجيل الانصراف!"
+                        )
                     }
                     return@Thread
                 }
@@ -257,8 +328,9 @@ object DataBaseHelper {
                 val connection = connect(context, SERVER_ADDRESS, SERVER_PORT)
                 if (connection == null) {
                     Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(context, "❌ فشل الاتصال بقاعدة البيانات!", Toast.LENGTH_LONG)
-                            .show()
+                        Toast.makeText(
+                            context, "❌ فشل الاتصال بقاعدة البيانات!", Toast.LENGTH_LONG
+                        ).show()
                     }
                     return@Thread
                 }

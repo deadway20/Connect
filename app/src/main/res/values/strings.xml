@@ -49,7 +49,7 @@
     <string name="finsh_btn">Finish</string>
     <string name="serverAddress_Card">Server Address</string>
     <string name="Monthly_calendar">Monthly Attend Days</string>
-    <string name="emp_name">emp name</string>
+    <string name="emp_name">Employee Name</string>
     <string name="evening_greeting">Good_evening ,</string>
     <string name="night_greeting">Good night ,</string>
     <string name="morning_icon">🌞</string>
@@ -65,6 +65,8 @@
     <string name="language">Language</string>
     <string name="date_of_birth">date of birth</string>
     <string name="email_address">email address</string>
+    <string name="profile">Edit profile</string>
+    <string name="save">Save</string>
 
     <string-array name="language_array">
         <item>English</item>

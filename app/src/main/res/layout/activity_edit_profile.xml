@@ -6,14 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:layoutDirection="locale"
     android:fitsSystemWindows="true"
     tools:context=".ServerSettingActivity">
 
     <View
         android:id="@+id/view"
         android:layout_width="460dp"
-        android:layout_height="130dp"
+        android:layout_height="250dp"
         android:background="@drawable/header_profile"
+        android:rotation="-20"
+        android:transformPivotX="-70dp"
+        android:transformPivotY="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,33 +33,68 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="Profile"
-        app:titleCentered="true"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/employee_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/text_primary"
-        android:contentDescription="employee_img"
-        android:elevation="4dp"
-        android:padding="6dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/emp_img"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/profile"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imageContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:shapeAppearanceOverlay="@style/CircleImageView"
-        app:strokeWidth="2dp"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/employee_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/text_primary"
+            android:contentDescription="employee_img"
+            android:elevation="4dp"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/emp_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            app:strokeWidth="2dp"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/edit_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:elevation="8dp"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_pen"
+            android:translationZ="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/employee_image"
+            app:layout_constraintEnd_toEndOf="@+id/employee_image"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            app:tint="@color/purple_700" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,15 +108,16 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/employeeNameLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/emp_name"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                android:background="@null"
-                android:layout_height="wrap_content"
-                android:hint="@string/emp_name"
-                app:boxStrokeColor="@color/purple_500">
+                app:boxStrokeColor="@color/outline_color"
+                app:boxStrokeWidth="2dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/employeeNameEditText"
@@ -88,16 +128,18 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/departmentLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                android:hint="@string/emp_dapartment_txt"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                android:background="@null"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/emp_dapartment_txt"
-                app:boxStrokeColor="@color/purple_500">
+                app:boxStrokeColor="@color/outline_color"
+                app:boxStrokeWidth="2dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/departmentEditText"
@@ -108,16 +150,18 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mobileLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                android:hint="@string/mobile_number"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                android:background="@null"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/mobile_number"
-                app:boxStrokeColor="@color/purple_500">
+                app:boxStrokeColor="@color/outline_color"
+                app:boxStrokeWidth="2dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/mobileEditText"
@@ -128,15 +172,17 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/workHoursLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/work_hours"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                android:layout_marginTop="16dp"
-                android:hint="@string/work_hours"
-                app:boxStrokeColor="@color/purple_500">
+                app:boxStrokeColor="@color/outline_color"
+                app:boxStrokeWidth="2dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/workHoursEditText"
@@ -147,53 +193,35 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/dateOfBirthLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/date_of_birth"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                android:background="@null"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/date_of_birth"
-                app:boxStrokeColor="@color/purple_500">
+                app:boxStrokeColor="@color/outline_color"
+                app:boxStrokeWidth="2dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/dateOfBirthEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:focusable="false"
                     android:inputType="date"
                     app:boxStrokeColor="@color/purple_500" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailAddressLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
-                android:layout_marginTop="16dp"
-                android:hint="@string/email_address"
-                app:boxStrokeColor="@color/purple_500">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailAddressEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:background="@null" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
                 android:id="@+id/saveButton"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
-                android:text="Save" />
+                android:background="@drawable/header_profile"
+                android:text="@string/save"
+                app:backgroundTint="#79A9CE" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
