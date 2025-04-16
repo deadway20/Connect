@@ -24,7 +24,6 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         prefsHelper = SharedPrefsHelper(this)
 
 
@@ -65,7 +64,6 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.employeeName.text = prefsHelper.getEmpName()
         binding.profileId.text = prefsHelper.getEmpID().toString()
-        binding.departmentName.text = prefsHelper.getEmpDepartment()
 
         // التحقق من وضعية المفتاح عند تشغيل التطبيق
         val isDarkMode = prefsHelper.getTheme()

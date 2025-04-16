@@ -14,10 +14,10 @@
     <View
         android:id="@+id/view"
         android:layout_width="460dp"
-        android:layout_height="250dp"
+        android:layout_height="220dp"
         android:background="@drawable/header_profile"
         android:rotation="-20"
-        android:transformPivotX="-70dp"
+        android:transformPivotX="45dp"
         android:transformPivotY="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
@@ -27,8 +27,10 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/toolbar_fram"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,16 +43,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/profile"
+            android:autoSizeTextType="uniform"
+            android:textSize="14sp"
             android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textStyle="bold"
+            android:maxHeight="50dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/employee_image"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="60dp"
         android:background="@color/text_primary"
         android:contentDescription="employee_img"
         android:elevation="4dp"
@@ -67,11 +72,10 @@
         android:id="@+id/emp_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="75dp"
         android:orientation="vertical"
         android:padding="6dp"
         app:layout_constraintEnd_toStartOf="@id/employee_image"
-        app:layout_constraintHorizontal_bias="0.339"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -112,17 +116,6 @@
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
-        <!-- Department Name -->
-        <TextView
-            android:id="@+id/department_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginTop="4dp"
-            android:text="@string/emp_dapartment_txt"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
