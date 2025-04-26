@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
-        android:id="@+id/theme"
-        android:icon="@drawable/dark_mode"
+        android:id="@+id/profile"
+        android:icon="@drawable/profile_24px"
         android:title="" />
+
     <item
-        android:id="@+id/lang"
-        android:icon="@drawable/ic_language"
+        android:id="@+id/todoList"
+        android:icon="@drawable/ic_todo_list"
         android:title="" />
 
     <item
@@ -16,14 +18,12 @@
         android:title="" />
 
     <item
-        android:id="@+id/calendar"
-        android:icon="@drawable/calendar_ico"
+        android:id="@+id/social"
+        android:icon="@drawable/ic_tag"
         android:title="" />
 
     <item
-        android:id="@+id/profile"
-        android:icon="@drawable/profile_24px"
+        android:id="@+id/calendar"
+        android:icon="@drawable/calendar_ico"
         android:title="" />
-
-
 </menu>

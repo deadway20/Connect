@@ -29,7 +29,7 @@
     <string name="ico_description">attend_ico</string>
     <string name="change_theme">تغيير الثيم</string>
     <string name="change_language">تغيير اللغة</string>
-    <string name="re3aya">رعاية لاب</string>
+    <string name="company_name">رعاية لاب</string>
     <string name="absence_days_count_in_month">0</string>
     <string name="attend_days_count_in_month">0</string>
     <string name="is_absence_in_day">غياب :</string>
@@ -49,7 +49,7 @@
     <string name="finsh_btn">إنهاء</string>
     <string name="serverAddress_Card">عنوان السيرفر</string>
     <string name="Monthly_calendar">أيام الحضور الشهرية</string>
-    <string name="emp_name">أسم الموظف</string>
+    <string name="emp_name">أستاذ</string>
     <string name="evening_greeting">مساء الخير ,</string>
     <string name="night_greeting">مساء الخير ,</string>
     <string name="morning_icon">🌞</string>
@@ -67,8 +67,32 @@
     <string name="email_address">البريد الاليكترونى</string>
     <string name="profile">الصفحة الشخصية</string>
     <string name="save">حفظ</string>
+    <string name="Welcome_msg">مرحبًا بك في تطبيق كونكت يساعدك هذا التطبيق على تتبع حضورك، انصرافك، التأخير، والأوفر تايم بدقة. نحن هنا لمساعدتك في تنظيم وقتك وتحسين إنتاجيتك.</string>
+    <string name="welcome_sql_img">welcome_sql_image</string>
+    <string name="get_start">أبدء الان</string>
+    <string name="likes">Likes</string>
+    <string name="server_setting_arrow">go to server setting</string>
+    <string name="edit_profile_arrow">go to edit profile</string>
+    <string name="what_s_on_your_mind">ماذا يدور فى ذهنك يا</string>
+    <string name="add_new_post">add_new_post</string>
+    <string name="post_recycler_view">post_recycler_view</string>
+    <string name="employee_status_recycler_view">employee_status_recycler_view</string>
     <string-array name="language_array">
         <item>الانجليزية</item>
         <item>العربية</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="create_post">إضافة منشور</string>
+    <string name="post">نشر</string>
+    <string name="close">Close</string>
+    <string name="employee_name">أسم الموظف</string>
+    <string name="public_post">عام</string>
+    <string name="whats_on_your_mind">ماذا يدور فى ذهنك يا</string>
+    <string name="add_to_your_post">إضافة إلى منشورك :</string>
+    <string name="add_photo">إضافة صوره</string>
+    <string name="tag_people">Tag People</string>
+    <string name="feeling">Feeling/Activity</string>
+    <string name="check_in">Check In</string>
+    <string name="album">Album</string>
 </resources>

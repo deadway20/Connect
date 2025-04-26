@@ -19,14 +19,12 @@ class ServerFragment : Fragment() {
     ): View {
         val prefsHelper = SharedPrefsHelper(requireContext())
         binding = FragmentServerBinding.inflate(inflater, container, false)
-        binding.ServerUsername.setText(prefsHelper.getUserName())
-        binding.ServerPassword.setText(prefsHelper.getPassword())
         loadServerSettings()
 
 
-        binding.ConnectBtn.setOnClickListener {
-            val ip = binding.ServerIP.text.toString().trim()
-            val port = binding.ServerPort.text.toString().trim()
+        binding.connectButton.setOnClickListener {
+            val ip = binding.serverIP.text.toString().trim()
+            val port = binding.serverPort.text.toString().trim()
 
             prefsHelper.putServerAddress(ip)
             prefsHelper.putServerPort(port)
@@ -54,11 +52,14 @@ class ServerFragment : Fragment() {
             }
         }
 
-        binding.SNextBtn.setOnClickListener {
+        binding.nextButton.setOnClickListener {
             (activity as? SetupActivity)?.nextPage()
         }
+        binding.previousButton.setOnClickListener {
+            (activity as? SetupActivity)?.prevPage()
+        }
 
-        if (binding.saveCheckBox.isChecked) {
+        if (binding.saveCredentialsCheckBox.isChecked) {
             saveServerSettings()
         } else {
             prefsHelper.clearPrefs()
@@ -70,8 +71,8 @@ class ServerFragment : Fragment() {
 
     private fun saveServerSettings() {
         val prefsHelper = SharedPrefsHelper(requireContext())
-        val ip = binding.ServerIP.text.toString().trim()
-        val port = binding.ServerPort.text.toString().trim()
+        val ip = binding.serverIP.text.toString().trim()
+        val port = binding.serverPort.text.toString().trim()
 
         if (ip.isEmpty() || port.isEmpty()) {
             Toast.makeText(requireContext(), "يرجى إدخال الـ IP والـ Port", Toast.LENGTH_SHORT)
@@ -87,10 +88,8 @@ class ServerFragment : Fragment() {
 
     private fun loadServerSettings() {
         val prefsHelper = SharedPrefsHelper(requireContext())
-        binding.ServerIP.setText(prefsHelper.getServerAddress())
-        binding.ServerPort.setText(prefsHelper.getServerPort())
-        binding.ServerUsername.setText(prefsHelper.getUserName())
-        binding.ServerPassword.setText(prefsHelper.getPassword())
+        binding.serverIP.setText(prefsHelper.getServerAddress())
+        binding.serverPort.setText(prefsHelper.getServerPort())
     }
 
 }

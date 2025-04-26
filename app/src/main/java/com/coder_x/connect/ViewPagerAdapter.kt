@@ -5,6 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
     private val fragments = listOf(
+        WelcomeFragment(),
         ServerFragment(),
         EmployeeFragment()
     )

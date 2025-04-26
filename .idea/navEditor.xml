@@ -108,7 +108,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_serverSettingsFragment_to_splashFragment">
+                            <entry key="action_serverSettingsFragment_to_welcomeFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -118,7 +118,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="splashFragment">
+                  <entry key="welcomeFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -129,7 +129,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_splashFragment_to_serverSettingsFragment">
+                            <entry key="action_welcomeFragment_to_serverSettingsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

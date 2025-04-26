@@ -57,7 +57,7 @@ class SharedPrefsHelper(context: Context) {
     }
 
     // 🔹 استرجاع ID الموظف
-    fun getEmpID(): Int {
+    fun getEmployeeId(): Int {
         return sharedPreferences.getInt(EMP_ID_KEY, -1)
     }
 
@@ -67,7 +67,7 @@ class SharedPrefsHelper(context: Context) {
     }
 
     // 🔹 إسترجاع أسم الموظف
-    fun getEmpName(): String {
+    fun getEmployeeName(): String {
         return sharedPreferences.getString(EMP_NAME_KEY, "") ?: ""
     }
 
@@ -116,7 +116,7 @@ class SharedPrefsHelper(context: Context) {
     }
 
     // 🔹 لاستعادة الصورة من بعد تخزينها
-    fun getEmpImg(): Bitmap? {
+    fun getEmployeeImage(): Bitmap? {
         try {
             val encoded = sharedPreferences.getString(EMP_IMG, null)
             if (encoded != null) {

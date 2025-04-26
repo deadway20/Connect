@@ -6,15 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ServerSettingActivity">
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="460dp"
-        android:layout_height="150dp"
-        android:background="@drawable/header_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

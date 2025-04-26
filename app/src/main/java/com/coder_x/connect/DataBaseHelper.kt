@@ -123,7 +123,7 @@ object DataBaseHelper {
             val prefsHelper = SharedPrefsHelper(context)
             SERVER_ADDRESS = prefsHelper.getServerAddress()
             SERVER_PORT = prefsHelper.getServerPort()
-            EMP_ID = prefsHelper.getEmpID()
+            EMP_ID = prefsHelper.getEmployeeId()
 
             val connection = connect(context, SERVER_ADDRESS, SERVER_PORT)
 
@@ -193,7 +193,7 @@ object DataBaseHelper {
                 val prefsHelper = SharedPrefsHelper(context)
                 SERVER_ADDRESS = prefsHelper.getServerAddress()
                 SERVER_PORT = prefsHelper.getServerPort()
-                EMP_ID = prefsHelper.getEmpID()
+                EMP_ID = prefsHelper.getEmployeeId()
 
                 val connection = connect(context, SERVER_ADDRESS, SERVER_PORT)
                 if (connection == null) {
@@ -257,7 +257,7 @@ object DataBaseHelper {
                 val prefsHelper = SharedPrefsHelper(context)
                 SERVER_ADDRESS = prefsHelper.getServerAddress()
                 SERVER_PORT = prefsHelper.getServerPort()
-                EMP_ID = prefsHelper.getEmpID()
+                EMP_ID = prefsHelper.getEmployeeId()
 
                 val connection = connect(context, SERVER_ADDRESS, SERVER_PORT)
                 if (connection == null) {
@@ -323,7 +323,7 @@ object DataBaseHelper {
                 val prefsHelper = SharedPrefsHelper(context)
                 SERVER_ADDRESS = prefsHelper.getServerAddress()
                 SERVER_PORT = prefsHelper.getServerPort()
-                EMP_ID = prefsHelper.getEmpID()
+                EMP_ID = prefsHelper.getEmployeeId()
                 // إنشاء إتصال جديد بالسيرفر
                 val connection = connect(context, SERVER_ADDRESS, SERVER_PORT)
                 if (connection == null) {

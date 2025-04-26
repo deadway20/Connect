@@ -1,13 +1,13 @@
 package com.coder_x.connect
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.fragment.app.FragmentManager
 import com.coder_x.connect.databinding.ActivityEditProfileBinding
 
 
@@ -19,6 +19,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var prefsHelper: SharedPrefsHelper
     private lateinit var binding: ActivityEditProfileBinding
+    private lateinit var fragmentManager: FragmentManager
     private lateinit var imageHelper: ImageHelper
     private var imageUri: Uri? = null
 
@@ -27,10 +28,11 @@ class EditProfileActivity : AppCompatActivity() {
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         prefsHelper = SharedPrefsHelper(this)
+        fragmentManager = supportFragmentManager
+
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
-            startActivity(Intent(this, ProfileActivity::class.java))
         }
         viewDirection(binding.view)
 
@@ -51,8 +53,8 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
-        var empName = prefsHelper.getEmpName()
-        var empID = prefsHelper.getEmpID()
+        var empName = prefsHelper.getEmployeeName()
+        var empID = prefsHelper.getEmployeeId()
         var empDepartment = prefsHelper.getEmpDepartment()
         var mobileNumber = prefsHelper.getMobileNumber()
         var empImagePath = prefsHelper.getEmpImagePath()
@@ -73,14 +75,17 @@ class EditProfileActivity : AppCompatActivity() {
             prefsHelper.putEmpName(employeeName)
             prefsHelper.putEmpDepartment(department)
             prefsHelper.putEmpMobile(mobile_number)
-
+            // back To Profile Fragment
             finish()
-            startActivity(Intent(this, ProfileActivity::class.java))
-
+//            supportFragmentManager.commit {
+//                replace(R.id.fragment_container, ProfileFragment())
+//                addToBackStack(null)
+//            }
 
         }
 
     }
+
 
     private fun viewDirection(view: View) {
         prefsHelper = SharedPrefsHelper(this)

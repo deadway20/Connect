@@ -113,7 +113,7 @@ class EmployeeFragment : Fragment(), ImageHelper.OnImageSelectedListener {
     }
 
     private fun navigateToMainActivity() {
-        val intent = Intent(requireContext(), MainActivity::class.java)
+        val intent = Intent(requireContext(), BottomBarActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         requireActivity().finish() // إضافة هذا السطر للتأكد من إغلاق النشاط الحالي

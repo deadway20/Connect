@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/socialRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- App Bar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSocial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:background="@drawable/toolbar_fram"
+        android:elevation="4dp"
+        app:title="BeSocial"
+        app:titleTextColor="@color/black"
+        app:titleCentered="true"
+        app:navigationIconTint="@color/black" />
+
+    <!-- Main Content -->
+    <LinearLayout
+        android:id="@+id/mainContent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="8dp">
+
+        <!-- Horizontal Employee Status -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/empStatus_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:layout_marginBottom="8dp"
+            android:scrollbars="none"
+            android:contentDescription="@string/employee_status_recycler_view" />
+
+        <!-- What's on your mind bar -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCreatePost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgCurrentUser"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/emp_img"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/tvWhatOnMind"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:text="@string/what_s_on_your_mind"
+                    android:textColor="#888"
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="@drawable/bg_rounded_input" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- RecyclerView for posts -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/posr_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:listitem="@layout/post_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:overScrollMode="ifContentScrolls"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:contentDescription="@string/post_recycler_view" />
+
+    </LinearLayout>
+
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/purple_500"
+        android:contentDescription="@string/add_new_post" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

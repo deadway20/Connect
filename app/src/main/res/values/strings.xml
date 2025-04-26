@@ -29,7 +29,7 @@
     <string name="ico_description">attend_ico</string>
     <string name="change_theme">Change Theme</string>
     <string name="change_language">Change Language</string>
-    <string name="re3aya">Re3aya Lab</string>
+    <string name="company_name">Re3aya Lab</string>
     <string name="absence_days_count_in_month">0</string>
     <string name="attend_days_count_in_month">0</string>
     <string name="is_absence_in_day">Absence :</string>
@@ -49,7 +49,7 @@
     <string name="finsh_btn">Finish</string>
     <string name="serverAddress_Card">Server Address</string>
     <string name="Monthly_calendar">Monthly Attend Days</string>
-    <string name="emp_name">Employee Name</string>
+    <string name="emp_name">Sir</string>
     <string name="evening_greeting">Good_evening ,</string>
     <string name="night_greeting">Good night ,</string>
     <string name="morning_icon">🌞</string>
@@ -67,9 +67,35 @@
     <string name="email_address">email address</string>
     <string name="profile">Profile</string>
     <string name="save">Save</string>
-
+    <string name="Welcome_msg">Welcome to Connect, helps you track your attendance, check-ins, delays, and overtime accurately.</string>
+    <string name="welcome_sql_img">welcome_sql_image</string>
+    <string name="get_start">Get Start</string>
+    <string name="likes">Likes</string>
+    <string name="server_setting_arrow">go to server setting</string>
+    <string name="edit_profile_arrow">go to edit profile</string>
     <string-array name="language_array">
         <item>English</item>
         <item>العربية</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="what_s_on_your_mind">What\'s on yoour mind</string>
+    <string name="add_new_post">add_new_post</string>
+    <string name="post_recycler_view">post_recycler_view</string>
+    <string name="employee_status_recycler_view">employee_status_recycler_view</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="create_post">Create Post</string>
+    <string name="post">Post</string>
+    <string name="close">Close</string>
+    <string name="public_post">Public</string>
+    <string name="whats_on_your_mind">What\'s on your mind?</string>
+    <string name="add_to_your_post">Add to your post:</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="tag_people">Tag People</string>
+    <string name="feeling">Feeling/Activity</string>
+    <string name="check_in">Check In</string>
+    <string name="album">Album</string>
+    <string name="employee_name">Employee Name</string>
+
+
 </resources>

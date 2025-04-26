@@ -1,139 +1,157 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for the Server Settings Fragment -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="locale"
     android:fillViewport="true"
-    android:orientation="vertical">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ServerFragment">
 
-    <!--Server Address Text Card-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ServerIP_card"
-        style="@style/CustomTextInputLayout"
-        android:layout_marginTop="32dp"
-        android:hint="@string/serverAddress_Card"
-        app:endIconMode="clear_text"
-        app:helperText="required"
-        app:layout_constraintBottom_toTopOf="@+id/ServerPort_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ServerIP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ServerPort_card"
-        style="@style/CustomTextInputLayout"
-        android:hint="@string/serverPort_hint"
-        app:endIconMode="clear_text"
-        app:helperText="required"
-        app:layout_constraintBottom_toTopOf="@+id/ServerUsername_Card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ServerIP_card">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ServerPort"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- اسم المستخدم -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ServerUsername_Card"
-        style="@style/CustomTextInputLayout"
-        android:hint="@string/username_hint"
-        app:endIconMode="clear_text"
-        app:helperText="required"
-        app:layout_constraintBottom_toTopOf="@+id/ServerPassWord_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ServerUsername_Card">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ServerUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- كلمة المرور -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ServerPassWord_card"
-        style="@style/CustomTextInputLayout"
-        android:hint="@string/password_hint"
-        app:endIconMode="clear_text"
-        app:helperText="required"
-        app:layout_constraintBottom_toTopOf="@+id/saveCheckBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ServerUsername_Card">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ServerPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- خيار الحفظ -->
-
-    <CheckBox
-        android:id="@+id/saveCheckBox"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
-        android:text="@string/save_sql_server_credentials"
-        app:layout_constraintBottom_toTopOf="@+id/Connect_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ServerPassWord_card" />
+        android:layout_height="wrap_content">
 
-    <!-- زر الاتصال -->
+        <!-- Server Address Text Input -->
+        <ImageView
+            android:id="@+id/server_img"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="28dp"
+            android:contentDescription="@string/welcome_sql_img"
+            android:padding="16dp"
+            android:src="@drawable/welcom_sql_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_guidline"
+            app:layout_constraintWidth_percent="0.8" />
 
-    <Button
-        android:id="@+id/Connect_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:text="@string/connect_to_server"
-        app:layout_constraintBottom_toTopOf="@+id/SNextBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/saveCheckBox" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/serverIP_card"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:hint="@string/serverAddress_Card"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/header_end"
+            app:boxStrokeWidth="2dp"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/server_img">
 
-    <!-- زر ألتقدم -->
-    <Button
-        android:id="@+id/SNextBtn"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/Next_txt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Connect_btn" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/serverIP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Server Port Text Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/serverPort_card"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:hint="@string/serverPort_hint"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/header_end"
+            app:boxStrokeWidth="2dp"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/serverIP_card">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/serverPort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Save Credentials Checkbox -->
+        <CheckBox
+            android:id="@+id/saveCredentialsCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/save_sql_server_credentials"
+            app:layout_constraintEnd_toEndOf="@id/serverPort_card"
+            app:layout_constraintStart_toStartOf="@id/serverPort_card"
+            app:layout_constraintTop_toBottomOf="@id/serverPort_card" />
+
+        <!-- Connect Button -->
+        <Button
+            android:id="@+id/connectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/header_profile"
+            android:text="@string/connect_to_server"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/lite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/saveCredentialsCheckBox" />
+
+
+        <!-- Next Button -->
+
+        <!-- Next Button -->
+
+        <Button
+            android:id="@+id/previousButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:background="@drawable/header_profile"
+            android:drawableStart="@drawable/ic_arrow_left"
+            android:drawablePadding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/Next_txt"
+            app:backgroundTint="@color/header_end"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/header_profile"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="8dp"
+            android:text="@string/Next_txt"
+            app:backgroundTint="@color/header_end"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_guidline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

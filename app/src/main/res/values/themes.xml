@@ -33,13 +33,16 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="outBox_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxStrokeColor">@color/outbox_color</item>
+        <item name="boxStrokeWidth">2dp</item>
 
     </style>
 
@@ -74,5 +77,10 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
+
+    <style name="cr50">
+        <item name="cornerSize">50dp</item>
+    </style>
+
 
 </resources>

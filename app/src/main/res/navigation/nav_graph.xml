@@ -4,7 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/serverSettingsFragment">
 
-    <!-- إدخال إعدادات السيرفر -->
+    <!-- WelcomeFragment -->
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.coder_x.connect.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/action_welcomeFragment_to_serverSettingsFragment"
+            app:destination="@id/serverSettingsFragment" />
+    </fragment>
+
+    <!-- Server Setting Fragment -->
     <fragment
         android:id="@+id/serverSettingsFragment"
         android:name="com.coder_x.connect.ServerFragment"
@@ -13,6 +24,9 @@
         <action
             android:id="@+id/action_serverSettingsFragment_to_employeeFragment"
             app:destination="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_serverSettingsFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
 
     <!-- إدخال بيانات الموظف -->
@@ -29,12 +43,12 @@
             app:destination="@id/serverSettingsFragment" />
     </fragment>
 
-
     <!-- تعريف `MainActivity` -->
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.coder_x.connect.MainActivity"
+        android:name="com.coder_x.connect.BottomBarActivity"
         android:label="Main Activity">
     </activity>
+
 
 </navigation>
