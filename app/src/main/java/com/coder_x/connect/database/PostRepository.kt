@@ -4,17 +4,17 @@ import androidx.lifecycle.LiveData
 
 class PostRepository(private val postDao: PostDao) {
 
-    val allPosts: LiveData<List<PostData>> = postDao.getAllPosts()
+    val allPosts: LiveData<List<PostEntity>> = postDao.getAllPosts()
 
-    suspend fun insert(post: PostData) {
+    suspend fun insert(post: PostEntity) {
         postDao.insertPost(post)
     }
 
-    suspend fun update(post: PostData) {
+    suspend fun update(post: PostEntity) {
         postDao.updatePost(post)
     }
 
-    suspend fun delete(post: PostData) {
+    suspend fun delete(post: PostEntity) {
         postDao.deletePost(post)
     }
 
@@ -26,7 +26,7 @@ class PostRepository(private val postDao: PostDao) {
         postDao.incrementComments(postId)
     }
 
-    suspend fun getPostById(postId: Long): PostData? {
+    suspend fun getPostById(postId: Long): PostEntity? {
         return postDao.getPostById(postId)
     }
 }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository
-    private val allPosts: LiveData<List<PostData>>
+    private val allPosts: LiveData<List<PostEntity>>
 
     init {
         val postDao = PostDatabase.getDatabase(application).postDao()
@@ -18,15 +18,15 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         allPosts = repository.allPosts
     }
 
-    fun insert(post: PostData) = viewModelScope.launch {
+    fun insert(post: PostEntity) = viewModelScope.launch {
         repository.insert(post)
     }
 
-    fun update(post: PostData) = viewModelScope.launch {
+    fun update(post: PostEntity) = viewModelScope.launch {
         repository.update(post)
     }
 
-    fun delete(post: PostData) = viewModelScope.launch {
+    fun delete(post: PostEntity) = viewModelScope.launch {
         repository.delete(post)
     }
 
@@ -38,8 +38,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         repository.incrementComments(postId)
     }
 
-    fun getPostById(postId: Long): LiveData<PostData?> {
-        val result = MutableLiveData<PostData?>()
+    fun getPostById(postId: Long): LiveData<PostEntity?> {
+        val result = MutableLiveData<PostEntity?>()
         viewModelScope.launch {
             result.value = repository.getPostById(postId)
         }

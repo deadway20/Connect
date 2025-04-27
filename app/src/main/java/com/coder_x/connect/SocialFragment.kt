@@ -8,7 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.coder_x.connect.database.PostData
+import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.databinding.FragmentSocialBinding
 
 class SocialFragment : Fragment() {
@@ -16,7 +16,7 @@ class SocialFragment : Fragment() {
     private lateinit var adapter: PostAdapter
     private lateinit var fragmentManager: FragmentManager
 
-    private val dataList = listOf<PostData>()
+    private val dataList = listOf<PostEntity>()
     private lateinit var addPostDialog: AddPostFragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

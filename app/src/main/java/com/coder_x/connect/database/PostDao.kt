@@ -12,19 +12,19 @@ import androidx.room.Update
 interface PostDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPost(post: PostData)
+    suspend fun insertPost(post: PostEntity)
 
     @Update
-    suspend fun updatePost(post: PostData)
+    suspend fun updatePost(post: PostEntity)
 
     @Delete
-    suspend fun deletePost(post: PostData)
+    suspend fun deletePost(post: PostEntity)
 
     @Query("SELECT * FROM posts ORDER BY id DESC")
-    fun getAllPosts(): LiveData<List<PostData>>
+    fun getAllPosts(): LiveData<List<PostEntity>>
 
     @Query("SELECT * FROM posts WHERE id = :postId")
-    suspend fun getPostById(postId: Long): PostData?
+    suspend fun getPostById(postId: Long): PostEntity?
 
     @Query("UPDATE posts SET likesCount = likesCount + 1 WHERE id = :postId")
     suspend fun incrementLikes(postId: Long)

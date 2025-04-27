@@ -1,9 +1,7 @@
 package com.coder_x.connect
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -11,18 +9,15 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.coder_x.connect.database.PostData
+import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.database.PostViewModel
 import com.coder_x.connect.databinding.FragmentAddPostBinding
-import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
-import androidx.core.net.toUri
+import java.util.Date
+import java.util.Locale
 
 class AddPostFragment : Fragment() {
 
@@ -34,7 +29,6 @@ class AddPostFragment : Fragment() {
 
     private val REQUEST_GALLERY = 100
     private val REQUEST_CAMERA = 101
-    private val PERMISSION_CODE = 102
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +47,7 @@ class AddPostFragment : Fragment() {
         val imagePath = prefsHelper.getEmpImagePath()
         if (imagePath != null) {
             try {
-                binding.employeeImage.setImageURI(Uri.parse(imagePath))
+                binding.employeeImage.setImageURI(imagePath.toUri())
             } catch (e: Exception) {
                 binding.employeeImage.setImageResource(R.drawable.emp_img)
             }
@@ -68,57 +62,26 @@ class AddPostFragment : Fragment() {
         }
 
         binding.btnAddPhoto.setOnClickListener {
-            checkPermissionAndOpenGallery()
+            getImageFromGallery()
         }
 
         binding.takePhoto.setOnClickListener {
-            checkPermissionAndOpenCamera()
+            getImageFromCamera()
         }
     }
 
-    private fun checkPermissionAndOpenGallery() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSION_CODE
-            )
-        } else {
-            openGallery()
-        }
-    }
-
-    private fun checkPermissionAndOpenCamera() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.CAMERA),
-                PERMISSION_CODE
-            )
-        } else {
-            openCamera()
-        }
-    }
-
-    private fun openGallery() {
+    private fun getImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_GALLERY)
     }
 
-    private fun openCamera() {
+    private fun getImageFromCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQUEST_CAMERA)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -127,84 +90,67 @@ class AddPostFragment : Fragment() {
                 REQUEST_GALLERY -> {
                     val selectedImageUri = data?.data
                     if (selectedImageUri != null) {
-                        binding.btnAddPhoto.setImageURI(selectedImageUri)
+                        binding.addPostImage.setImageURI(selectedImageUri)
                         postImagePath = selectedImageUri.toString()
-                        binding.btnAddPhoto.visibility = View.VISIBLE
                     }
                 }
-
                 REQUEST_CAMERA -> {
                     val photo = data?.extras?.get("data") as? Bitmap
                     if (photo != null) {
-                        val uri = saveImageToGallery(photo)
-                        binding.postImage.setImageURI(uri)
-                        postImagePath = uri.toString()
-                        binding.postImage.visibility = View.VISIBLE
+                        binding.addPostImage.setImageBitmap(photo)
+                        // عشان تحفظ الصورة في ملف وتاخد مسارها
+                        val imageUri = saveImageToGallery(photo)
+                        postImagePath = imageUri.toString()
                     }
                 }
             }
         }
     }
 
-    private fun saveImageToGallery(bitmap: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(
-            requireContext().contentResolver,
-            bitmap,
-            "CapturedImage_${System.currentTimeMillis()}",
-            null
-        )
-        return path.toUri()
-    }
-
     private fun addPost() {
         val employeeName = prefsHelper.getEmployeeName()
         val employeeId = prefsHelper.getEmployeeId()
-        val postText = binding.etPostContent.text.toString().trim()
-        val postTime = getCurrentFormattedTime().toLong()
+        val postText = binding.addPostText.text.toString().trim()
+        val postTime = getCurrentTime()
 
-        if (postText.isEmpty() && postImagePath == null) {
-            Toast.makeText(requireContext(), "اكتب بوست أو حط صورة", Toast.LENGTH_SHORT).show()
+        if (postText.isEmpty()) {
+            binding.addPostText.error = "اكتب حاجة الأول"
             return
         }
 
-        val post = PostData(
+        val post = PostEntity(
             employeeName = employeeName,
             employeeId = employeeId,
             postTime = postTime,
             postText = postText,
             postImagePath = postImagePath,
             likesCount = 0,
-            commentsCount = 0
+            commentsCount = 0,
+            isLiked = false
+
+
         )
 
         postViewModel.insert(post)
 
-        Toast.makeText(requireContext(), "تم نشر البوست بنجاح ✅", Toast.LENGTH_SHORT).show()
-
+        // بعد إضافة البوست نرجع على SocialFragment
         requireActivity().supportFragmentManager.popBackStack()
     }
 
-    private fun getCurrentFormattedTime(): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
-        return sdf.format(Date())
+    private fun saveImageToGallery(bitmap: Bitmap): Uri? {
+        val savedImageURL = MediaStore.Images.Media.insertImage(
+            requireContext().contentResolver,
+            bitmap,
+            "Post_Image_" + System.currentTimeMillis(),
+            "Image taken for post"
+        )
+        return savedImageURL?.toUri()
     }
 
-    // التعامل مع نتيجة طلب التصاريح
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray,
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(requireContext(), "تم منح الإذن ✅", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "تم رفض الإذن ❌", Toast.LENGTH_SHORT).show()
-            }
-        }
+    private fun getCurrentTime(): Long {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+        val currentDate = Date() // التاريخ الحالي
+        return currentDate.time
     }
+
 }

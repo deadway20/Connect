@@ -53,8 +53,10 @@
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/createPost_topbar">
+        app:layout_constraintTop_toBottomOf="@id/createPost_topbar"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/employee_info_card"
@@ -74,10 +76,10 @@
                     android:id="@+id/employee_image"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/emp_img"
-                    app:shapeAppearanceOverlay="@style/CircleImageView"
-                    android:layout_marginEnd="8dp" />
+                    app:shapeAppearanceOverlay="@style/CircleImageView" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,19 +91,19 @@
                         android:id="@+id/employee_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:focusable="true"
                         android:text="@string/employee_name"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:focusable="true" />
+                        android:textStyle="bold" />
 
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:padding="6dp"
                         android:background="@drawable/toolbar_fram"
+                        android:padding="6dp"
                         tools:ignore="UseCompoundDrawables">
 
                         <ImageView
@@ -126,22 +128,41 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- نص البوست -->
         <EditText
-            android:id="@+id/et_post_content"
+            android:id="@+id/add_post_text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1"
+            android:layout_marginTop="8dp"
             android:background="@color/transparent"
             android:gravity="top|start"
             android:hint="@string/whats_on_your_mind"
-            android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:minHeight="120dp"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textSize="18sp" />
+
+        <!-- صورة البوست اللي هيختارها أو يصورها -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_post_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/add_post_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"

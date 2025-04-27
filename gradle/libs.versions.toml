@@ -1,9 +1,14 @@
 [versions]
-agp = "8.9.1"
+agp = "8.9.2"
+androidxRoomRuntime = "2.7.1"
 glide = "4.16.0"
 jtds = "1.3.1"
-kotlin = "1.9.24"
-coreKtx = "1.15.0"
+kotlin = "2.1.10"  # يجب أن يكون نفس إصدار kotlin-plugin
+kotlinxCoroutinesCore = "1.7.3"
+lifecycleLivedataKtxVersion = "2.8.7"
+lifecycleViewmodelKtxVersion = "2.8.7"
+room = "2.7.1"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -14,18 +19,29 @@ constraintlayout = "2.2.1"
 materialCalendarView = "1.9.2"
 navigationFragmentKtx = "2.8.9"
 navigationUiKtx = "2.8.9"
+roomCompiler = "2.6.1"
+roomKtx = "2.7.1"
 roomRuntime = "2.7.1"
+roomRuntimeVersion = "2.6.1"
 ucrop = "2.2.10"
-uiTextAndroid = "1.7.8"
-lifecycleLivedataKtx = "2.6.1"
-lifecycleViewmodelKtx = "2.6.1"
+uiTextAndroid = "1.8.0"
+lifecycleLivedataKtx = "2.8.7"
+lifecycleViewmodelKtx = "2.8.7"
 
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-livedata-ktx-v270 = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtxVersion" }
+androidx-lifecycle-viewmodel-ktx-v270 = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtxVersion" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-room-ktx-v271 = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-runtime-v271 = { module = "androidx.room:room-runtime", version.ref = "androidxRoomRuntime" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 jtds = { module = "net.sourceforge.jtds:jtds", version.ref = "jtds" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -42,10 +58,16 @@ ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version.ref = "uiTextAndroid" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+
+
+
 

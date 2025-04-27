@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.coder_x.connect.database.PostData
+import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.databinding.PostItemBinding
 import java.io.File
 
 class PostAdapter(
-    private var postList: List<PostData>,
+    private var postList: List<PostEntity>,
 ) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     // ViewHolder class
@@ -27,25 +27,25 @@ class PostAdapter(
             tvEmployeeName.text = post.employeeName
             tvEmployeeId.text = "#${post.employeeId}"
             tvPostTime.text = post.postTime.toString()
-            tvPostText.text = post.postText
+            postText.text = post.postText
             tvLikeCount.text = post.likesCount.toString()
             tvCommentCount.text = post.commentsCount.toString()
 
             if (!post.postImagePath.isNullOrEmpty()) {
                 val imageFile = File(post.postImagePath)
-                imagePost.visibility = View.VISIBLE
+                postImage.visibility = View.VISIBLE
                 Glide.with(holder.itemView.context)
                     .load(imageFile)
-                    .into(imagePost)
+                    .into(postImage)
             } else {
-                imagePost.visibility = View.GONE
+                postImage.visibility = View.GONE
             }
         }
     }
 
     override fun getItemCount(): Int = postList.size
 
-    fun submitList(newList: List<PostData>) {
+    fun submitList(newList: List<PostEntity>) {
         postList = newList
         notifyDataSetChanged() // بعدين لما تحب تحسن الأداء بنخليه DiffUtil
     }

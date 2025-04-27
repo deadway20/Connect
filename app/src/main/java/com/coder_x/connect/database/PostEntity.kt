@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "posts")
-data class PostData(
+data class PostEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val employeeName: String,
@@ -14,4 +14,5 @@ data class PostData(
     val postImagePath: String?, // ممكن يكون null
     val likesCount: Int,
     val commentsCount: Int,
+    val isLiked: Boolean,
 )
