@@ -1,6 +1,8 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -55,21 +57,16 @@ dependencies {
     implementation(libs.ucrop)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    annotationProcessor(libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)
 
-    // Room
-    implementation(libs.androidx.room.runtime.v271)
-    implementation(libs.androidx.room.ktx.v271)
+    // Room dependencies:
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-
-    // Lifecycle
-    implementation(libs.androidx.lifecycle.viewmodel.ktx.v270)
-    implementation(libs.androidx.lifecycle.livedata.ktx.v270)
-
 }

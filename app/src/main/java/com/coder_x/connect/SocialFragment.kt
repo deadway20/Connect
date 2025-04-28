@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coder_x.connect.database.PostEntity
+import com.coder_x.connect.database.PostViewModel
 import com.coder_x.connect.databinding.FragmentSocialBinding
 
 class SocialFragment : Fragment() {
@@ -16,34 +18,40 @@ class SocialFragment : Fragment() {
     private lateinit var adapter: PostAdapter
     private lateinit var fragmentManager: FragmentManager
 
-    private val dataList = listOf<PostEntity>()
-    private lateinit var addPostDialog: AddPostFragment
+    private val postViewModel: PostViewModel by activityViewModels() // اضفنا هنا
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentSocialBinding.inflate(inflater, container, false)
         adapter = PostAdapter(emptyList())
         fragmentManager = requireActivity().supportFragmentManager
-        addPostDialog = AddPostFragment()
         binding.posrRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.posrRecyclerView.adapter = adapter
 
+        // 🛠️ هنا نراقب البوستات ونعرضها لما تتغير
+        postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
+            adapter.submitList(posts)
+        }
 
         binding.tvWhatOnMind.setOnClickListener {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, addPostDialog)
-                .addToBackStack(null).commit()
-        }
-        binding.fabAddPost.setOnClickListener {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, addPostDialog)
-                .addToBackStack(null).commit()
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, AddPostFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
-        // make code on press back button go to another fragment
+        binding.fabAddPost.setOnClickListener {
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, AddPostFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (addPostDialog.isVisible) {
+                if (AddPostFragment().isVisible) {
                     fragmentManager.popBackStack()
                 } else {
                     isEnabled = false
@@ -53,13 +61,6 @@ class SocialFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-
-
-
-
-
         return binding.root
-
-
     }
 }

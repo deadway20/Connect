@@ -10,6 +10,9 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+    plugins {
+        id("com.google.devtools.ksp") version "1.9.22-1.0.17" // Use the latest KSP version
+    }
 }
 
 dependencyResolutionManagement {

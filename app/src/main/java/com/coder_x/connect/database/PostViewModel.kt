@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository
-    private val allPosts: LiveData<List<PostEntity>>
+    val allPosts: LiveData<List<PostEntity>>
 
     init {
         val postDao = PostDatabase.getDatabase(application).postDao()

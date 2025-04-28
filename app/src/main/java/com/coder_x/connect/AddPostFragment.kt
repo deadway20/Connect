@@ -15,9 +15,7 @@ import androidx.fragment.app.activityViewModels
 import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.database.PostViewModel
 import com.coder_x.connect.databinding.FragmentAddPostBinding
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class AddPostFragment : Fragment() {
 
@@ -44,35 +42,25 @@ class AddPostFragment : Fragment() {
     }
 
     private fun setupViews() {
-        val imagePath = prefsHelper.getEmpImagePath()
-        if (imagePath != null) {
+        prefsHelper.getEmpImagePath()?.let { imagePath ->
             try {
                 binding.employeeImage.setImageURI(imagePath.toUri())
             } catch (e: Exception) {
                 binding.employeeImage.setImageResource(R.drawable.emp_img)
             }
-        }
+        } ?: binding.employeeImage.setImageResource(R.drawable.emp_img)
 
         binding.employeeName.text = prefsHelper.getEmployeeName()
     }
 
     private fun setupListeners() {
-        binding.addPostBtn.setOnClickListener {
-            addPost()
-        }
-
-        binding.btnAddPhoto.setOnClickListener {
-            getImageFromGallery()
-        }
-
-        binding.takePhoto.setOnClickListener {
-            getImageFromCamera()
-        }
+        binding.addPostBtn.setOnClickListener { addPost() }
+        binding.btnAddPhoto.setOnClickListener { getImageFromGallery() }
+        binding.takePhoto.setOnClickListener { getImageFromCamera() }
     }
 
     private fun getImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
+        val intent = Intent(Intent.ACTION_PICK).apply { type = "image/*" }
         startActivityForResult(intent, REQUEST_GALLERY)
     }
 
@@ -88,19 +76,23 @@ class AddPostFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_GALLERY -> {
-                    val selectedImageUri = data?.data
-                    if (selectedImageUri != null) {
-                        binding.addPostImage.setImageURI(selectedImageUri)
+                    data?.data?.let { selectedImageUri ->
+                        binding.addPostImage.apply {
+                            setImageURI(selectedImageUri)
+                            visibility = View.VISIBLE
+                        }
                         postImagePath = selectedImageUri.toString()
+                        binding.addPostText.visibility = View.VISIBLE
                     }
                 }
                 REQUEST_CAMERA -> {
-                    val photo = data?.extras?.get("data") as? Bitmap
-                    if (photo != null) {
-                        binding.addPostImage.setImageBitmap(photo)
-                        // عشان تحفظ الصورة في ملف وتاخد مسارها
-                        val imageUri = saveImageToGallery(photo)
-                        postImagePath = imageUri.toString()
+                    (data?.extras?.get("data") as? Bitmap)?.let { photo ->
+                        binding.addPostImage.apply {
+                            setImageBitmap(photo)
+                            visibility = View.VISIBLE
+                        }
+                        postImagePath = saveImageToGallery(photo)?.toString()
+                        binding.addPostText.visibility = View.VISIBLE
                     }
                 }
             }
@@ -111,29 +103,26 @@ class AddPostFragment : Fragment() {
         val employeeName = prefsHelper.getEmployeeName()
         val employeeId = prefsHelper.getEmployeeId()
         val postText = binding.addPostText.text.toString().trim()
-        val postTime = getCurrentTime()
 
         if (postText.isEmpty()) {
-            binding.addPostText.error = "اكتب حاجة الأول"
+            binding.addPostText.error = "ماذا يدور فى بالك"
             return
         }
 
         val post = PostEntity(
             employeeName = employeeName,
             employeeId = employeeId,
-            postTime = postTime,
+            postTime = getCurrentTime(),
             postText = postText,
             postImagePath = postImagePath,
             likesCount = 0,
             commentsCount = 0,
             isLiked = false
-
-
         )
 
         postViewModel.insert(post)
 
-        // بعد إضافة البوست نرجع على SocialFragment
+        // نرجع للشاشة السابقة بعد إضافة البوست
         requireActivity().supportFragmentManager.popBackStack()
     }
 
@@ -141,16 +130,13 @@ class AddPostFragment : Fragment() {
         val savedImageURL = MediaStore.Images.Media.insertImage(
             requireContext().contentResolver,
             bitmap,
-            "Post_Image_" + System.currentTimeMillis(),
+            "Post_Image_${System.currentTimeMillis()}",
             "Image taken for post"
         )
         return savedImageURL?.toUri()
     }
 
     private fun getCurrentTime(): Long {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
-        val currentDate = Date() // التاريخ الحالي
-        return currentDate.time
+        return Date().time
     }
-
 }
