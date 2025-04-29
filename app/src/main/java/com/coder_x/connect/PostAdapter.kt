@@ -1,6 +1,7 @@
 package com.coder_x.connect
 
 import android.view.LayoutInflater
+import android.text.format.DateUtils
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.databinding.ItemCreatePostBinding
 import com.coder_x.connect.databinding.ItemPostBinding
+import java.util.Date
 
 
 class PostAdapter(
@@ -115,7 +117,11 @@ class PostAdapter(
 
                 binding.tvEmployeeName.text = post.employeeName
                 binding.tvEmployeeId.text = "#${post.employeeId}"
-                binding.tvPostTime.text = post.postTime.toString()
+
+                val now = Date()
+                val timeAgo = DateUtils.getRelativeTimeSpanString(post.postTime, now.time, DateUtils.MINUTE_IN_MILLIS)
+                binding.tvPostTime.text = timeAgo
+
                 binding.postText.text = post.postText
                 binding.tvLikeCount.text = "${post.likesCount} Likes"
                 binding.tvCommentCount.text = "${post.commentsCount} Comments"
