@@ -100,15 +100,16 @@ class PostAdapter(
                 val binding = (holder as PostViewHolder).binding
                 val post = item.postEntity
 
-                val context = holder.itemView.context
-                val prefsHelper = SharedPrefsHelper(context)
-
-                val imagePath = prefsHelper.getEmpImagePath()
-                if (imagePath != null) {
-                    try {
-                        binding.imageProfile.setImageURI(imagePath.toUri())
-                    } catch (e: Exception) {
+                if(!post.postImagePath.isNullOrEmpty()){
+                    try{
+                        binding.imageProfile.setImageURI(post.postImagePath.toUri())
+                    }catch (e: Exception){
                         binding.imageProfile.setImageResource(R.drawable.emp_img)
+                    }
+                }else{
+                    val context = holder.itemView.context
+                    val prefsHelper = SharedPrefsHelper(context)
+                    prefsHelper.getEmpImagePath()?.let {
                     }
                 }
 
@@ -121,7 +122,7 @@ class PostAdapter(
 
                 if (!post.postImagePath.isNullOrEmpty()) {
                     binding.postImage.visibility = View.VISIBLE
-                    Glide.with(context).load(post.postImagePath).into(binding.postImage)
+                    Glide.with(holder.itemView.context).load(post.postImagePath).into(binding.postImage)
                 } else {
                     binding.postImage.visibility = View.GONE
                 }
