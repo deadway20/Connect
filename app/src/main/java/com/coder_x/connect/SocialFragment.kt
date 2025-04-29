@@ -9,37 +9,30 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.database.PostViewModel
 import com.coder_x.connect.databinding.FragmentSocialBinding
 
-class SocialFragment : Fragment() {
+class SocialFragment : Fragment(), PostAdapter.OnSocialActionListener {
     private lateinit var binding: FragmentSocialBinding
     private lateinit var adapter: PostAdapter
     private lateinit var fragmentManager: FragmentManager
 
-    private val postViewModel: PostViewModel by activityViewModels() // اضفنا هنا
+    private val postViewModel: PostViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSocialBinding.inflate(inflater, container, false)
-        adapter = PostAdapter(emptyList())
-        fragmentManager = requireActivity().supportFragmentManager
-        binding.posrRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.posrRecyclerView.adapter = adapter
+        adapter = PostAdapter(emptyList(), this)
 
-        // 🛠️ هنا نراقب البوستات ونعرضها لما تتغير
+        fragmentManager = requireActivity().supportFragmentManager
+
+        binding.socialRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.socialRecyclerView.adapter = adapter
+
         postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
-        }
-
-        binding.tvWhatOnMind.setOnClickListener {
-            fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AddPostFragment())
-                .addToBackStack(null)
-                .commit()
         }
 
         binding.fabAddPost.setOnClickListener {
@@ -63,4 +56,13 @@ class SocialFragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onCreatePostClicked() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, AddPostFragment())
+            .addToBackStack(null)
+            .commit()
+    }
+
 }
+

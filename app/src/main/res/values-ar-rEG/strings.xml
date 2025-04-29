@@ -73,7 +73,7 @@
     <string name="likes">Likes</string>
     <string name="server_setting_arrow">go to server setting</string>
     <string name="edit_profile_arrow">go to edit profile</string>
-    <string name="what_s_on_your_mind">ماذا يدور فى ذهنك يا</string>
+    <string name="what_s_on_your_mind">ماذا يدور فى بالك ؟</string>
     <string name="add_new_post">add_new_post</string>
     <string name="post_recycler_view">post_recycler_view</string>
     <string name="employee_status_recycler_view">employee_status_recycler_view</string>

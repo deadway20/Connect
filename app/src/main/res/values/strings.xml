@@ -78,7 +78,7 @@
         <item>العربية</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="what_s_on_your_mind">What\'s on yoour mind</string>
+    <string name="what_s_on_your_mind">What\'s on your mind ?</string>
     <string name="add_new_post">add_new_post</string>
     <string name="post_recycler_view">post_recycler_view</string>
     <string name="employee_status_recycler_view">employee_status_recycler_view</string>
