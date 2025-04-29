@@ -81,6 +81,18 @@ class PostAdapter(
                 binding.profileImage.setOnClickListener {
                     listener.onCreatePostClicked()
                 }
+                val context = holder.itemView.context
+                val prefsHelper = SharedPrefsHelper(context)
+
+                val imagePath = prefsHelper.getEmpImagePath()
+                if (imagePath != null) {
+                    try {
+                        binding.profileImage.setImageURI(imagePath.toUri())
+                    } catch (e: Exception) {
+                        binding.profileImage.setImageResource(R.drawable.emp_img)
+                    }
+                }
+
 
             }
 
