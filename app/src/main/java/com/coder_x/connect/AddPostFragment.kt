@@ -9,134 +9,67 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import com.coder_x.connect.database.PostEntity
-import com.coder_x.connect.database.PostViewModel
 import com.coder_x.connect.databinding.FragmentAddPostBinding
-import java.util.Date
 
 class AddPostFragment : Fragment() {
 
-    private lateinit var binding: FragmentAddPostBinding
-    private lateinit var prefsHelper: SharedPrefsHelper
-    private val postViewModel: PostViewModel by activityViewModels()
+    private var _binding: FragmentAddPostBinding? = null
+    private val binding get() = _binding!!
 
-    private var postImagePath: String? = null
-
-    private val REQUEST_GALLERY = 100
-    private val REQUEST_CAMERA = 101
+    private val PICK_IMAGE_REQUEST = 1
+    private val CAMERA_REQUEST = 2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddPostBinding.inflate(inflater, container, false)
-        prefsHelper = SharedPrefsHelper(requireContext())
-
-        setupViews()
-        setupListeners()
-
+        _binding = FragmentAddPostBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    private fun setupViews() {
-        prefsHelper.getEmpImagePath()?.let { imagePath ->
-            try {
-                binding.employeeImage.setImageURI(imagePath.toUri())
-            } catch (e: Exception) {
-                binding.employeeImage.setImageResource(R.drawable.emp_img)
-            }
-        } ?: binding.employeeImage.setImageResource(R.drawable.emp_img)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding.employeeName.text = prefsHelper.getEmployeeName()
+        // زر لاختيار صورة من المعرض
+        binding.btnAddPhoto.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+
+        // زر لتصوير صورة بالكاميرا
+        binding.btnTakePhoto.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, CAMERA_REQUEST)
+        }
     }
 
-    private fun setupListeners() {
-        binding.addPostBtn.setOnClickListener { addPost() }
-        binding.btnAddPhoto.setOnClickListener { getImageFromGallery() }
-        binding.takePhoto.setOnClickListener { getImageFromCamera() }
-    }
-
-    private fun getImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK).apply { type = "image/*" }
-        startActivityForResult(intent, REQUEST_GALLERY)
-    }
-
-    private fun getImageFromCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, REQUEST_CAMERA)
-    }
-
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
             when (requestCode) {
-                REQUEST_GALLERY -> {
-                    data?.data?.let { selectedImageUri ->
-                        binding.addPostImage.apply {
-                            setImageURI(selectedImageUri)
-                            visibility = View.VISIBLE
-                        }
-                        postImagePath = selectedImageUri.toString()
-                        binding.addPostText.visibility = View.VISIBLE
+                PICK_IMAGE_REQUEST -> {
+                    val selectedImageUri: Uri? = data.data
+                    if (selectedImageUri != null) {
+                        binding.cardPostImage.visibility = View.VISIBLE
+                        binding.addPostImage.setImageURI(selectedImageUri)
                     }
                 }
-                REQUEST_CAMERA -> {
-                    (data?.extras?.get("data") as? Bitmap)?.let { photo ->
-                        binding.addPostImage.apply {
-                            setImageBitmap(photo)
-                            visibility = View.VISIBLE
-                        }
-                        postImagePath = saveImageToGallery(photo)?.toString()
-                        binding.addPostText.visibility = View.VISIBLE
+
+                CAMERA_REQUEST -> {
+                    val photo = data.extras?.get("data") as? Bitmap
+                    if (photo != null) {
+                        binding.cardPostImage.visibility = View.VISIBLE
+                        binding.addPostImage.setImageBitmap(photo)
                     }
                 }
             }
         }
     }
 
-    private fun addPost() {
-        val employeeName = prefsHelper.getEmployeeName()
-        val employeeId = prefsHelper.getEmployeeId()
-        val postText = binding.addPostText.text.toString().trim()
-
-        if (postText.isEmpty()) {
-            binding.addPostText.error = "ماذا يدور فى بالك"
-            return
-        }
-
-        val post = PostEntity(
-            employeeName = employeeName,
-            employeeId = employeeId,
-            postTime = getCurrentTime(),
-            postText = postText,
-            postImagePath = postImagePath,
-            likesCount = 0,
-            commentsCount = 0,
-            isLiked = false
-        )
-
-        postViewModel.insert(post)
-
-        // نرجع للشاشة السابقة بعد إضافة البوست
-        requireActivity().supportFragmentManager.popBackStack()
-    }
-
-    private fun saveImageToGallery(bitmap: Bitmap): Uri? {
-        val savedImageURL = MediaStore.Images.Media.insertImage(
-            requireContext().contentResolver,
-            bitmap,
-            "Post_Image_${System.currentTimeMillis()}",
-            "Image taken for post"
-        )
-        return savedImageURL?.toUri()
-    }
-
-    private fun getCurrentTime(): Long {
-        return Date().time
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

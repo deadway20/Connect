@@ -1,5 +1,6 @@
 package com.coder_x.connect
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.text.format.DateUtils
 import android.view.View
@@ -11,6 +12,8 @@ import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.databinding.ItemCreatePostBinding
 import com.coder_x.connect.databinding.ItemPostBinding
 import java.util.Date
+import android.util.Base64
+
 
 
 class PostAdapter(
@@ -102,18 +105,17 @@ class PostAdapter(
                 val binding = (holder as PostViewHolder).binding
                 val post = item.postEntity
 
-                if(!post.postImagePath.isNullOrEmpty()){
-                    try{
-                        binding.imageProfile.setImageURI(post.postImagePath.toUri())
-                    }catch (e: Exception){
-                        binding.imageProfile.setImageResource(R.drawable.emp_img)
-                    }
-                }else{
-                    val context = holder.itemView.context
-                    val prefsHelper = SharedPrefsHelper(context)
-                    prefsHelper.getEmpImagePath()?.let {
-                    }
+                val prefsHelper = SharedPrefsHelper(holder.itemView.context)
+                val bitmap = prefsHelper.getEmployeeImage()
+
+                if (!post.employeeImage.isNullOrEmpty()) {
+                    val decodedBytes = Base64.decode(post.employeeImage, Base64.DEFAULT)
+                    val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+                    binding.imageProfile.setImageBitmap(bitmap)
+                } else {
+                    binding.imageProfile.setImageResource(R.drawable.emp_img)
                 }
+
 
                 binding.tvEmployeeName.text = post.employeeName
                 binding.tvEmployeeId.text = "#${post.employeeId}"
