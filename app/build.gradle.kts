@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.jtds)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.glide)
+    implementation(libs.squareup.picasso)
     implementation(libs.material.calendar.view)
     implementation(libs.androidx.ui.text.android)
     implementation(libs.ucrop)

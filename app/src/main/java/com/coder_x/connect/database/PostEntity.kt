@@ -15,7 +15,5 @@ data class PostEntity(
     val likesCount: Int,
     val commentsCount: Int,
     val isLiked: Boolean,
-
-    // جديد: صورة الموظف مشفرة Base64
     val employeeImage: String?
 )

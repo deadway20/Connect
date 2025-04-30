@@ -29,7 +29,7 @@
                 android:layout_height="48dp"
                 android:src="@drawable/emp_img"
                 app:tint="@color/purple_500"
-                android:background="@color/gray"
+                android:background="@color/white"
                 android:scaleType="centerCrop"
                 android:layout_marginEnd="12dp"
                 app:shapeAppearanceOverlay="@style/CircleImageView" />
