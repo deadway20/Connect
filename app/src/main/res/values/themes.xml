@@ -41,7 +41,7 @@
         <item name="boxCornerRadiusBottomStart">12dp</item>
         <item name="boxCornerRadiusTopEnd">12dp</item>
         <item name="boxCornerRadiusTopStart">12dp</item>
-        <item name="boxStrokeColor">@color/outbox_color</item>
+        <item name="boxStrokeColor">@color/outline_color</item>
         <item name="boxStrokeWidth">2dp</item>
 
     </style>

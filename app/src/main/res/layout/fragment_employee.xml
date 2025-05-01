@@ -1,172 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true"
-    android:layoutDirection="locale"
-    tools:context=".EmployeeFragment">
+    android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/top_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/bottom_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
-
-
-    <!-- صورة الموظف -->
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/emp_image"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/img_frame_color"
-        android:clickable="true"
-        android:contentDescription="@string/ico_description"
-        android:focusable="true"
-        android:padding="3dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/emp_img"
-        app:layout_constraintBottom_toTopOf="@id/Emp_name_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/CircleImageView"
-        app:strokeWidth="2dp"
-        tools:ignore="HardcodedText" />
-    <!-- اسم الموظف -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Emp_name_card"
-        style="@style/outBox_style"
-        android:hint="@string/emp_name"
-        app:layout_constraintBottom_toTopOf="@id/emp_mobileNumber_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emp_image">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/EmployeeName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- الموبيل -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emp_mobileNumber_card"
-        style="@style/outBox_style"
-        android:hint="@string/emp_name"
-        app:layout_constraintBottom_toTopOf="@id/emp_depart_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Emp_name_card">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Employee_MobileNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- القسم -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emp_depart_card"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/emp_name"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="@color/outline_color"
-        app:boxStrokeWidth="2dp"
-        app:layout_constraintBottom_toTopOf="@id/emp_workHours"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:layoutDirection="locale"
+        tools:context=".EmployeeFragment">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Employee_Department"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/top_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
 
-    <!-- ساعات العمل -->
-
-    <!-- زر التسجيل -->
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emp_workHours"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/emp_name"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="@color/outline_color"
-        app:boxStrokeWidth="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emp_depart_card">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Employee_WorkHours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/Register_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/header_profile"
-        android:padding="4dp"
-        android:text="@string/register_employee"
-        app:backgroundTint="#79A9CE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emp_workHours" />
-
-    <Button
-        android:id="@+id/FinishBtn"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/header_end"
-        android:text="@string/finsh_btn"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/PreviousBtn"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/header_end"
-        android:text="@string/previous_txt"
-        app:layout_constraintBottom_toBottomOf="@+id/FinishBtn"
-        app:layout_constraintEnd_toStartOf="@+id/FinishBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/FinishBtn" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- صورة الموظف -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/emp_image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/img_frame_color"
+            android:clickable="true"
+            android:contentDescription="@string/ico_description"
+            android:focusable="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/emp_img"
+            app:layout_constraintBottom_toTopOf="@id/Emp_name_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_guideline"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            app:strokeWidth="2dp"
+            tools:ignore="HardcodedText" />
+        <!-- اسم الموظف -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/Emp_name_card"
+            style="@style/outBox_style"
+            android:hint="@string/employee_name"
+            app:layout_constraintBottom_toTopOf="@id/emp_mobileNumber_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emp_image">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/EmployeeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- الموبيل -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emp_mobileNumber_card"
+            style="@style/outBox_style"
+            android:hint="@string/mobile_number"
+            app:layout_constraintBottom_toTopOf="@id/emp_depart_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Emp_name_card">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Employee_MobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- القسم -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emp_depart_card"
+            style="@style/outBox_style"
+            android:hint="@string/emp_dapartment_txt"
+            app:layout_constraintBottom_toTopOf="@id/emp_workHours"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Employee_Department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emp_workHours"
+            style="@style/outBox_style"
+            android:hint="@string/work_hours"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emp_depart_card">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Employee_WorkHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- زر التسجيل -->
+        <Button
+            android:id="@+id/Register_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/header_profile"
+            android:padding="4dp"
+            android:text="@string/register_employee"
+            app:backgroundTint="@color/light_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emp_workHours" />
+
+        <Button
+            android:id="@+id/FinishBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/light_blue"
+            android:text="@string/finsh_btn"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/PreviousBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/light_blue"
+            android:text="@string/previous_txt"
+            app:layout_constraintBottom_toBottomOf="@+id/FinishBtn"
+            app:layout_constraintEnd_toStartOf="@+id/FinishBtn"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/FinishBtn"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.databinding.ItemCreatePostBinding
 import com.coder_x.connect.databinding.ItemPostBinding
@@ -111,17 +112,34 @@ class PostAdapter(
 
                 if (!post.employeeImage.isNullOrEmpty()) {
                     try {
-                        val imageBytes = Base64.decode(post.employeeImage, Base64.DEFAULT)
-                        Glide.with(holder.itemView.context)
-                            .asBitmap()
-                            .load(imageBytes)
-                            .into(binding.imageProfile)
+                        // أضف تحقق إضافي من طول البيانات
+                        if (post.employeeImage.length > 100) { // تأكد أن البيانات ليست قصيرة جدًا
+                            Log.d("ImageDebug", "Base64 length: ${post.employeeImage.length}")
+
+                            val imageBytes = Base64.decode(post.employeeImage, Base64.DEFAULT)
+                            Log.d("ImageDebug", "Decoded bytes length: ${imageBytes.size}")
+
+                            Glide.with(holder.itemView.context)
+                                .asBitmap()
+                                .load(imageBytes)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE) // تعطيل الكاش للتجربة
+                                .skipMemoryCache(true) // تعطيل ذاكرة التخزين المؤقت
+                                .placeholder(R.drawable.emp_img)
+                                .error(R.drawable.emp_img)
+                                .into(binding.imageProfile)
+                        } else {
+                            Log.e("ImageDebug", "Base64 data too short!")
+                            binding.imageProfile.setImageResource(R.drawable.emp_img)
+                        }
                     } catch (e: Exception) {
+                        Log.e("ImageDebug", "Error loading image: ${e.message}")
                         binding.imageProfile.setImageResource(R.drawable.emp_img)
                     }
                 } else {
+                    Log.d("ImageDebug", "Employee image is null or empty")
                     binding.imageProfile.setImageResource(R.drawable.emp_img)
                 }
+
 
                 binding.tvEmployeeName.text = post.employeeName
                 binding.tvEmployeeId.text = "#${post.employeeId}"

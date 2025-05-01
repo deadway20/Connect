@@ -13,7 +13,7 @@
     <string name="morning_greeting">Good Mornning ,</string>
     <string name="delays_title">Delays</string>
     <string name="emp_dapartment_txt">Department</string>
-    <string name="register_employee">Register Employee</string>
+    <string name="register_employee">Regist</string>
     <string name="connect_to_server">Connect to Server</string>
     <string name="hours">Hours</string>
     <string name="connect_name">Connect</string>
@@ -40,7 +40,7 @@
     <string name="delays_time">00:00</string>
     <string name="username_hint">Username</string>
     <string name="Next_txt">Next</string>
-    <string name="previous_txt">Previous</string>
+    <string name="previous_txt">Back</string>
     <string name="serverPort_hint">Server Port</string>
     <string name="password_hint">Password</string>
     <string name="save_sql_server_credentials">Save SQL Server Credentials</string>

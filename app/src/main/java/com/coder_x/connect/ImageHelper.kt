@@ -18,6 +18,7 @@ class ImageHelper(private val fragment: Fragment) {
 
     private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var requestCameraPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var cropImageLauncher: ActivityResultLauncher<Intent>
     private var imageUri: Uri? = null
     private var onImageSelectedListener: OnImageSelectedListener? = null
@@ -50,6 +51,20 @@ class ImageHelper(private val fragment: Fragment) {
                 ).show()
             }
         }
+        requestCameraPermissionLauncher = fragment.registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                openCamera()
+            } else {
+                Toast.makeText(
+                    fragment.requireContext(),
+                    "يرجى منح إذن الوصول للكاميرا",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
 
         cropImageLauncher = fragment.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -76,6 +91,29 @@ class ImageHelper(private val fragment: Fragment) {
                 requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
         }
+    }
+
+    fun checkCameraPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                fragment.requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                openCamera()
+            }
+
+            else -> {
+                requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        //  pickImageLauncher.launch(intent)
+
+        Toast.makeText(fragment.requireContext(), "camera not working now", Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun openGallery() {

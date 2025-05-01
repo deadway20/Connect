@@ -16,8 +16,6 @@ import androidx.fragment.app.activityViewModels
 import com.coder_x.connect.database.PostEntity
 import com.coder_x.connect.database.PostViewModel
 import com.coder_x.connect.databinding.FragmentAddPostBinding
-import java.io.ByteArrayOutputStream
-import java.util.Date
 
 class AddPostFragment : Fragment() {
 
@@ -45,7 +43,7 @@ class AddPostFragment : Fragment() {
     }
 
     private fun setupViews() {
-        prefsHelper.getEmployeeImageAsBase64()?.let { imagePath ->
+        prefsHelper.getEmployeeImageUri()?.let { imagePath ->
             try {
                 binding.employeeImage.setImageURI(imagePath.toUri())
             } catch (e: Exception) {
@@ -115,7 +113,7 @@ class AddPostFragment : Fragment() {
         val employeeName = prefsHelper.getEmployeeName()
         val employeeId = prefsHelper.getEmployeeId()
         val postText = binding.addPostText.text.toString()
-        val empImageBase64 = prefsHelper.getEmployeeImageAsBase64()
+        val empImageBase64 = prefsHelper.getEmployeeImageUri()
 
         // هنا نضيف كود التحقق
         Log.d("AddPostFragment", "Employee Image Base64: ${empImageBase64?.take(20)}...")

@@ -8,7 +8,7 @@ plugins {
 android {
     signingConfigs {
         getByName("debug") {
-            storeFile = file("/home/user/Downloads/Coder-x.jks")
+            storeFile = file("D:\\#workspac#\\Key_store\\Coder-x.jks")
             storePassword = "Yousef511?"
             keyAlias = "key0"
             keyPassword = "Yousef511?"
