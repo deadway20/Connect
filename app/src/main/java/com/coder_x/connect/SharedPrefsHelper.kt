@@ -5,6 +5,8 @@ package com.coder_x.connect
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
 import androidx.core.content.edit
@@ -27,8 +29,8 @@ class SharedPrefsHelper(context: Context) {
         private const val COMPLETED = "isSetupCompleted"
         private const val USERNAME = "sa"
         private const val PASSWORD = "12345678"
-        private const val EMP_IMG = "employee_image_key"
-        private const val KEY_EMP_IMAGE_PATH = "emp_image_path"
+        private const val EMP_IMG_URI_KEY = "employee_image_uri"
+        private const val EMP_IMG_BASE64_KEY = "employee_image_base64"
         private const val MY_LANG = "SetLang"
         private const val MY_THEME = "SetTheme"
 
@@ -105,25 +107,71 @@ class SharedPrefsHelper(context: Context) {
         return sharedPreferences.getInt(EMP_HOURS_KEY, -1)
     }
 
-    //🔹 تخزين الصورة كـ Base64 String
 
-    fun putEmpImg(img: Bitmap) {
+
+    /**
+     * حفظ صورة كـ Base64 في SharedPreferences
+     * @param bitmap صورة الموظف
+     * @return Base64 string إذا تم التحويل بنجاح، أو null في حالة الفشل
+     */
+    fun saveEmployeeImageAsBitmap(bitmap: Bitmap): String? {
         try {
             val byteArrayOutputStream = ByteArrayOutputStream()
-            img.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            // استخدام JPEG للحصول على حجم أصغر، جودة 80% كافية للصور
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
             val encoded = Base64.encodeToString(byteArray, Base64.DEFAULT)
-            Log.d("putEmpImg", "Encoded Base64: ${encoded.take(20)}...")
-            sharedPreferences.edit { putString(EMP_IMG, encoded) }
+
+            // حفظ في SharedPreferences
+            sharedPreferences.edit { putString(EMP_IMG_BASE64_KEY, encoded) }
+            Log.d("SharedPrefsHelper", "صورة محفوظة كـ Base64: ${encoded.take(20)}...")
+
+            return encoded
         } catch (e: Exception) {
-            Log.e("putEmpImg", "Error saving image", e)
+            Log.e("SharedPrefsHelper", "خطأ في حفظ الصورة كـ Base64", e)
+            return null
         }
     }
 
-    // 🔹 لاستعادة الصورة من بعد تخزينها
-    fun getEmployeeImage(): Bitmap? {
+    /**
+     * حفظ مسار صورة Uri وتحويلها إلى Base64 في نفس الوقت
+     * @param context السياق
+     * @param uri مسار الصورة
+     * @return Base64 string إذا تم التحويل بنجاح، أو null في حالة الفشل
+     */
+    fun saveEmployeeImageFromUri(context: Context, uri: Uri): String? {
         try {
-            val encoded = sharedPreferences.getString(EMP_IMG, null)
+            // حفظ مسار Uri
+            val uriString = uri.toString()
+            sharedPreferences.edit { putString(EMP_IMG_URI_KEY, uriString) }
+
+            // تحويل Uri إلى Bitmap ثم إلى Base64
+            val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+            return saveEmployeeImageAsBitmap(bitmap)
+
+        } catch (e: Exception) {
+            Log.e("SharedPrefsHelper", "خطأ في حفظ صورة Uri", e)
+            return null
+        }
+    }
+
+    /**
+     * الحصول على صورة الموظف كـ Base64 string
+     * @return Base64 string أو null إذا لم تكن موجودة
+     */
+    fun getEmployeeImageAsBase64(): String? {
+        val encoded = sharedPreferences.getString(EMP_IMG_BASE64_KEY, null)
+        Log.d("SharedPrefsHelper", "استعادة صورة Base64: ${encoded?.take(20) ?: "null"}...")
+        return encoded
+    }
+
+    /**
+     * الحصول على صورة الموظف كـ Bitmap
+     * @return Bitmap أو null إذا لم تكن موجودة
+     */
+    fun getEmployeeImageAsBitmap(): Bitmap? {
+        try {
+            val encoded = getEmployeeImageAsBase64()
             if (encoded != null) {
                 val decodedBytes = Base64.decode(encoded, Base64.DEFAULT)
                 return android.graphics.BitmapFactory.decodeByteArray(
@@ -134,25 +182,23 @@ class SharedPrefsHelper(context: Context) {
             }
             return null
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("SharedPrefsHelper", "خطأ في استعادة الصورة كـ Bitmap", e)
             return null
         }
     }
 
-    fun getEmployeeImageBase64(): String? {
-        val encoded = sharedPreferences.getString(EMP_IMG, null)
-        Log.d("getEmployeeImageBase64", "Key: $EMP_IMG, Value: $encoded")
-        return encoded
+    /**
+     * الحصول على مسار صورة الموظف كـ Uri string
+     */
+    fun getEmployeeImageUri(): String? {
+        return sharedPreferences.getString(EMP_IMG_URI_KEY, null)
     }
 
-    //🔹 دالة لحفظ مسار صورة الموظف
-    fun putEmpImagePath(path: String) {
-        sharedPreferences.edit() { putString(KEY_EMP_IMAGE_PATH, path) }
-    }
-
-    //🔹 دالة لاسترجاع مسار صورة الموظف (مفيدة في المستقبل)
-    fun getEmpImagePath(): String? {
-        return sharedPreferences.getString(KEY_EMP_IMAGE_PATH, null)
+    /**
+     * دالة مساعدة للتحقق من وجود صورة للموظف بأي تنسيق
+     */
+    fun hasEmployeeImage(): Boolean {
+        return getEmployeeImageAsBase64() != null || getEmployeeImageUri() != null
     }
     // 🔹 لمسح جميع البيانات المحفوظة
     fun clearPrefs() {

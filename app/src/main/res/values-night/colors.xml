@@ -34,10 +34,11 @@
     <color name="transparent">#00FFFFFF</color>
 
 
-    <!-- Dark Theme Colors -->
-    <color name="background">#121212</color>
-    <color name="card_background">#202020</color>
-    <color name="text_primary">#E9FAFD</color>
+
+      <!-- Dark Theme Colors -->
+    <color name="background">#18191A</color>
+    <color name="card_background">#242526</color>
+    <color name="text_primary">#E4E6EB</color>
     <color name="text_secondary">#000000</color>
     <color name="header_start">#1565C0</color>
     <color name="header_end">#1976D2</color>

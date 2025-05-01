@@ -46,7 +46,7 @@ class MainFragment : Fragment() {
         getCurrentDate()
         getDataFromServer()
         applyTheme()
-        displayEmpInfo(prefsHelper.getEmployeeName(), prefsHelper.getEmpImagePath())
+        displayEmpInfo(prefsHelper.getEmployeeName(), prefsHelper.getEmployeeImageUri())
         checkInButton(binding.clockInBtn)
         checkOutButton(binding.clockOutBtn)
         return binding.root

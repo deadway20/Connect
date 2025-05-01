@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +45,7 @@ class AddPostFragment : Fragment() {
     }
 
     private fun setupViews() {
-        prefsHelper.getEmpImagePath()?.let { imagePath ->
+        prefsHelper.getEmployeeImageAsBase64()?.let { imagePath ->
             try {
                 binding.employeeImage.setImageURI(imagePath.toUri())
             } catch (e: Exception) {
@@ -116,7 +115,7 @@ class AddPostFragment : Fragment() {
         val employeeName = prefsHelper.getEmployeeName()
         val employeeId = prefsHelper.getEmployeeId()
         val postText = binding.addPostText.text.toString()
-        val empImageBase64 = prefsHelper.getEmpImagePath()
+        val empImageBase64 = prefsHelper.getEmployeeImageAsBase64()
 
         // هنا نضيف كود التحقق
         Log.d("AddPostFragment", "Employee Image Base64: ${empImageBase64?.take(20)}...")
@@ -147,36 +146,11 @@ class AddPostFragment : Fragment() {
         return savedImageURL?.toUri()
     }
 
-    private fun getCurrentTime(): Long {
-        return Date().time
-    }
-
     private fun checkAddPostButtonEnable() {
         if (isTextAdded || postImagePath != null) {
             binding.addPostBtn.isEnabled = true
         } else {
             binding.addPostBtn.isEnabled = false
-        }
-    }
-
-    private fun convertUriToBase64(uriString: String): String? {
-        return try {
-            val uri = uriString.toUri()
-            val originalBitmap =
-                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
-
-            // تغيير تنسيق البكسل إذا لزم الأمر (لتجنب الألوان الخاطئة)
-            val fixedBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true)
-
-            // ضغط الصورة بتنسيق JPEG (بدون خلفية شفافة)
-            val outputStream = ByteArrayOutputStream()
-            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream) // 70% جودة
-            val compressedBytes = outputStream.toByteArray()
-
-            Base64.encodeToString(compressedBytes, Base64.NO_WRAP)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
         }
     }
 

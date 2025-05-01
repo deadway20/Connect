@@ -6,6 +6,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("/home/user/Downloads/Coder-x.jks")
+            storePassword = "Yousef511?"
+            keyAlias = "key0"
+            keyPassword = "Yousef511?"
+        }
+    }
     namespace = "com.coder_x.connect"
     compileSdk = 35
 

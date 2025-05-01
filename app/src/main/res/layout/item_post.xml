@@ -8,6 +8,7 @@
     app:cardElevation="4dp"
     android:clickable="true"
     android:focusable="true"
+    android:background="@color/card_background"
     app:rippleColor="?attr/colorControlHighlight">
 
     <LinearLayout

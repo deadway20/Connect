@@ -37,7 +37,7 @@ class EditProfileActivity : AppCompatActivity() {
         viewDirection(binding.view)
 
         // استرجاع صورة الموظف
-        val imagePath = prefsHelper.getEmpImagePath()
+        val imagePath = prefsHelper.getEmployeeImageUri()
         if (imagePath != null) {
             try {
                 // تحويل URI إلى Bitmap
@@ -57,7 +57,7 @@ class EditProfileActivity : AppCompatActivity() {
         var empID = prefsHelper.getEmployeeId()
         var empDepartment = prefsHelper.getEmpDepartment()
         var mobileNumber = prefsHelper.getMobileNumber()
-        var empImagePath = prefsHelper.getEmpImagePath()
+        var empImagePath = prefsHelper.getEmployeeImageUri()
 
         binding.employeeNameEditText.setText(empName)
         binding.departmentEditText.setText(empDepartment)

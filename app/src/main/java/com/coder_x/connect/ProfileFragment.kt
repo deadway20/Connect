@@ -36,7 +36,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupViews() {
-        val imagePath = prefsHelper.getEmpImagePath()
+        val imagePath = prefsHelper.getEmployeeImageUri()
         if (imagePath != null) {
             try {
                 binding.employeeImage.setImageURI(imagePath.toUri())
