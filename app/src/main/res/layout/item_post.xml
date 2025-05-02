@@ -29,9 +29,9 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/emp_img"
-                app:tint="@color/purple_500"
                 android:background="@color/white"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:layout_marginEnd="12dp"
                 app:shapeAppearanceOverlay="@style/CircleImageView" />
 
@@ -71,7 +71,8 @@
             android:id="@+id/post_text"
             android:layout_marginTop="8dp"
             android:text="صلي على الحبيب قلبك يطيب ❤️"
-            android:textSize="15sp"
+            android:textSize="16sp"
+            android:lineSpacingExtra="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -81,9 +82,10 @@
         <ImageView
             android:id="@+id/post_image"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/image_1"
             android:visibility="visible" />
 

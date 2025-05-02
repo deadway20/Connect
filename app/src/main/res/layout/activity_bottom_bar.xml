@@ -44,7 +44,7 @@
         android:backgroundTint="@color/light_blue"
         android:src="@drawable/home_24px"
         android:contentDescription="@string/ico_description"
-        app:tint="@android:color/black"
+        app:tint="@color/text_secondary"
         app:elevation="8dp"
         android:translationZ="20dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomNavigation"
