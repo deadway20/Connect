@@ -100,7 +100,7 @@ class EmployeeFragment : Fragment(), ImageHelper.OnImageSelectedListener {
 
         // إضافة التحقق من وجود صورة
         if (imageUri != null) {
-            prefsHelper.putEmployeeImageFromUri(requireContext(), imageUri!!)
+            prefsHelper.putEmployeeImage(requireContext(), imageUri!!)
         }
 
         // إدراج بيانات الموظف في قاعدة البيانات
@@ -125,6 +125,6 @@ class EmployeeFragment : Fragment(), ImageHelper.OnImageSelectedListener {
         binding.RegisterBtn.visibility = View.VISIBLE
 
         // استخدام الدالة الجديدة لحفظ الصورة كـ Uri وBase64 معًا
-        prefsHelper.putEmployeeImageFromUri(requireContext(), uri)
+        prefsHelper.putEmployeeImage(requireContext(), uri)
     }
 }

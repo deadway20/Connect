@@ -41,7 +41,7 @@ class EditProfileActivity : AppCompatActivity() {
         if (imagePath != null) {
             try {
                 // تحويل URI إلى Bitmap
-                val imageUri = imagePath.toUri()
+                val imageUri = imagePath
                 binding.employeeImage.setImageURI(imageUri)
 
 
@@ -63,7 +63,7 @@ class EditProfileActivity : AppCompatActivity() {
         binding.departmentEditText.setText(empDepartment)
         binding.mobileEditText.setText(mobileNumber)
         if (empImagePath != null) {
-            binding.employeeImage.setImageURI(empImagePath.toUri())
+            binding.employeeImage.setImageURI(empImagePath)
         }
 
 

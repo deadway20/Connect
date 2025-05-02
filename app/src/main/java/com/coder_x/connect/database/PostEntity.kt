@@ -15,5 +15,5 @@ data class PostEntity(
     val likesCount: Int,
     val commentsCount: Int,
     val isLiked: Boolean,
-    val employeeImage: String?
+    val employeeImage: String? = null
 )

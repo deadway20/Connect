@@ -18,6 +18,8 @@ import com.coder_x.connect.databinding.FragmentProfileBinding
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var prefsHelper: SharedPrefsHelper
+    private lateinit var imageHelper: ImageHelper
+
     private var languageChanged = false
     private var initialSetup = true
 
@@ -27,6 +29,7 @@ class ProfileFragment : Fragment() {
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         prefsHelper = SharedPrefsHelper(requireContext())
+        imageHelper = ImageHelper(this)
 
         setupViews()
         setupLanguageSpinner()
@@ -39,7 +42,7 @@ class ProfileFragment : Fragment() {
         val imagePath = prefsHelper.getEmployeeImageUri()
         if (imagePath != null) {
             try {
-                binding.employeeImage.setImageURI(imagePath.toUri())
+                imageHelper.loadEmployeeImageInto(binding.employeeImage, requireContext())
             } catch (e: Exception) {
                 Log.e("ProfileFragment", "Error loading image: ${e.message}")
                 binding.employeeImage.setImageResource(R.drawable.emp_img)

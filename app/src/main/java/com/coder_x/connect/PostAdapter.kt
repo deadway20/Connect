@@ -21,6 +21,8 @@ class PostAdapter(
     private val listener: OnSocialActionListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private lateinit var imageHelper: ImageHelper
+
     companion object {
         const val TYPE_EMPLOYEE_STATUS = 0
         const val TYPE_CREATE_POST = 1
@@ -53,9 +55,7 @@ class PostAdapter(
 
             TYPE_CREATE_POST -> {
                 val binding = ItemCreatePostBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
                 CreatePostViewHolder(binding)
             }
@@ -92,7 +92,7 @@ class PostAdapter(
                 val imagePath = prefsHelper.getEmployeeImageUri()
                 if (imagePath != null) {
                     try {
-                        binding.profileImage.setImageURI(imagePath.toUri())
+                        binding.profileImage.setImageURI(imagePath)
                     } catch (e: Exception) {
                         binding.profileImage.setImageResource(R.drawable.emp_img)
                     }
@@ -106,35 +106,28 @@ class PostAdapter(
                 val post = item.postEntity
                 // هنا نضيف كود التحقق
                 Log.d(
-                    "PostAdapter",
-                    "Post Employee Image Base64: ${post.employeeImage?.take(20)}..."
+                    "PostAdapter", "Post Employee Image Base64: ${post.employeeImage?.take(20)}..."
                 )
-
                 if (!post.employeeImage.isNullOrEmpty()) {
-                    try {
-                        // أضف تحقق إضافي من طول البيانات
-                        if (post.employeeImage.length > 100) { // تأكد أن البيانات ليست قصيرة جدًا
-                            Log.d("ImageDebug", "Base64 length: ${post.employeeImage.length}")
-
-                            val imageBytes = Base64.decode(post.employeeImage, Base64.DEFAULT)
-                            Log.d("ImageDebug", "Decoded bytes length: ${imageBytes.size}")
-
+                    // أضف تحقق إضافي من طول البيانات
+                    val base64 = post.employeeImage
+                    if (base64.isNotEmpty() && base64.length > 100) {
+                        try {
+                            val imageBytes = Base64.decode(base64, Base64.DEFAULT)
                             Glide.with(holder.itemView.context)
                                 .asBitmap()
                                 .load(imageBytes)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) // تعطيل الكاش للتجربة
-                                .skipMemoryCache(true) // تعطيل ذاكرة التخزين المؤقت
                                 .placeholder(R.drawable.emp_img)
                                 .error(R.drawable.emp_img)
                                 .into(binding.imageProfile)
-                        } else {
-                            Log.e("ImageDebug", "Base64 data too short!")
+                        } catch (e: Exception) {
+                            Log.e("ImageDebug", "Decoding failed: ${e.message}")
                             binding.imageProfile.setImageResource(R.drawable.emp_img)
                         }
-                    } catch (e: Exception) {
-                        Log.e("ImageDebug", "Error loading image: ${e.message}")
+                    } else {
                         binding.imageProfile.setImageResource(R.drawable.emp_img)
                     }
+
                 } else {
                     Log.d("ImageDebug", "Employee image is null or empty")
                     binding.imageProfile.setImageResource(R.drawable.emp_img)
@@ -145,7 +138,9 @@ class PostAdapter(
                 binding.tvEmployeeId.text = "#${post.employeeId}"
 
                 val now = Date()
-                val timeAgo = DateUtils.getRelativeTimeSpanString(post.postTime, now.time, DateUtils.MINUTE_IN_MILLIS)
+                val timeAgo = DateUtils.getRelativeTimeSpanString(
+                    post.postTime, now.time, DateUtils.MINUTE_IN_MILLIS
+                )
                 binding.tvPostTime.text = timeAgo
 
                 binding.postText.text = post.postText
@@ -154,7 +149,8 @@ class PostAdapter(
 
                 if (!post.postImagePath.isNullOrEmpty()) {
                     binding.postImage.visibility = View.VISIBLE
-                    Glide.with(holder.itemView.context).load(post.postImagePath).into(binding.postImage)
+                    Glide.with(holder.itemView.context).load(post.postImagePath)
+                        .into(binding.postImage)
                 } else {
                     binding.postImage.visibility = View.GONE
                 }

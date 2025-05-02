@@ -113,7 +113,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/comments_ico6"
+                android:src="@drawable/comments_ico"
                 android:layout_marginEnd="6dp" />
 
             <TextView

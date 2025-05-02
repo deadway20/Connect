@@ -22,6 +22,7 @@ class AddPostFragment : Fragment() {
     private lateinit var binding: FragmentAddPostBinding
     private lateinit var prefsHelper: SharedPrefsHelper
     private val postViewModel: PostViewModel by activityViewModels()
+    private lateinit var imageHelper: ImageHelper
 
     private var postImagePath: String? = null
     private var isTextAdded = false
@@ -35,6 +36,7 @@ class AddPostFragment : Fragment() {
     ): View {
         binding = FragmentAddPostBinding.inflate(inflater, container, false)
         prefsHelper = SharedPrefsHelper(requireContext())
+        imageHelper = ImageHelper(this)
 
         setupViews()
         setupListeners()
@@ -43,14 +45,8 @@ class AddPostFragment : Fragment() {
     }
 
     private fun setupViews() {
-        prefsHelper.getEmployeeImageUri()?.let { imagePath ->
-            try {
-                binding.employeeImage.setImageURI(imagePath.toUri())
-            } catch (e: Exception) {
-                binding.employeeImage.setImageResource(R.drawable.emp_img)
-            }
-        } ?: binding.employeeImage.setImageResource(R.drawable.emp_img)
 
+        imageHelper.loadEmployeeImageInto( binding.employeeImage, requireContext())
         binding.employeeName.text = prefsHelper.getEmployeeName()
         binding.addPostText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus && binding.addPostText.text.isNotEmpty()) {
@@ -113,10 +109,7 @@ class AddPostFragment : Fragment() {
         val employeeName = prefsHelper.getEmployeeName()
         val employeeId = prefsHelper.getEmployeeId()
         val postText = binding.addPostText.text.toString()
-        val empImageBase64 = prefsHelper.getEmployeeImageUri()
-
-        // هنا نضيف كود التحقق
-        Log.d("AddPostFragment", "Employee Image Base64: ${empImageBase64?.take(20)}...")
+        val imageBase64 = prefsHelper.getEmployeeImageBase64() ?: ""
 
         val post = PostEntity(
             employeeName = employeeName,
@@ -127,7 +120,7 @@ class AddPostFragment : Fragment() {
             likesCount = 0,
             commentsCount = 0,
             isLiked = false,
-            employeeImage = empImageBase64
+            employeeImage = imageBase64
         )
 
         postViewModel.insert(post)

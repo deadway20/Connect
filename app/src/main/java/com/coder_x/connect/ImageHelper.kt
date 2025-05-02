@@ -2,10 +2,12 @@ package com.coder_x.connect
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.MediaStore
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.yalantis.ucrop.UCrop
 import java.io.File
+import androidx.core.net.toUri
 
 class ImageHelper(private val fragment: Fragment) {
 
@@ -143,5 +146,21 @@ class ImageHelper(private val fragment: Fragment) {
 
     interface OnImageSelectedListener {
         fun onImageSelected(uri: Uri)
+    }
+
+    fun loadEmployeeImageInto(imageView: ImageView, context: Context) {
+        val prefsHelper = SharedPrefsHelper(context)
+        val bitmap = prefsHelper.getEmployeeImageBitmap()
+        if (bitmap != null) {
+            imageView.setImageBitmap(bitmap)
+        } else {
+            val uriStr = prefsHelper.getEmployeeImageUri()
+            if (uriStr != null) {
+                val uri = uriStr.toString().toUri()
+                imageView.setImageURI(uri)
+            } else {
+                imageView.setImageResource(R.drawable.emp_img)
+            }
+        }
     }
 }
