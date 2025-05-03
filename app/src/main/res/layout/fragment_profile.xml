@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:layoutDirection="locale"
-    android:fitsSystemWindows="true"
     android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:layoutDirection="locale"
     tools:context=".ProfileFragment">
 
 
@@ -18,48 +18,48 @@
         android:layout_height="250dp"
         android:scaleType="fitXY"
         android:src="@drawable/profile_header"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Toolbar -->
     <LinearLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="78dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/back_btn"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:src="@drawable/back_btn"
-            android:scaleType="fitXY" />
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_btn" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:layout_weight="1"
-            android:text="Profile"
+            android:layout_height="38dp"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/text_secondary"
-            android:textSize="20sp"
             android:maxHeight="44dp"
+            android:text="@string/profile_title"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/message_btn"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:src="@drawable/message_btn"
-            android:scaleType="fitXY" />
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/message_btn" />
     </LinearLayout>
 
     <!-- بطاقة الموظف -->
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="@id/profile_header">
 
         <!-- الاسم و ID -->
-        <!-- كارت الإعدادات -->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,6 +108,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- كارت الإعدادات -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/settings_card"
             android:layout_width="match_parent"
@@ -342,13 +343,13 @@
         android:id="@+id/employee_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="100dp"
+        android:elevation="10dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
-        android:elevation="10dp"
-        android:layout_marginTop="100dp"
-        app:shapeAppearanceOverlay="@style/cr50"
-        app:layout_constraintTop_toTopOf="@id/profile_header"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/profile_header"
+        app:shapeAppearanceOverlay="@style/cr50" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

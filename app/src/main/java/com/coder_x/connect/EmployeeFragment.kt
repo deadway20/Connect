@@ -12,12 +12,12 @@ import com.coder_x.connect.databinding.FragmentEmployeeBinding
 
 class EmployeeFragment : Fragment(), ImageHelper.OnImageSelectedListener {
     private lateinit var binding: FragmentEmployeeBinding
+    private lateinit var prefsHelper: SharedPrefsHelper
+    private lateinit var imageHelper: ImageHelper
     private lateinit var empName: String
     private lateinit var empDepartment: String
     private lateinit var empMobile: String
     private var workHours: Int = 0
-    private lateinit var prefsHelper: SharedPrefsHelper
-    private lateinit var imageHelper: ImageHelper
     private var imageUri: Uri? = null
 
     override fun onCreateView(
@@ -27,9 +27,9 @@ class EmployeeFragment : Fragment(), ImageHelper.OnImageSelectedListener {
 
         // تأكد من تهيئة prefsHelper
         prefsHelper = SharedPrefsHelper(requireContext())
-
         imageHelper = ImageHelper(this)
         imageHelper.setOnImageSelectedListener(this)
+
 
         binding.empImage.setOnClickListener {
             imageHelper.checkGalleryPermission()

@@ -12,13 +12,14 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.yalantis.ucrop.UCrop
 import java.io.File
-import androidx.core.net.toUri
 
 class ImageHelper(private val fragment: Fragment) {
-
+    private val context: Context = fragment.requireContext()
+    private lateinit var prefsHelper: SharedPrefsHelper
     private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var requestCameraPermissionLauncher: ActivityResultLauncher<String>
@@ -162,5 +163,12 @@ class ImageHelper(private val fragment: Fragment) {
                 imageView.setImageResource(R.drawable.emp_img)
             }
         }
+    }
+
+    fun pickImageFromGallery() {
+
+        TODO("make pick image from gallery function")
+
+
     }
 }

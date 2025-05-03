@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,81 +8,80 @@
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:layoutDirection="locale"
-    tools:context=".EditProfileActivity">
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/profile_header"
+    tools:context=".EditProfileFragment">
 
-
-    <!-- صورة الهيدر -->
-    <ImageView
-        android:id="@+id/profile_header"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/profile_header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Toolbar -->
-    <LinearLayout
-        android:id="@+id/toolbar_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="78dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
+
+        <!-- صورة الهيدر -->
         <ImageView
-            android:id="@+id/back_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/back_btn" />
-
-        <TextView
+            android:id="@+id/profile_header"
             android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:maxHeight="44dp"
-            android:text="@string/profile_title"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/message_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_height="250dp"
             android:scaleType="fitXY"
-            android:src="@drawable/message_btn" />
-    </LinearLayout>
+            android:src="@drawable/profile_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profile_header">
+        <!-- Toolbar -->
+        <LinearLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="78dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="left"
+                android:src="@drawable/back_btn"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxHeight="44dp"
+                android:text="@string/profile_title"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
         <!-- بطاقة الموظف -->
         <LinearLayout
             android:id="@+id/employee_info_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="120dp"
             android:background="@drawable/profile_card"
             android:orientation="vertical"
             android:paddingStart="8dp"
             android:paddingTop="60dp"
             android:paddingEnd="8dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <LinearLayout
@@ -163,52 +162,51 @@
                     app:backgroundTint="#79A9CE" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 
-    <!-- صورة الموظف -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/imageContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layoutDirection="ltr"
-        android:contentDescription="employee_img"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/profile_header"
-        app:shapeAppearanceOverlay="@style/cr50">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/employee_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+        <!-- صورة الموظف -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/imageContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
             android:contentDescription="employee_img"
-            android:background="@color/text_primary"
-            android:padding="6dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"
-            app:strokeWidth="2dp"
-            android:elevation="10dp"
-            tools:ignore="HardcodedText"
+            android:layoutDirection="ltr"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImageView" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/profile_header"
+            app:shapeAppearanceOverlay="@style/cr50">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/edit_image"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_pen"
-            android:translationZ="8dp"
-            android:elevation="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/employee_image"
-            app:layout_constraintEnd_toEndOf="@+id/employee_image"
-            app:shapeAppearanceOverlay="@style/CircleImageView"
-            app:tint="@color/purple_500" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/employee_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@color/text_primary"
+                android:contentDescription="employee_img"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/CircleImageView"
+                app:strokeWidth="2dp"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/edit_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:elevation="1dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pen_edit_ico2"
+                android:translationZ="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/employee_image"
+                app:layout_constraintEnd_toEndOf="@+id/employee_image"
+                app:shapeAppearanceOverlay="@style/CircleImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

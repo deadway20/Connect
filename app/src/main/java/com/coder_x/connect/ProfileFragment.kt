@@ -11,14 +11,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.coder_x.connect.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var prefsHelper: SharedPrefsHelper
     private lateinit var imageHelper: ImageHelper
+    private lateinit var fragmentManager: FragmentManager
 
     private var languageChanged = false
     private var initialSetup = true
@@ -30,6 +31,7 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         prefsHelper = SharedPrefsHelper(requireContext())
         imageHelper = ImageHelper(this)
+        fragmentManager = requireActivity().supportFragmentManager
 
         setupViews()
         setupLanguageSpinner()
@@ -119,10 +121,12 @@ class ProfileFragment : Fragment() {
     private fun applyClickListeners() {
         binding.apply {
             editProfileArrow.setOnClickListener {
-                startActivity(Intent(requireContext(), EditProfileActivity::class.java))
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, EditProfileFragment()).commit()
             }
             editProfileText.setOnClickListener {
-                startActivity(Intent(requireContext(), EditProfileActivity::class.java))
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, EditProfileFragment()).commit()
             }
             serverSettingArrow.setOnClickListener {
                 startActivity(

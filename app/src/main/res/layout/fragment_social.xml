@@ -20,6 +20,7 @@
             android:id="@+id/back_btn"
             android:layout_width="38dp"
             android:layout_height="38dp"
+            android:contentDescription="back_btn"
             android:scaleType="fitXY"
             android:src="@drawable/back_btn" />
 
@@ -59,12 +60,12 @@
         android:id="@+id/fabAddPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:layoutDirection="rtl"
         android:contentDescription="@string/add_new_post"
         app:backgroundTint="@color/light_blue"
         app:tint="@color/text_secondary"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        tools:ignore="RtlHardcoded" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

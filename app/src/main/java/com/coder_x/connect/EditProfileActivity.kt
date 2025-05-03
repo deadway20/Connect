@@ -1,12 +1,10 @@
 package com.coder_x.connect
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.coder_x.connect.databinding.ActivityEditProfileBinding
 
@@ -16,25 +14,19 @@ class EditProfileActivity : AppCompatActivity() {
     override fun attachBaseContext(baseContext: Context) {
         super.attachBaseContext(LocaleHelper.getLocalizedContext(baseContext))
     }
-
-    private lateinit var prefsHelper: SharedPrefsHelper
     private lateinit var binding: ActivityEditProfileBinding
+    private lateinit var prefsHelper: SharedPrefsHelper
     private lateinit var fragmentManager: FragmentManager
     private lateinit var imageHelper: ImageHelper
-    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding = ActivityEditProfileBinding.inflate(layoutInflater)
+
         prefsHelper = SharedPrefsHelper(this)
         fragmentManager = supportFragmentManager
-
-
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
-        viewDirection(binding.view)
+        imageHelper = ImageHelper(Fragment())
 
         // استرجاع صورة الموظف
         val imagePath = prefsHelper.getEmployeeImageUri()
@@ -43,8 +35,6 @@ class EditProfileActivity : AppCompatActivity() {
                 // تحويل URI إلى Bitmap
                 val imageUri = imagePath
                 binding.employeeImage.setImageURI(imageUri)
-
-
             } catch (e: Exception) {
                 // معالجة الأخطاء المحتملة
                 Log.e("MainActivity", "Error loading image: ${e.message}")
@@ -86,18 +76,4 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-
-    private fun viewDirection(view: View) {
-        prefsHelper = SharedPrefsHelper(this)
-        if (prefsHelper.getLanguage() == "en") {
-            view.rotation = -20f
-            view.pivotX = -50f
-            view.pivotY = 80f
-
-        } else {
-            view.rotation = 20f
-            view.pivotX = 1500f
-            view.pivotY = 80f
-        }
-    }
 }

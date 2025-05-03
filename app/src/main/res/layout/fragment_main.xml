@@ -15,48 +15,48 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/header_background"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Toolbar -->
-    <LinearLayout
-        android:id="@+id/toolbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/toolbar_layout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:paddingHorizontal="16dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <ImageView
-            android:id="@+id/back_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/back_btn" />
+    <!--        <ImageView-->
+    <!--            android:id="@+id/back_btn"-->
+    <!--            android:layout_width="38dp"-->
+    <!--            android:layout_height="38dp"-->
+    <!--            android:scaleType="fitXY"-->
+    <!--            android:src="@drawable/back_btn" />-->
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:maxHeight="44dp"
-            android:text="@string/company_name"
-            android:textColor="@color/text_secondary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <!--        <TextView-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="38dp"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:gravity="center"-->
+    <!--            android:maxHeight="44dp"-->
+    <!--            android:text="@string/company_name"-->
+    <!--            android:textColor="@color/text_secondary"-->
+    <!--            android:textSize="20sp"-->
+    <!--            android:textStyle="bold" />-->
 
-        <ImageView
-            android:id="@+id/message_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_social_notification" />
-    </LinearLayout>
+    <!--        <ImageView-->
+    <!--            android:id="@+id/message_btn"-->
+    <!--            android:layout_width="38dp"-->
+    <!--            android:layout_height="38dp"-->
+    <!--            android:scaleType="fitXY"-->
+    <!--            android:src="@drawable/ic_social_notification" />-->
+    <!--    </LinearLayout>-->
 
     <!-- كارت بيانات الموظف -->
 
@@ -64,8 +64,8 @@
         android:id="@+id/empInfo_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="12dp"
         android:clipChildren="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -105,9 +105,9 @@
             android:layout_marginTop="6dp"
             android:padding="5dp"
             android:text="@string/morning_greeting"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
             app:layout_constraintStart_toEndOf="@+id/employee_image"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,9 +118,9 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="@string/emp_name"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/greeting"
             app:layout_constraintStart_toEndOf="@+id/greeting"
             app:layout_constraintTop_toTopOf="@+id/greeting" />
@@ -142,14 +142,13 @@
 
         <TextView
             android:id="@+id/quotes_text"
-            android:layout_width="250dp"
-            android:layout_height="45dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="1dp"
             android:layout_marginEnd="4dp"
+            android:lineSpacingExtra="6dp"
             android:padding="3dp"
             android:text="Stay positive, work hard, make it happen."
-            android:lineSpacingExtra="6dp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -157,6 +156,17 @@
             app:layout_constraintStart_toEndOf="@+id/employee_image"
             app:layout_constraintTop_toBottomOf="@+id/greeting"
             app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/message_btn"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:scaleType="fitXY"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_social_notification"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
@@ -169,10 +179,10 @@
         android:backgroundTint="@color/card_background"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/attendanceCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/empInfo_card"
-        app:layout_constraintBottom_toTopOf="@id/attendanceCard">
+        app:layout_constraintTop_toBottomOf="@id/empInfo_card">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -344,15 +354,15 @@
         android:id="@+id/attendanceCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginVertical="8dp"
-        app:cardCornerRadius="16dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attendTime_card">
 
 
@@ -407,17 +417,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:paddingVertical="8dp"
                             android:paddingStart="16dp"
-                            android:paddingEnd="16dp"
-                            android:paddingVertical="8dp">
+                            android:paddingEnd="16dp">
 
                             <ImageView
                                 android:id="@+id/overtime_ico"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                app:tint="#2196F3"
                                 android:contentDescription="@string/ico_description"
-                                android:src="@drawable/clock_plus" />
+                                android:src="@drawable/clock_plus"
+                                app:tint="#2196F3" />
 
                             <TextView
                                 android:id="@+id/overtime_txt"
@@ -455,17 +465,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:paddingVertical="8dp"
                             android:paddingStart="16dp"
-                            android:paddingEnd="16dp"
-                            android:paddingVertical="8dp">
+                            android:paddingEnd="16dp">
 
                             <ImageView
                                 android:id="@+id/delays_ico"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                app:tint="#FF9800"
                                 android:contentDescription="@string/ico_description"
-                                android:src="@drawable/clock_minus" />
+                                android:src="@drawable/clock_minus"
+                                app:tint="#FF9800" />
 
                             <TextView
                                 android:id="@+id/delays_txt"
@@ -507,19 +517,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:paddingVertical="8dp"
                             android:paddingStart="16dp"
-                            android:paddingEnd="16dp"
-                            android:paddingVertical="8dp">
+                            android:paddingEnd="16dp">
 
                             <ImageView
                                 android:id="@+id/attend_days_ico"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="start"
-                                app:tint="#4CAF50"
                                 android:contentDescription="@string/ico_description"
                                 android:gravity="center_horizontal"
-                                android:src="@drawable/calendar_plus" />
+                                android:src="@drawable/calendar_plus"
+                                app:tint="#4CAF50" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -534,9 +544,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
-                                android:text="@string/attend_days_count_in_month"
                                 android:layout_marginStart="4dp"
                                 android:layout_marginTop="4dp"
+                                android:text="@string/attend_days_count_in_month"
                                 android:textColor="#4CAF50"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -560,18 +570,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:paddingVertical="8dp"
                             android:paddingStart="16dp"
-                            android:paddingEnd="16dp"
-                            android:paddingVertical="8dp">
+                            android:paddingEnd="16dp">
 
                             <ImageView
                                 android:id="@+id/absence_ico"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                app:tint="#9C27B0"
                                 android:contentDescription="@string/ico_description"
                                 android:gravity="center_horizontal"
-                                android:src="@drawable/calendar_minus" />
+                                android:src="@drawable/calendar_minus"
+                                app:tint="#9C27B0" />
 
                             <TextView
                                 android:id="@+id/absence_txt"
@@ -585,9 +595,9 @@
                                 android:id="@+id/absence_days_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/absence_days_count_in_month"
-                                android:layout_marginTop="4dp"
                                 android:layout_marginStart="4dp"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/absence_days_count_in_month"
                                 android:textColor="#9C27B0"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -627,6 +637,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clock_in_btn"
                 style="@style/MyButtonStyle"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/check_in_btn"
                 android:contentDescription="@string/ico_description"
                 android:fontFamily="@font/marhey_medium"
@@ -637,7 +648,6 @@
                 app:iconGravity="textTop"
                 app:iconSize="45dp"
                 app:iconTint="@color/white"
-                android:layout_marginEnd="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
