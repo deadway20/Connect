@@ -25,6 +25,7 @@
             android:src="@drawable/back_btn" />
 
         <TextView
+            android:id="@+id/topBar_title"
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_gravity="center"

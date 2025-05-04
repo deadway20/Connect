@@ -8,8 +8,8 @@
         android:title="" />
 
     <item
-        android:id="@+id/todoList"
-        android:icon="@drawable/ic_todo_list"
+        android:id="@+id/calendar"
+        android:icon="@drawable/calendar_ico"
         android:title="" />
 
     <item
@@ -23,7 +23,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/calendar"
-        android:icon="@drawable/calendar_ico"
+        android:id="@+id/todoList"
+        android:icon="@drawable/ic_todo_list"
         android:title="" />
 </menu>

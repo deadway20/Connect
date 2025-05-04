@@ -25,11 +25,22 @@ class SocialFragment : Fragment(), PostAdapter.OnSocialActionListener {
     ): View {
         binding = FragmentSocialBinding.inflate(inflater, container, false)
         adapter = PostAdapter(emptyList(), this)
-
         fragmentManager = requireActivity().supportFragmentManager
-
         binding.socialRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.socialRecyclerView.adapter = adapter
+
+        val fontsList = listOf(
+            "angelos",
+            "early_quake",
+            "gladolia_regular",
+            "moldie",
+            "reality_stone",
+        )
+
+        val fontResId =
+            resources.getIdentifier(fontsList.random(), "font", requireContext().packageName)
+        binding.topBarTitle.typeface = resources.getFont(fontResId)
+
 
         postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
