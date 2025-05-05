@@ -1,5 +1,9 @@
 package com.coder_x.connect
 
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Shader
+import android.graphics.Shader.TileMode
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,17 +33,20 @@ class SocialFragment : Fragment(), PostAdapter.OnSocialActionListener {
         binding.socialRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.socialRecyclerView.adapter = adapter
 
-        val fontsList = listOf(
-            "angelos",
-            "early_quake",
-            "gladolia_regular",
-            "moldie",
-            "reality_stone",
-        )
-
         val fontResId =
-            resources.getIdentifier(fontsList.random(), "font", requireContext().packageName)
+            resources.getIdentifier("angelos", "font", requireContext().packageName)
         binding.topBarTitle.typeface = resources.getFont(fontResId)
+        // make gradient text white and blue
+        val paint = binding.topBarTitle.paint
+        val width = paint.measureText(binding.topBarTitle.text.toString())
+        val shader: Shader = LinearGradient(
+            0f, 0f, width, binding.topBarTitle.textSize, intArrayOf(
+                Color.WHITE,
+                Color.BLUE
+            ), null, TileMode.CLAMP
+        )
+        binding.topBarTitle.paint.shader = shader
+
 
 
         postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
