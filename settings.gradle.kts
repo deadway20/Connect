@@ -11,7 +11,7 @@ pluginManagement {
         gradlePluginPortal()
     }
     plugins {
-        id("com.google.devtools.ksp") version "1.9.22-1.0.17" // Use the latest KSP version
+        id("com.google.devtools.ksp") version "2.0.21-1.0.27" // Use the latest KSP version
     }
 }
 
@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // أضف مستودع Jitpack هنا
+        jcenter()
         maven { url = uri("https://jitpack.io") }
     }
 }

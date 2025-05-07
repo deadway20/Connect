@@ -79,7 +79,7 @@
     </style>
 
     <style name="cr50">
-        <item name="cornerSize">50dp</item>
+        <item name="cornerSize">20dp</item>
     </style>
 
 

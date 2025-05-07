@@ -78,4 +78,10 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
+    //sound Graph view Visualizer
+    implementation("com.github.Semantive:waveform-android:v1.2")
+
+    // expandable Calendar view
+    implementation("com.kizitonwose.calendar:view:2.5.0")
 }
