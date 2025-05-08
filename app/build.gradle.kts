@@ -8,7 +8,7 @@ plugins {
 android {
     signingConfigs {
         getByName("debug") {
-            storeFile = file("/home/user/Downloads/Coder-x.jks")
+            storeFile = file("D:\\#workspac#\\Key_store\\Coder-x.jks")
             storePassword = "Yousef511?"
             keyAlias = "key0"
             keyPassword = "Yousef511?"
@@ -61,7 +61,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.glide)
     implementation(libs.squareup.picasso)
-    implementation(libs.material.calendar.view)
     implementation(libs.androidx.ui.text.android)
     implementation(libs.ucrop)
     implementation(libs.androidx.lifecycle.livedata.ktx)
@@ -80,8 +79,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     //sound Graph view Visualizer
-    implementation("com.github.Semantive:waveform-android:v1.2")
+//    implementation(libs.waveform.android)
 
     // expandable Calendar view
-    implementation("com.kizitonwose.calendar:view:2.5.0")
+//    implementation(libs.view)
 }

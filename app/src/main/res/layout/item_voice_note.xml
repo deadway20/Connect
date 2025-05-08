@@ -1,27 +1,26 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp">
+    android:layout_margin="8dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    app:cardCornerRadius="20dp"
+    android:strokeColor="#4DB6AC"
+    android:backgroundTint="#E0F2F1">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/userImage"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_gravity="top"
-        android:scaleType="centerCrop"
-        android:src="@drawable/emp_img"
-        app:shapeAppearanceOverlay="@style/cr50" />
-
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="#E0F2F1"
-        android:strokeColor="#4DB6AC">
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/voice_note_view"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/light_blue" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,9 +56,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
                     android:src="@drawable/play_media_ico"
+                    android:layout_marginEnd="8dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <com.semantive.waveformandroid.waveform.view.WaveformView
@@ -69,6 +67,5 @@
                     android:paddingEnd="4dp" />
             </LinearLayout>
         </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
