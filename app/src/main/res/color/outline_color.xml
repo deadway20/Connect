@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- عند عدم الفوكس -->
-    <item android:color="#79A9CE" android:state_focused="false" android:state_hovered="false" android:state_checked="false" />
+    <item android:color="#79A9CE" android:state_checked="false" android:state_focused="false" android:state_hovered="false" />
 
     <!-- عند الفوكس -->
     <item android:color="#79A9CE" android:state_focused="true" />

@@ -12,57 +12,40 @@
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/userImage"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/emp_img"
             android:layout_gravity="top"
             android:scaleType="centerCrop"
+            android:src="@drawable/emp_img"
             app:shapeAppearanceOverlay="@style/cr50" />
+
         <TextView
             android:id="@+id/helloText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello, Yousef"
-            android:textSize="18sp"
-            android:textColor="#333"
             android:layout_marginStart="12dp"
+            android:text="Hello, Yousef"
+            android:textColor="#333"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Month and arrow -->
-
-        <TextView
-            android:id="@+id/monthText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="May, 2025"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#444"
-            app:drawableEndCompat="arrow_down_ico"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/headerLayout" />
-
-    <!-- Material Calendar View -->
-    <!--    <com.kizitonwose.calendar.view.CalendarView-->
-    <!--        android:id="@+id/calendarView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:padding="8dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/monthSelectorLayout"-->
-    <!--        tools:ignore="SpeakableTextPresentCheck" />-->
+    <FrameLayout
+        android:id="@+id/calendarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"/>
 
 
     <!-- Notes List -->
@@ -74,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/monthText"
+        app:layout_constraintTop_toBottomOf="@id/calendarContainer"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
