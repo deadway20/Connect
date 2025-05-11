@@ -8,7 +8,7 @@ plugins {
 android {
     signingConfigs {
         getByName("debug") {
-            storeFile = file("D:\\#workspac#\\Key_store\\Coder-x.jks")
+            storeFile = file("/home/user/Downloads/Coder-x.jks")
             storePassword = "Yousef511?"
             keyAlias = "key0"
             keyPassword = "Yousef511?"
@@ -79,8 +79,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     //sound Graph view Visualizer
-//    implementation(libs.waveform.android)
+   implementation("com.github.massoudss:waveformSeekBar:5.0.2")
+    implementation("com.github.lincollincol:amplituda:2.2.2")
+
 
     // expandable Calendar view
-//    implementation(libs.view)
+    implementation(libs.view)
 }

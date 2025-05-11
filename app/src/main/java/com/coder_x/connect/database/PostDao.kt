@@ -31,4 +31,7 @@ interface PostDao {
 
     @Query("UPDATE posts SET commentsCount = commentsCount + 1 WHERE id = :postId")
     suspend fun incrementComments(postId: Long)
+
+    @Query("UPDATE posts SET isLiked = :isLiked WHERE id = :postId")
+    suspend fun updateLikeStatus(postId: Long, isLiked: Boolean)
 }
