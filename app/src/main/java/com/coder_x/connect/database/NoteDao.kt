@@ -29,20 +29,30 @@ interface NoteDao {
     @Query("SELECT * FROM notes ORDER BY timestamp DESC")
     fun getAllNotes(): LiveData<List<NoteEntity>>
 
+    @Query("SELECT * FROM notes WHERE date(strftime('%Y-%m-%d', timestamp / 1000, 'unixepoch')) = date(strftime('%Y-%m-%d', :timestamp / 1000, 'unixepoch'))")
+    suspend fun getAllNotesByDate(timestamp: Long): LiveData<List<NoteEntity>>
+
     @Query("SELECT * FROM notes WHERE isCompleted = 0 ORDER BY timestamp DESC")
-    fun getActiveNotes(): LiveData<List<NoteEntity>>
+    suspend fun getActiveNotes(): LiveData<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE isCompleted = 1 ORDER BY timestamp DESC")
-    fun getCompletedNotes(): LiveData<List<NoteEntity>>
+    suspend fun getCompletedNotes(): LiveData<List<NoteEntity>>
 
     @Query("UPDATE notes SET isCompleted = 1 WHERE id = :noteId")
     suspend fun markNoteAsCompleted(noteId: Long)
 
     @Query("UPDATE notes SET isCompleted = 0 WHERE id = :noteId")
-    suspend fun markNoteAsActive(noteId: Long)
+    suspend fun markNoteAsUncompleted(noteId: Long)
 
     @Query("DELETE FROM notes WHERE id = :noteId")
     suspend fun deleteNoteById(noteId: Long)
+
+    @Query("DELETE FROM notes WHERE isCompleted = 1")
+    suspend fun deleteCompletedNotes()
+
+    @Query("DELETE FROM notes WHERE date(strftime('%Y-%m-%d', timestamp / 1000, 'unixepoch')) = :date")
+    suspend fun deleteNotesByDate(date: String)
+
 
     @Query("DELETE FROM notes")
     suspend fun deleteAllNotes()
