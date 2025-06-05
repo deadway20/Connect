@@ -1,0 +1,202 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <!-- ✅ خلفية الأزرار -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/background_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <!-- زر التعديل -->
+            <LinearLayout
+                android:id="@+id/edit_button"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="#8BBA8E"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_pen"
+                    app:tint="@color/theme_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- زر الحذف -->
+            <LinearLayout
+                android:id="@+id/delete_button"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="#FDD6D8"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_delete"
+                    app:tint="@color/theme_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ✅ المحتوى القابل للسحب -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/foreground_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        app:cardCornerRadius="20dp"
+        android:elevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/todoView"
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:background="#4DB6AC" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:id="@+id/voice_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:paddingHorizontal="16dp"
+                        android:text="Yesterday"
+                        android:textColor="@color/text_primary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/voice_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Meeting Recording"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="25dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:button="@drawable/checkbox_custom"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <ImageButton
+                        android:id="@+id/playPause_btn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical|left"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="@color/transparent"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/play_media_ico"
+                        app:tint="@color/theme_color"
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    <com.masoudss.lib.WaveformSeekBar
+                        android:id="@+id/waveformSeekBar"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        app:marker_color="@android:color/holo_red_dark"
+                        app:marker_text_color="@android:color/white"
+                        app:marker_text_padding="4dp"
+                        app:marker_text_size="14sp"
+                        app:marker_width="2dp"
+                        app:wave_background_color="@android:color/darker_gray"
+                        app:wave_corner_radius="4dp"
+                        app:wave_gap="4dp"
+                        app:wave_gravity="center"
+                        app:wave_max_progress="100"
+                        app:wave_min_height="8dp"
+                        app:wave_padding_Bottom="4dp"
+                        app:wave_padding_left="4dp"
+                        app:wave_padding_right="4dp"
+                        app:wave_padding_top="4dp"
+                        app:wave_progress="50"
+                        app:wave_progress_color="@android:color/holo_blue_dark"
+                        app:wave_visible_progress="50"
+                        app:wave_width="6dp" />
+
+                    <TextView
+                        android:id="@+id/voice_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="00:00"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

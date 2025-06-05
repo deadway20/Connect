@@ -7,28 +7,38 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/background">
+
     <!-- Toolbar -->
     <LinearLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:padding="4dp"
         android:orientation="horizontal"
+        android:layoutDirection="ltr"
         android:paddingHorizontal="16dp">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/back_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:contentDescription="back_btn"
-            android:scaleType="fitXY"
-            android:src="@drawable/back_btn" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/arrow_back_ico"
+            android:backgroundTint="@color/transparent"
+            app:tint="@color/theme_color" />
 
         <TextView
             android:id="@+id/topBar_title"
             android:layout_width="0dp"
             android:layout_height="38dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
             android:maxHeight="44dp"
@@ -37,24 +47,32 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/message_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/message_btn" />
+        <ImageButton
+            android:id="@+id/notification_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/notifications_ico"
+            app:tint="@color/theme_color"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
     </LinearLayout>
 
     <!-- RecyclerView that includes all content -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/socialRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="130dp"
         android:clipToPadding="false"
         android:overScrollMode="ifContentScrolls"
         android:scrollbars="vertical"
+        tools:ignore="SpeakableTextPresentCheck"
         tools:listitem="@layout/item_post" />
+    </LinearLayout>
 
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -62,11 +80,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="65dp"
         android:contentDescription="@string/add_new_post"
         app:backgroundTint="@color/light_blue"
+        tools:ignore="RtlHardcoded"
         app:tint="@color/text_secondary"
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="RtlHardcoded" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

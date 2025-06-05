@@ -162,19 +162,8 @@
             android:layout_gravity="bottom"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="4dp">
-
-
-            <ImageButton
-                android:id="@+id/btn_tag_people"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/tag_people"
-                android:scaleType="centerCrop"
-                android:src="@drawable/hashtag" />
+            android:paddingBottom="70dp"
+            android:paddingHorizontal="8dp">
 
             <ImageButton
                 android:id="@+id/btn_take_photo"

@@ -24,8 +24,7 @@
     <color name="lite_pink">#40FFD0FE</color>
     <color name="lite_red">#33D12123</color>
     <color name="lite_orange">#80FF57</color>
-    <color name="light_grey">#424242</color>
-    <color name="light_gray">#B0B0B0</color>
+    <color name="lite_gray">#959494</color>
     <color name="btn_txt_color">#858281</color>
     <color name="img_frame_color">#F0E6E6</color> <!-- لون فاتح للوضع النهاري -->
     <color name="emp_img_tint">#000000</color>
@@ -64,7 +63,11 @@
     <!-- outbox color -->
     <color name="outbox_color">#2196F3</color>
     <color name="light_blue">#6DA8D7</color>
+    <color name="light_green">#84BC85</color>
 
-    
+    <!-- Calendar Colors -->
+    <color name="selected_day_background">#E3F2FD</color>
+    <color name="selected_day_text">#1976D2</color>
+
 
 </resources>

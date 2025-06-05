@@ -182,20 +182,8 @@ class MainFragment : Fragment() {
             binding.quotesText.text = QuotesList.englishQuotes.random()
         }
         // استرجاع صورة الموظف
-        if (empImgPath != null) {
-            try {
-                // تحويل URI إلى Bitmap
-                val imageUri = empImgPath.toUri()
-                binding.employeeImage.setImageURI(imageUri)
-
-
-            } catch (e: Exception) {
-                // معالجة الأخطاء المحتملة
-                Log.e("MainActivity", "Error loading image: ${e.message}")
-                // يمكنك وضع صورة افتراضية في حالة حدوث خطأ
-                binding.employeeImage.setImageResource(R.drawable.emp_img)
-            }
-        }
+        val empImg = prefsHelper.getEmployeeImageBitmap()
+        binding.employeeImage.setImageBitmap(empImg)
     }
 
     // displaying attendance data

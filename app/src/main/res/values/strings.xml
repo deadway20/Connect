@@ -99,6 +99,19 @@
     <string name="profile_title">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="back_btn">back_btn</string>
+    <string name="voice_record_button">voice record button</string>
+    <string name="text_todo_button">text todo button</string>
+    <string name="add_new_todo">add new todo</string>
+    <string name="todo_title">Todo Title</string>
+    <string name="cancel_recording">cancel recording</string>
+    <string name="save_recording">save recording</string>
+    <string name="recording_voice">recording voice</string>
+    <string name="text_todo_title">Todo title</string>
+    <string name="todo_description">Todo description</string>
+    <string name="Hello">Hello, %1$s</string>
+    <string name="update_button_text">update</string>
+    <string name="title_required">Title required</string>
+    <string name="record_required">record required</string>
 
 
 </resources>

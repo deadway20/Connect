@@ -1,118 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp">
+    android:padding="16dp"
+    app:cardBackgroundColor="@color/card_background"
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Header مع زر التبديل -->
         <LinearLayout
             android:id="@+id/calendarHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <!-- اسم الشهر والسنة -->
+            <ImageButton
+                android:id="@+id/btnPrevious"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_arrow_left" />
+
             <TextView
                 android:id="@+id/txtMonthYear"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:text="May 2023"/>
+                android:textStyle="bold" />
 
-            <!-- زر التبديل -->
+            <ImageButton
+                android:id="@+id/btnNext"
+                android:layout_width="48dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_arrow_right" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <ImageButton
                 android:id="@+id/btnToggle"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="expand_calendar"
-                android:src="@drawable/ic_arrow_down"
-                app:tint="@color/black"/>
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_arrow_down" />
         </LinearLayout>
 
-
-        <!-- Header -->
+        <!-- أيام الأسبوع (تظهر دائماً) -->
         <LinearLayout
             android:id="@+id/weekHeader"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground">
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
 
-            <!-- أيام الأسبوع -->
             <TextView
                 android:id="@+id/day1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Sun"
+                android:textColor="@color/text_primary" />
 
-            <!-- Repeat for 7 days -->
             <TextView
                 android:id="@+id/day2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Mon"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/day3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Tue"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/day4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Wed"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/day5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Thu"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/day6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Fri"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/day7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"/>
-            <!-- Repeat for all days -->
-
+                android:gravity="center"
+                android:text="Sat"
+                android:textColor="@color/text_primary" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendarRecycler"
+        <!-- ViewPager2 للسحب بين الأشهر -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/monthViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:orientation="horizontal" />
+
+        <!-- weekView (يتم إخفاؤه عند التوسيع) -->
+        <LinearLayout
+            android:id="@+id/weekView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- أيام الأسبوع الحالي -->
+            <LinearLayout
+                android:id="@+id/currentWeek"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/currentDay1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/currentDay2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/currentDay3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/currentDay4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/currentDay5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/currentDay6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/currentDay7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

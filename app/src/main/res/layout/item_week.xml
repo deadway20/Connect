@@ -1,66 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="7">
+    android:gravity="center"
+    android:background="@color/card_background"
+    android:paddingVertical="8dp">
 
     <TextView
         android:id="@+id/day1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/day_background"
-        android:gravity="center"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/text_primary" />
 
-    <!-- Repeat for 7 days -->
+    <!-- Repeat for all days -->
     <TextView
         android:id="@+id/day2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/day_background"
-        android:gravity="center"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/text_primary" />
 
     <TextView
         android:id="@+id/day3"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/day_background"
-        android:gravity="center"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/text_primary" />
 
     <TextView
         android:id="@+id/day4"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/day_background"
-        android:gravity="center"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/day5"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/day_background"
-        android:gravity="center"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/text_primary" />
 
     <TextView
         android:id="@+id/day6"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/day_background"
-        android:gravity="center"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/day7"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/day_background"
-        android:gravity="center"/>
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/text_primary" />
 
 </LinearLayout>

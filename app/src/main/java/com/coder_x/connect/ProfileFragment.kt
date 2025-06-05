@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.coder_x.connect.SocialFragment.Companion.fontCustomize
 import com.coder_x.connect.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -41,29 +41,31 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupViews() {
-        val imagePath = prefsHelper.getEmployeeImageUri()
-        if (imagePath != null) {
-            try {
-                imageHelper.loadEmployeeImageInto(binding.employeeImage, requireContext())
-            } catch (e: Exception) {
-                Log.e("ProfileFragment", "Error loading image: ${e.message}")
-                binding.employeeImage.setImageResource(R.drawable.emp_img)
-            }
+        // Top bar binding and font customization
+        fontCustomize(requireContext(), binding.topBarText)
+        binding.backBtn.setOnClickListener {
+            // back to Main Fragment
+            fragmentManager.popBackStack()
         }
-
+        val imagePath = prefsHelper.getEmployeeImageBitmap()
+        val empID = prefsHelper.getEmployeeId()
+        if (imagePath != null) {
+            binding.employeeImage.setImageResource(R.drawable.emp_img)
+        } else {
+            binding.employeeImage.setImageResource(R.drawable.emp_img)
+        }
         binding.employeeName.text = prefsHelper.getEmployeeName()
-        binding.employeeId.text = "#${prefsHelper.getEmployeeId()}"
+        binding.employeeId.text = empID.toString()
         binding.DarkModeSwitch.isChecked = prefsHelper.getTheme()
     }
+
 
     private fun setupLanguageSpinner() {
         val languages = LocaleHelper.getSupportedLanguages()
         val languageNames = languages.map { LocaleHelper.getDisplayLanguageName(it) }
 
         val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            languageNames
+            requireContext(), android.R.layout.simple_spinner_item, languageNames
         ).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
@@ -120,21 +122,11 @@ class ProfileFragment : Fragment() {
 
     private fun applyClickListeners() {
         binding.apply {
-            editProfileArrow.setOnClickListener {
-                fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, EditProfileFragment()).commit()
-            }
             editProfileText.setOnClickListener {
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, EditProfileFragment()).commit()
             }
-            serverSettingArrow.setOnClickListener {
-                startActivity(
-                    Intent(
-                        requireContext(), ServerSettingActivity::class.java
-                    )
-                )
-            }
+
             serverSettingText.setOnClickListener {
                 startActivity(
                     Intent(

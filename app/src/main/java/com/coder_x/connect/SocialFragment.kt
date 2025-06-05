@@ -1,13 +1,12 @@
 package com.coder_x.connect
 
+import android.content.Context
 import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
-import android.graphics.Shader.TileMode
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -33,21 +32,10 @@ class SocialFragment : Fragment(), PostAdapter.OnSocialActionListener {
         binding.socialRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.socialRecyclerView.adapter = adapter
 
-        val fontResId =
-            resources.getIdentifier("angelos", "font", requireContext().packageName)
-        binding.topBarTitle.typeface = resources.getFont(fontResId)
-        // make gradient text white and blue
-        val paint = binding.topBarTitle.paint
-        val width = paint.measureText(binding.topBarTitle.text.toString())
-        val shader: Shader = LinearGradient(
-            0f, 0f, width, binding.topBarTitle.textSize, intArrayOf(
-                Color.WHITE,
-                Color.BLUE
-            ), null, TileMode.CLAMP
-        )
-        binding.topBarTitle.paint.shader = shader
-
-
+        fontCustomize(requireContext(), binding.topBarTitle)
+        binding.backBtn.setOnClickListener {
+            fragmentManager.popBackStack()
+        }
 
         postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
@@ -82,5 +70,16 @@ class SocialFragment : Fragment(), PostAdapter.OnSocialActionListener {
             .commit()
     }
 
+    companion object {
+        fun fontCustomize(context: Context, textView: TextView) {
+            val resources = context.resources
+            val fontResId =
+                resources.getIdentifier("angelos", "font", context.packageName)
+            textView.typeface = resources.getFont(fontResId)
+            // make font color baby blue
+            val babyBlue = Color.rgb(137, 207, 240) // Define baby blue color
+            textView.setTextColor(babyBlue)
+        }
+    }
 }
 

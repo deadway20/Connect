@@ -175,7 +175,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/profile_header"
-            app:shapeAppearanceOverlay="@style/cr50">
+            app:shapeAppearanceOverlay="@style/Rounded_img">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/employee_image"

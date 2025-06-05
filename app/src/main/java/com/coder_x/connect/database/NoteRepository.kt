@@ -1,12 +1,17 @@
 package com.coder_x.connect.database
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 
 class NoteRepository(private val noteDao: NoteDao) {
-    val allNotes: LiveData<List<NoteEntity>> = noteDao.getAllNotes()
+    val allNotes: LiveData<List<NoteEntity>> = noteDao.getAllNotes().asLiveData()
+
+
 
     suspend fun insert(note: NoteEntity) {
-        noteDao.insertNote(note)
+        Log.d("NOTE_REPO", "Inserting: $note")
+        noteDao.insert(note)
     }
 
     suspend fun update(note: NoteEntity) {
@@ -21,16 +26,18 @@ class NoteRepository(private val noteDao: NoteDao) {
         return noteDao.getNoteById(noteId)
     }
 
-    suspend fun getAllNotesByDate(timestamp: Long): LiveData<List<NoteEntity>> {
-        return noteDao.getAllNotesByDate(timestamp)
+    suspend  fun getNotesByDate(date: String): LiveData<List<NoteEntity>> {
+        return noteDao.getNotesByDate(date).asLiveData()
     }
-
+     fun getNotesWithDefaultDate(date: String): LiveData<List<NoteEntity>> {
+        return noteDao.getNotesWithDefaultDate(date).asLiveData()
+    }
     suspend fun getActiveNotes(): LiveData<List<NoteEntity>> {
-        return noteDao.getActiveNotes()
+        return noteDao.getActiveNotes().asLiveData()
     }
 
     suspend fun getCompletedNotes(): LiveData<List<NoteEntity>> {
-        return noteDao.getCompletedNotes()
+        return noteDao.getCompletedNotes().asLiveData()
     }
 
     suspend fun markNoteAsUncompleted(noteId: Long) {

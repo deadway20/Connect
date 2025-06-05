@@ -2,12 +2,16 @@ package com.coder_x.connect
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.fragment.app.FragmentManager
 import com.coder_x.connect.databinding.ActivityBottomBarBinding
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
+import androidx.core.graphics.scale
 
 
 class BottomBarActivity : AppCompatActivity() {
@@ -40,6 +44,16 @@ class BottomBarActivity : AppCompatActivity() {
         // set default fragment
         navigateToFragment(defaultFragment)
 
+        // R.id.profile
+        val userImg = prefsHelper.getEmployeeImageBitmap()
+        if (userImg != null) {
+            // Increase the size of the profile image
+            val scaledUserImg = userImg.scale(120, 120, false) // Adjust 120, 120 to your desired size
+            val roundedDrawable = RoundedBitmapDrawableFactory.create(resources, scaledUserImg).apply {
+                isCircular = true
+            }
+            binding.bottomNavigation.menu.findItem(R.id.profile).icon = roundedDrawable
+        }
         //set navigation bar item select
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
@@ -93,12 +107,13 @@ class BottomBarActivity : AppCompatActivity() {
     }
 
     private fun setupBottomBarCorners() {
-        val bottomBarBackground = binding.bottomNavigation.background as MaterialShapeDrawable
+        val bottomBarBackground = binding.bottomNavigationAppBar.background as MaterialShapeDrawable
         bottomBarBackground.shapeAppearanceModel =
             bottomBarBackground.shapeAppearanceModel.toBuilder().apply {
-                setAllCorners(CornerFamily.ROUNDED, 75f)
+                setAllCorners(CornerFamily.ROUNDED, 50f)
             }.build()
     }
+
 
     private fun navigateToFragment(fragment: androidx.fragment.app.Fragment) {
         fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()

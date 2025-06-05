@@ -96,4 +96,18 @@
     <string name="check_in">Check In</string>
     <string name="album">Album</string>
     <string name="profile_title">الصفحة الشخصية</string>
+    <string name="back_btn">back button</string>
+    <string name="voice_record_button">voice record button</string>
+    <string name="text_todo_button">text todo button</string>
+    <string name="add_new_todo">add new todo</string>
+    <string name="todo_title">Todo Title</string>
+    <string name="cancel_recording">cancel recording</string>
+    <string name="save_recording">save recording</string>
+    <string name="recording_voice">recording voice</string>
+    <string name="text_todo_title">Todo title</string>
+    <string name="todo_description">Todo description</string>
+    <string name="Hello">مرحبا, %1$s</string>
+    <string name="update_button_text">تحديث</string>
+    <string name="title_required">مطلوب العنوان</string>
+    <string name="record_required">مطلوب التسجيل الصوت</string>
 </resources>
