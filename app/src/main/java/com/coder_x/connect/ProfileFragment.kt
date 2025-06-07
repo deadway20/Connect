@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
 
     private fun setupViews() {
         // Top bar binding and font customization
-        fontCustomize(requireContext(), binding.topBarText)
+        fontCustomize(requireContext(), binding.topBarTitle)
         binding.backBtn.setOnClickListener {
             // back to Main Fragment
             fragmentManager.popBackStack()
@@ -50,13 +50,14 @@ class ProfileFragment : Fragment() {
         val imagePath = prefsHelper.getEmployeeImageBitmap()
         val empID = prefsHelper.getEmployeeId()
         if (imagePath != null) {
-            binding.employeeImage.setImageResource(R.drawable.emp_img)
+            binding.employeeImage.setImageBitmap(imagePath)
         } else {
             binding.employeeImage.setImageResource(R.drawable.emp_img)
         }
         binding.employeeName.text = prefsHelper.getEmployeeName()
         binding.employeeId.text = empID.toString()
         binding.DarkModeSwitch.isChecked = prefsHelper.getTheme()
+
     }
 
 

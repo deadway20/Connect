@@ -28,8 +28,9 @@ object Migration1To2 : Migration(1, 2) {
     }
 }
 // Migration 2 to 3
-object Migration2To3 : Migration(2, 3) {
+object Migration3To5 : Migration(3, 5) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        db.execSQL("ALTER TABLE notes ADD COLUMN selected_date TEXT DEFAULT NULL")
+        db.execSQL("ALTER TABLE notes ADD COLUMN tasks_count INTEGER DEFAULT 0")
+
     }
 }

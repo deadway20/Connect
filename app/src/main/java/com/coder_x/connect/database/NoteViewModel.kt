@@ -11,8 +11,8 @@ import java.util.*
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     private val noteRepository: NoteRepository
-    val allNotes: LiveData<List<NoteEntity>>
-    val notesByDate: LiveData<List<NoteEntity>>
+    private val allNotes: LiveData<List<NoteEntity>>
+    val tasksBySelectedDate: LiveData<List<NoteEntity>>
 
     private val _selectedDate = MutableLiveData<String>().apply {
         value = getCurrentDate()
@@ -24,18 +24,17 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         noteRepository = NoteRepository(noteDao)
         allNotes = noteRepository.allNotes
 
-        notesByDate = selectedDate.switchMap { date ->
-            noteRepository.getNotesWithDefaultDate(date)
+        tasksBySelectedDate = selectedDate.switchMap { date ->
+            noteRepository.getTasksByDate(date)
         }
-    }
-
-    private fun getCurrentDate(): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return sdf.format(Date())
     }
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
+    }
+    private fun getCurrentDate(): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(Date())
     }
 
     fun insert(note: NoteEntity) = viewModelScope.launch {
@@ -53,6 +52,10 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun getNoteById(noteId: Long) = viewModelScope.launch {
         noteRepository.getNoteById(noteId)
     }
+
+//    fun getTasksByDate(date: String) = viewModelScope.launch {
+//        noteRepository.getTasksByDate(date)
+//    }
 
     fun getActiveNotes() = viewModelScope.launch {
         noteRepository.getActiveNotes()
@@ -85,4 +88,8 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteNotesByDate(date: String) = viewModelScope.launch {
         noteRepository.deleteNotesByDate(date)
     }
+    fun getTasksCountByDate(date: String) : LiveData<Int>  {
+        return noteRepository.getTasksCountByDate(date)
+    }
+
 }

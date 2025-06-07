@@ -117,10 +117,10 @@ class PostAdapter(
                 val context = holder.itemView.context
                 val prefsHelper = SharedPrefsHelper(context)
 
-                val imagePath = prefsHelper.getEmployeeImageUri()
+                val imagePath = prefsHelper.getEmployeeImageBitmap()
                 if (imagePath != null) {
                     try {
-                        binding.profileImage.setImageURI(imagePath)
+                        binding.profileImage.setImageBitmap(imagePath)
                     } catch (e: Exception) {
                         binding.profileImage.setImageResource(R.drawable.emp_img)
                     }

@@ -29,10 +29,10 @@ interface NoteDao {
 
 
     @Query("SELECT * FROM notes WHERE selected_date IS NULL OR selected_date = :date ORDER BY timestamp DESC")
-    fun getNotesWithDefaultDate(date: String): Flow<List<NoteEntity>>
+    fun getTasksWithDefaultDate(date: String): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE selected_date = :date ORDER BY timestamp DESC")
-    fun getNotesByDate(date: String): Flow<List<NoteEntity>>
+    fun getTasksByDate(date: String): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE isCompleted = 0 ORDER BY timestamp DESC")
     fun getActiveNotes(): Flow<List<NoteEntity>>
@@ -58,6 +58,9 @@ interface NoteDao {
 
     @Query("DELETE FROM notes")
     suspend fun deleteAllNotes()
+
+    @Query("SELECT COUNT(*) FROM notes WHERE selected_date = :date")
+    fun getTasksCountByDate(date: String): Flow<Int>
 
 
 

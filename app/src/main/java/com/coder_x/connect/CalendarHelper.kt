@@ -127,10 +127,10 @@ class CalendarHelper(
     private fun updateDayAppearance(dayView: TextView, day: String) {
         if (day == selectedDay) {
             dayView.setBackgroundResource(R.drawable.selected_day_background)
-            dayView.setTextColor(ContextCompat.getColor(context, R.color.white))
+            dayView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         } else {
             dayView.background = null
-            dayView.setTextColor(ContextCompat.getColor(context, R.color.black))
+            dayView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
         }
     }
 
@@ -168,7 +168,7 @@ class CalendarHelper(
 
 
     private fun setupWeekHeader() {
-        val daysOfWeek = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+        val daysOfWeek = listOf("Sat","Sun", "Mon", "Tue", "Wed", "Thu", "Fri" )
         daysOfWeek.forEachIndexed { index, day ->
             val dayView = rootView.findViewById<TextView>(
                 context.resources.getIdentifier("day${index+1}", "id", context.packageName)

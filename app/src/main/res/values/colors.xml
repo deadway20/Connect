@@ -41,7 +41,7 @@
     <!-- Light Theme Colors -->
     <color name="background">#F5F5F5</color>
     <color name="card_background">#FFFFFF</color>
-    <color name="text_primary">#424141</color>
+    <color name="text_primary">#242424</color>
     <color name="text_secondary">#FFFFFF</color>
     <color name="header_start">#2196F3</color>
     <color name="header_end">#42A5F5</color>

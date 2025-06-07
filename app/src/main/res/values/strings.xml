@@ -112,6 +112,7 @@
     <string name="update_button_text">update</string>
     <string name="title_required">Title required</string>
     <string name="record_required">record required</string>
+    <string name="tasks_count">You have %1$s tasks today</string>
 
 
 </resources>

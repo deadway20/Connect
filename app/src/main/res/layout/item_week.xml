@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="40dp"
     android:orientation="horizontal"
+    android:layout_marginHorizontal="16dp"
     android:gravity="center"
     android:background="@color/card_background">
 
+
     <TextView
         android:id="@+id/day1"
-        android:layout_width="48dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
         android:textSize="14sp"
         android:textColor="@color/text_primary" />
@@ -17,16 +20,18 @@
     <!-- Repeat for all days -->
     <TextView
         android:id="@+id/day2"
-        android:layout_width="48dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
         android:textSize="14sp"
         android:textColor="@color/text_primary" />
 
     <TextView
         android:id="@+id/day3"
-        android:layout_width="48dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
         android:textSize="14sp"
         android:textColor="@color/text_primary" />
@@ -40,23 +45,26 @@
 
     <TextView
         android:id="@+id/day5"
-        android:layout_width="48dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
         android:textSize="14sp"
         android:textColor="@color/text_primary" />
 
     <TextView
         android:id="@+id/day6"
-        android:layout_width="48dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
         android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/day7"
-        android:layout_width="48dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
         android:textSize="14sp"
         android:textColor="@color/text_primary" />

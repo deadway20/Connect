@@ -135,8 +135,8 @@
                     android:padding="5dp"
                     android:layout_marginHorizontal="10dp"
                     android:text="You have 3 tasks today"
-                    android:textColor="@color/text_primary"
-                    android:textSize="15sp"
+                    android:textColor="#38A0F2"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

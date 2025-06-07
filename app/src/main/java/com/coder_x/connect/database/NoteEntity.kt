@@ -15,5 +15,6 @@ data class NoteEntity(
     val audioProgress: Long? = null, // variable storing the voice note progress (for audio based todos)
     val audioPath: String? = null, // variable storing the voice note path (for audio based todos)
     val type: String,  // variable storing the todo type (text or voice)
-    @ColumnInfo(name = "selected_date") val selectedDate: String? = null
+    @ColumnInfo(name = "selected_date") val selectedDate: String? = null,
+    @ColumnInfo(name = "tasks_count") val tasksCount: Int = 0
 )

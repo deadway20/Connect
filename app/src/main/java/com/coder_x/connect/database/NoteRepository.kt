@@ -26,17 +26,17 @@ class NoteRepository(private val noteDao: NoteDao) {
         return noteDao.getNoteById(noteId)
     }
 
-    suspend  fun getNotesByDate(date: String): LiveData<List<NoteEntity>> {
-        return noteDao.getNotesByDate(date).asLiveData()
+    fun getTasksByDate(date: String): LiveData<List<NoteEntity>> {
+        return noteDao.getTasksByDate(date).asLiveData()
     }
-     fun getNotesWithDefaultDate(date: String): LiveData<List<NoteEntity>> {
-        return noteDao.getNotesWithDefaultDate(date).asLiveData()
+     fun getTasksWithDefaultDate(date: String): LiveData<List<NoteEntity>> {
+        return noteDao.getTasksWithDefaultDate(date).asLiveData()
     }
-    suspend fun getActiveNotes(): LiveData<List<NoteEntity>> {
+    fun getActiveNotes(): LiveData<List<NoteEntity>> {
         return noteDao.getActiveNotes().asLiveData()
     }
 
-    suspend fun getCompletedNotes(): LiveData<List<NoteEntity>> {
+    fun getCompletedNotes(): LiveData<List<NoteEntity>> {
         return noteDao.getCompletedNotes().asLiveData()
     }
 
@@ -62,5 +62,9 @@ class NoteRepository(private val noteDao: NoteDao) {
 
     suspend fun deleteCompletedNotes() {
         noteDao.deleteCompletedNotes()
+    }
+
+    fun getTasksCountByDate(date: String): LiveData<Int> {
+        return noteDao.getTasksCountByDate(date).asLiveData()
     }
 }

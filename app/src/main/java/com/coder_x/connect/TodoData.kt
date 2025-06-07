@@ -9,6 +9,7 @@ data class TodoData(
     val totalDuration: Long?,  // Variable storing the voice note duration (for audio based todos)
     val progress: Long?, // Variable storing the voice note progress (for audio based todos)
     val type: TodoType, // Variable storing the todo type (text or voice)
+    val selectedDate: String? // Variable storing the selected date (for calendar based todos)
 )
 
 enum class TodoType {

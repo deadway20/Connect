@@ -5,12 +5,12 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +19,8 @@ import com.coder_x.connect.database.NoteViewModel
 import com.coder_x.connect.databinding.FragmentToDoBinding
 import com.coder_x.connect.SocialFragment.Companion.fontCustomize
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Calendar
 import java.util.Date
@@ -32,6 +34,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var adapter: TodoAdapter
     private lateinit var prefsHelper: SharedPrefsHelper
+    private var currentSelectedDate: String = LocalDate.now().toString()
     private lateinit var swipeHelper: SwipeHelper // إضافة مرجع للـ SwipeHelper
     private val todoList = mutableListOf<TodoData>()
     private var isOpen = false
@@ -43,12 +46,13 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java] // Initialize noteViewModel first
         binding = FragmentToDoBinding.inflate(inflater, container, false)
         binding.notesRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.notesRecycler.clipChildren = false
         binding.notesRecycler.clipToPadding = false
-        viewBinding()
-        noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
+        viewBinding() // Call viewBinding after noteViewModel is initialized
+        currentSelectedDate = noteViewModel.selectedDate.value ?: LocalDate.now().toString()
         adapter = TodoAdapter(todoList, requireContext())
         binding.notesRecycler.adapter = adapter
         prefsHelper = SharedPrefsHelper(requireContext())
@@ -65,66 +69,45 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
             val item = adapter.getItemAt(position)
 
             // حذف العنصر من قاعدة البيانات
-            noteViewModel.delete(NoteEntity(
-                id = item.id,
-                title = item.todoTitle,
-                timestamp = System.currentTimeMillis(),
-                isCompleted = item.isCompleted,
-                audioPath = item.audioPath,
-                audioDuration = item.totalDuration,
-                audioProgress = item.progress,
-                isAudio = item.type == TodoType.VOICE,
-                type = item.type.name
-            ))
+            noteViewModel.delete(
+                NoteEntity(
+                    id = item.id,
+                    title = item.todoTitle,
+                    timestamp = System.currentTimeMillis(),
+                    isCompleted = item.isCompleted,
+                    audioPath = item.audioPath,
+                    audioDuration = item.totalDuration,
+                    audioProgress = item.progress,
+                    isAudio = item.type == TodoType.VOICE,
+                    type = item.type.name
+                )
+            )
 
-            // حذف العنصر من الـ Adapter فوراً
+            // Delete the item from the adapter
             adapter.removeItem(position)
 
-            // إغلاق السويب
+            // close the opened item
             swipeHelper.closeOpenedItem()
 
-            Toast.makeText(requireContext(), "تم حذف المهمة", Toast.LENGTH_SHORT).show()
         }
 
-        // إنشاء SwipeHelper وحفظ مرجع إليه
+        // Initialize the SwipeHelper
         swipeHelper = SwipeHelper(adapter)
         val itemTouchHelper = ItemTouchHelper(swipeHelper)
         itemTouchHelper.attachToRecyclerView(binding.notesRecycler)
 
-        // مراقبة التغييرات في قاعدة البيانات
-        noteViewModel.allNotes.observe(viewLifecycleOwner) { notes ->
-            val newTodoList = notes.map { note ->
-                TodoData(
-                    id = note.id,
-                    todoTitle = note.title,
-                    todoTime = getTimeAgo(note.timestamp),
-                    isCompleted = note.isCompleted,
-                    audioPath = note.audioPath,
-                    totalDuration = note.audioDuration,
-                    progress = note.audioProgress,
-                    type = TodoType.valueOf(note.type)
-                )
-            }
-
-            // تحديث القائمة باستخدام الدالة الجديدة
-            adapter.updateList(newTodoList)
-        }
+        // Observer for the list of notes
+        currentSelectedDate = LocalDate.now().toString()
+        observeTasksByDate(currentSelectedDate)
 
         CalendarHelper(
             requireContext(),
             binding.calendarContainer,
-            object : CalendarHelper.CalendarInteractionListener {
-                override fun onDayClicked(day: String, month: Int, year: Int) {
-                    val date = "$day/${month + 1}/$year"
-                    Toast.makeText(requireContext(), "Selected: $date", Toast.LENGTH_SHORT).show()
-                }
-            }
+            this // Pass the fragment as the listener
         ).setupCalendar()
 
         return binding.root
     }
-
-    // باقي الدوال تبقى كما هي...
     override fun onClick(v: View) {
         when (v.id) {
             R.id.add_todo_btn -> animateFab()
@@ -132,13 +115,13 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                 closeFabMenu()
                 showTextTodoBottomSheet()
             }
+
             R.id.voice_todo_btn -> {
                 closeFabMenu()
                 showVoiceTodoBottomSheet()
             }
         }
     }
-
     private fun viewBinding() {
         prefsHelper = SharedPrefsHelper(requireContext())
         addFab = binding.addTodoBtn
@@ -150,7 +133,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, MainFragment()).commit()
         }
-        setViews()
+        setGreetingMsg()
         binding.addTodoBtn.setOnClickListener(this)
         binding.textTodoBtn.setOnClickListener(this)
         binding.voiceTodoBtn.setOnClickListener(this)
@@ -163,12 +146,10 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
     }
 
     private fun animateFab() {
-        isOpen = if (isOpen) {
+        if (isOpen) {
             closeFabMenu()
-            false
         } else {
             openFabMenu()
-            true
         }
     }
 
@@ -194,6 +175,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         )
         openAnimatorSet.duration = animationDuration
         openAnimatorSet.start()
+        isOpen = true
     }
 
     private fun closeFabMenu() {
@@ -222,10 +204,20 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
             }
         })
         closeAnimatorSet.start()
+        isOpen = false
     }
 
     override fun onDayClicked(day: String, month: Int, year: Int) {
-        Toast.makeText(requireContext(), "Selected day: $day", Toast.LENGTH_SHORT).show()
+        // استخدام Locale.US لضمان تنسيق التاريخ بشكل ثابت بغض النظر عن لغة الجهاز
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day.toInt())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val selectedDate = dateFormat.format(calendar.time)
+
+        currentSelectedDate = selectedDate
+        noteViewModel.setSelectedDate(selectedDate) // تحديث التاريخ في ViewModel
+        observeTasksByDate(selectedDate) // إعادة تحميل البيانات والعدد للتاريخ الجديد
+        Toast.makeText(requireContext(), "Selected: $selectedDate", Toast.LENGTH_SHORT).show()
     }
 
     private fun showTextTodoBottomSheet() {
@@ -238,7 +230,8 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                 audioPath = null,
                 audioDuration = null,
                 isAudio = false,
-                type = TodoType.TEXT.name
+                type = TodoType.TEXT.name,
+                selectedDate = currentSelectedDate // إضافة التاريخ الحالي للمهمة
             )
             noteViewModel.insert(note)
         }
@@ -256,7 +249,8 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                 audioDuration = duration.toLongOrNull(),
                 audioProgress = 0,
                 isAudio = true,
-                type = TodoType.VOICE.name
+                type = TodoType.VOICE.name,
+                selectedDate = currentSelectedDate // إضافة التاريخ الحالي للمهمة
             )
             noteViewModel.insert(note)
         }
@@ -276,7 +270,8 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                         audioPath = null,
                         audioDuration = null,
                         isAudio = false,
-                        type = TodoType.TEXT.name
+                        type = TodoType.TEXT.name,
+                        selectedDate = item.selectedDate ?: currentSelectedDate // استخدام تاريخ المهمة أو التاريخ الحالي
                     )
                 )
                 Toast.makeText(requireContext(), "تم تحديث المهمة النصية", Toast.LENGTH_SHORT)
@@ -298,7 +293,8 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                     audioDuration = item.totalDuration,
                     audioProgress = item.progress,
                     isAudio = true,
-                    type = TodoType.VOICE.name
+                    type = TodoType.VOICE.name,
+                    selectedDate = item.selectedDate ?: currentSelectedDate // استخدام تاريخ المهمة أو التاريخ الحالي
                 )
             )
             onVoiceTodoUpdated = { updatedTodo ->
@@ -332,7 +328,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         }
     }
 
-    private fun setViews() {
+    private fun setGreetingMsg() {
         val empName = prefsHelper.getEmployeeName()
         val empImg = prefsHelper.getEmployeeImageBitmap()
         val currentTime = LocalTime.now()
@@ -359,6 +355,37 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         val firstName = empName.split(" ").firstOrNull()
         if (!firstName.isNullOrEmpty()) {
             binding.empName.text = firstName
+        }
+
+        val today = SimpleDateFormat("d/M/yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+        // تم نقل استدعاء getTasksCountByDate إلى observeTasksByDate لضمان تحديث العدد مع تغيير اليوم
+    }
+
+    private fun observeTasksByDate(dateString: String) {
+        noteViewModel.setSelectedDate(dateString) // تأكد من تحديث التاريخ في ViewModel
+
+        noteViewModel.tasksBySelectedDate.observe(viewLifecycleOwner) { notes ->
+            val newTodoList = notes.mapNotNull { note ->
+                if (note.type.isNotEmpty()) {
+                    TodoData(
+                        id = note.id,
+                        todoTitle = note.title,
+                        todoTime = getTimeAgo(note.timestamp),
+                        isCompleted = note.isCompleted,
+                        audioPath = note.audioPath,
+                        totalDuration = note.audioDuration,
+                        progress = note.audioProgress,
+                        type = TodoType.valueOf(note.type),
+                        selectedDate = note.selectedDate
+                    )
+                } else null
+            }
+            adapter.updateList(newTodoList)
+        }
+
+        // عد المهام عند تغيير التاريخ
+        noteViewModel.getTasksCountByDate(dateString).observe(viewLifecycleOwner) { count ->
+            binding.tasksCount.text = getString(R.string.tasks_count, count.toString())
         }
     }
 }
