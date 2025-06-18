@@ -85,4 +85,11 @@ dependencies {
 
     // expandable Calendar view
     implementation(libs.view)
+
+    //lottie animation
+    implementation(libs.lottie)
+
+    // مكتبة قوية جداً لإنشاء الرسوم البيانية
+    implementation(libs.mpandroidchart)
+
 }

@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 
 class NoteRepository(private val noteDao: NoteDao) {
-    val allNotes: LiveData<List<NoteEntity>> = noteDao.getAllNotes().asLiveData()
-
+    val allNotes: LiveData<List<NoteEntity>> = noteDao.getAllTasks().asLiveData()
 
 
     suspend fun insert(note: NoteEntity) {
@@ -15,56 +14,81 @@ class NoteRepository(private val noteDao: NoteDao) {
     }
 
     suspend fun update(note: NoteEntity) {
-        noteDao.updateNote(note)
+        noteDao.updateTask(note)
     }
 
     suspend fun delete(note: NoteEntity) {
-        noteDao.deleteNote(note)
+        noteDao.deleteTask(note)
     }
 
     suspend fun getNoteById(noteId: Long): NoteEntity? {
-        return noteDao.getNoteById(noteId)
+        return noteDao.getTasksById(noteId)
     }
 
     fun getTasksByDate(date: String): LiveData<List<NoteEntity>> {
         return noteDao.getTasksByDate(date).asLiveData()
     }
-     fun getTasksWithDefaultDate(date: String): LiveData<List<NoteEntity>> {
+
+    fun getTasksWithDefaultDate(date: String): LiveData<List<NoteEntity>> {
         return noteDao.getTasksWithDefaultDate(date).asLiveData()
     }
-    fun getActiveNotes(): LiveData<List<NoteEntity>> {
-        return noteDao.getActiveNotes().asLiveData()
+
+    fun getAllTasks(): LiveData<List<NoteEntity>> = noteDao.getAllTasks().asLiveData()
+
+    fun getCompletedTasks(): LiveData<List<NoteEntity>> =
+        noteDao.getTasksByCompletion(true).asLiveData()
+
+    fun getActiveTasks(): LiveData<List<NoteEntity>> =
+        noteDao.getTasksByCompletion(false).asLiveData()
+
+
+    fun getActiveTasksByDate(date: String): LiveData<List<NoteEntity>> {
+        return noteDao.getActiveTasksByDate(date).asLiveData()
     }
 
-    fun getCompletedNotes(): LiveData<List<NoteEntity>> {
-        return noteDao.getCompletedNotes().asLiveData()
-    }
-
-    suspend fun markNoteAsUncompleted(noteId: Long) {
+    suspend fun setTaskUncompleted(noteId: Long) {
         noteDao.markNoteAsUncompleted(noteId)
     }
 
-    suspend fun markNoteAsCompleted(noteId: Long) {
+    suspend fun setTaskCompleted(noteId: Long) {
         noteDao.markNoteAsCompleted(noteId)
     }
 
     suspend fun deleteNoteById(noteId: Long) {
-        noteDao.deleteNoteById(noteId)
+        noteDao.deleteTaskById(noteId)
     }
 
-    suspend fun deleteAllNotes() {
-        noteDao.deleteAllNotes()
+    suspend fun deleteAllTasks() {
+        noteDao.deleteAllTasks()
     }
 
     suspend fun deleteNotesByDate(date: String) {
-        noteDao.deleteNotesByDate(date)
+        noteDao.deleteTasksByDate(date)
     }
 
     suspend fun deleteCompletedNotes() {
-        noteDao.deleteCompletedNotes()
+        noteDao.deleteCompletedTasks()
     }
 
     fun getTasksCountByDate(date: String): LiveData<Int> {
         return noteDao.getTasksCountByDate(date).asLiveData()
     }
+
+    fun getActiveTasksCount(): LiveData<Int> {
+        return noteDao.getActiveTasksCount().asLiveData()
+    }
+
+    suspend fun setColorView(color: Int, itemId: Long) {
+        noteDao.setColorView(color, itemId)
+    }
+
+    suspend fun getColor(itemId: Int): Int? {
+        return noteDao.getColor(itemId)
+    }
+
+    fun getColorLiveData(itemId: Long): LiveData<Int?> {
+        return noteDao.getColorLiveData(itemId).asLiveData()
+    }
+
+
 }

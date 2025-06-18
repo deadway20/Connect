@@ -16,17 +16,16 @@ interface NoteDao {
     suspend fun insert(note: NoteEntity)
 
     @Update
-    suspend fun updateNote(note: NoteEntity)
+    suspend fun updateTask(note: NoteEntity)
 
     @Delete
-    suspend fun deleteNote(note: NoteEntity)
+    suspend fun deleteTask(note: NoteEntity)
 
     @Query("SELECT * FROM notes WHERE id = :noteId")
-    suspend fun getNoteById(noteId: Long): NoteEntity?
+    suspend fun getTasksById(noteId: Long): NoteEntity?
 
     @Query("SELECT * FROM notes ORDER BY timestamp DESC")
-    fun getAllNotes(): Flow<List<NoteEntity>>
-
+    fun getAllTasks(): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE selected_date IS NULL OR selected_date = :date ORDER BY timestamp DESC")
     fun getTasksWithDefaultDate(date: String): Flow<List<NoteEntity>>
@@ -34,11 +33,11 @@ interface NoteDao {
     @Query("SELECT * FROM notes WHERE selected_date = :date ORDER BY timestamp DESC")
     fun getTasksByDate(date: String): Flow<List<NoteEntity>>
 
-    @Query("SELECT * FROM notes WHERE isCompleted = 0 ORDER BY timestamp DESC")
-    fun getActiveNotes(): Flow<List<NoteEntity>>
+    @Query("SELECT * FROM notes WHERE isCompleted = :completed ORDER BY timestamp DESC")
+    fun getTasksByCompletion(completed: Boolean): Flow<List<NoteEntity>>
 
-    @Query("SELECT * FROM notes WHERE isCompleted = 1 ORDER BY timestamp DESC")
-    fun getCompletedNotes(): Flow<List<NoteEntity>>
+    @Query("SELECT * FROM notes WHERE selected_date = :date AND isCompleted = 0 ORDER BY timestamp DESC")
+    fun getActiveTasksByDate(date: String): Flow<List<NoteEntity>>
 
     @Query("UPDATE notes SET isCompleted = 1 WHERE id = :noteId")
     suspend fun markNoteAsCompleted(noteId: Long)
@@ -47,23 +46,33 @@ interface NoteDao {
     suspend fun markNoteAsUncompleted(noteId: Long)
 
     @Query("DELETE FROM notes WHERE id = :noteId")
-    suspend fun deleteNoteById(noteId: Long)
+    suspend fun deleteTaskById(noteId: Long)
 
     @Query("DELETE FROM notes WHERE isCompleted = 1")
-    suspend fun deleteCompletedNotes()
+    suspend fun deleteCompletedTasks()
 
     @Query("DELETE FROM notes WHERE selected_date = :date")
-    suspend fun deleteNotesByDate(date: String)
+    suspend fun deleteTasksByDate(date: String)
 
 
     @Query("DELETE FROM notes")
-    suspend fun deleteAllNotes()
+    suspend fun deleteAllTasks()
 
     @Query("SELECT COUNT(*) FROM notes WHERE selected_date = :date")
     fun getTasksCountByDate(date: String): Flow<Int>
 
+    @Query("SELECT COUNT(*) FROM notes WHERE isCompleted = 0")
+    fun getActiveTasksCount(): Flow<Int>
 
 
+    @Query("SELECT color FROM notes WHERE id = :itemId")
+    suspend fun getColor(itemId: Int): Int? // Make it suspend, returns nullable Int
+
+    @Query("UPDATE notes SET color = :color WHERE id = :itemId")
+    suspend fun setColorView(color: Int, itemId: Long) // Changed to Long
+
+    @Query("SELECT color FROM notes WHERE id = :itemId")
+    fun getColorLiveData(itemId: Long): Flow<Int?> // Changed to Long
 
 
 

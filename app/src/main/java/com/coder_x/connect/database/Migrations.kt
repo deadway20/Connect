@@ -27,10 +27,9 @@ object Migration1To2 : Migration(1, 2) {
         db.execSQL("ALTER TABLE notes_new RENAME TO notes")
     }
 }
-// Migration 2 to 3
-object Migration3To5 : Migration(3, 5) {
-    override fun migrate(db: SupportSQLiteDatabase) {
-        db.execSQL("ALTER TABLE notes ADD COLUMN tasks_count INTEGER DEFAULT 0")
 
+object Migration5To6 : Migration(5, 6) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE notes ADD COLUMN color INTEGER NOT NULL DEFAULT 0")
     }
 }

@@ -8,12 +8,11 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <!-- ✅ خلفية الأزرار -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/background_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,10 +20,9 @@
             android:gravity="end"
             android:orientation="horizontal">
 
-            <!-- زر التعديل -->
             <LinearLayout
                 android:id="@+id/edit_button"
-                android:layout_width="70dp"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:background="#8BBA8E"
                 android:gravity="center"
@@ -47,10 +45,9 @@
 
             </LinearLayout>
 
-            <!-- زر الحذف -->
             <LinearLayout
                 android:id="@+id/delete_button"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:background="#FDD6D8"
                 android:gravity="center"
@@ -79,8 +76,8 @@
         android:id="@+id/foreground_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        android:elevation="6dp">
+        android:elevation="6dp"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,22 +96,14 @@
                 android:orientation="vertical"
                 android:padding="6dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/todoTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="2dp">
-
-                    <TextView
-                        android:id="@+id/todoTime"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingHorizontal="16dp"
-                        android:text="Yesterday"
-                        android:textColor="@color/text_primary"
-                        android:textSize="10sp" />
-                </LinearLayout>
+                    android:paddingHorizontal="16dp"
+                    android:text="Yesterday"
+                    android:textColor="@color/text_primary"
+                    android:textSize="10sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -131,12 +120,15 @@
 
                     <TextView
                         android:id="@+id/todoTitle"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="8dp"
-                        android:text="Buy some things from SuperMarket"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Buy some things from SuperMarket and some things from SuperMarket and some things from SuperMarket and some things from SuperMarket and some things from SuperMarket"
                         android:textColor="@color/text_primary"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

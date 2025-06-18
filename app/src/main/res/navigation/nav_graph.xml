@@ -7,7 +7,7 @@
     <!-- WelcomeFragment -->
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.coder_x.connect.WelcomeFragment"
+        android:name="com.coder_x.connect.onboarding.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome">
         <action
@@ -18,7 +18,7 @@
     <!-- Server Setting Fragment -->
     <fragment
         android:id="@+id/serverSettingsFragment"
-        android:name="com.coder_x.connect.ServerFragment"
+        android:name="com.coder_x.connect.onboarding.ServerFragment"
         android:label="Server Settings"
         tools:layout="@layout/fragment_server">
         <action
@@ -32,7 +32,7 @@
     <!-- إدخال بيانات الموظف -->
     <fragment
         android:id="@+id/employeeFragment"
-        android:name="com.coder_x.connect.EmployeeFragment"
+        android:name="com.coder_x.connect.onboarding.EmployeeDataFragment"
         android:label="Employee Data"
         tools:layout="@layout/fragment_employee">
         <action
@@ -46,7 +46,7 @@
     <!-- تعريف `MainActivity` -->
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.coder_x.connect.BottomBarActivity"
+        android:name="com.coder_x.connect.main.BottomBarActivity"
         android:label="Main Activity">
     </activity>
 

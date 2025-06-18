@@ -9,7 +9,7 @@
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:paddingTop="?attr/actionBarSize"
-    tools:context=".BottomBarActivity">
+    tools:context=".main.BottomBarActivity">
 
     <!-- Fragment Container -->
     <FrameLayout

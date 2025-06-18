@@ -8,7 +8,6 @@ import com.coder_x.connect.databinding.ActivityMainBinding
 // فئة النشاط الرئيسي التي تدير واجهة المستخدم وتفاعلاتها
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    // دالة تُستدعى عند إنشاء النشاط
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
