@@ -7,7 +7,10 @@
     <dimen name="toolbar_horizontal_margin">8dp</dimen>
     <dimen name="toolbar_vertical_margin">8dp</dimen>
     <dimen name="toolbar_text_size">20sp</dimen>
-
     <dimen name="calendar_header_height">48dp</dimen>
     <dimen name="calendar_expanded_height">350dp</dimen>
+
+    <dimen name="action_bar_size">56dp</dimen>
+    <dimen name="chips_height">48dp</dimen>
+
 </resources>

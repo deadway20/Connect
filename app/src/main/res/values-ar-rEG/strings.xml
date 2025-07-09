@@ -114,4 +114,5 @@
     <string name="performance_analytics">تحليلات الأداء</string>
     <string name="distribution_of_days">توزيع ايام الشهر</string>
     <string name="you_have_uncompleted_tasks">You have %1$s uncompleted tasks.</string>
+    <string name="id">ID:%1$s</string>
 </resources>

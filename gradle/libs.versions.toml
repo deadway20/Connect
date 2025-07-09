@@ -23,7 +23,7 @@ navigationUiKtx = "2.8.9"
 ucrop = "2.2.10"
 uiTextAndroid = "1.8.0"
 view = "2.5.0"
-waveformAndroid = "v1.2"
+waveformseekbar = "5.0.2"
 
 
 
@@ -54,8 +54,7 @@ ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version.ref = "uiTextAndroid" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 view = { module = "com.kizitonwose.calendar:view", version.ref = "view" }
-waveform-android = { module = "com.github.Semantive:waveform-android", version.ref = "waveformAndroid" }
-
+waveformseekbar = { module = "com.github.massoudss:waveformSeekBar", version.ref = "waveformseekbar" }
 
 
 [plugins]

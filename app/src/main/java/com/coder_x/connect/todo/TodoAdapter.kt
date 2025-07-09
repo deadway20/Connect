@@ -1,29 +1,39 @@
 package com.coder_x.connect.todo
 
+
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.coder_x.connect.R
 import com.coder_x.connect.databinding.ItemTextTodoBinding
 import com.coder_x.connect.databinding.ItemVoiceTodoBinding
 import com.coder_x.connect.database.NoteViewModel
+
 import kotlin.random.Random
 
 class TodoAdapter(
-    private val todoList: MutableList<TodoData>, // تغيير إلى MutableList
+    private val todoList: MutableList<TodoData>,
     val context: Context,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var onEdit: ((Int) -> Unit)? = null
     var onDelete: ((Int) -> Unit)? = null
+
     private var openedPosition: Int = -1
-    private var isButtonClicked = false // متغير لتتبع النقر على الأزرار
+    private var isButtonClicked = false
     private val noteViewModel = NoteViewModel(context.applicationContext as Application)
+
+    private var mediaPlayer: MediaPlayer? = null
+    private var currentPlayingPosition = -1
+    private var progressHandler: Handler? = null
+    private var progressRunnable: Runnable? = null
 
     fun closeOpenedItem() {
         if (openedPosition != -1) {
@@ -33,133 +43,84 @@ class TodoAdapter(
         }
     }
 
-    private fun isItemOpen(position: Int): Boolean = openedPosition == position
+    private fun isItemOpen(position: Int) = openedPosition == position
 
     fun setOpenedItem(position: Int) {
         if (openedPosition != position) {
             val oldPosition = openedPosition
             openedPosition = position
-
-            // أعد رسم العنصر القديم والجديد
-            if (oldPosition != -1) {
-                notifyItemChanged(oldPosition)
-            }
-            if (position != -1) {
-                notifyItemChanged(position)
-            }
+            if (oldPosition != -1) notifyItemChanged(oldPosition)
+            if (position != -1) notifyItemChanged(position)
         }
     }
 
-    // دالة لتحديث القائمة
     fun updateList(newList: List<TodoData>) {
         todoList.clear()
         todoList.addAll(newList)
         notifyDataSetChanged()
     }
 
-    // دالة لحذف عنصر من القائمة
     fun removeItem(position: Int) {
+        if (position == currentPlayingPosition) stopAudio()
         if (position >= 0 && position < todoList.size) {
             todoList.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, todoList.size)
-
-            // إذا كان العنصر المحذوف هو المفتوح، أعد تعيين openedPosition
-            if (openedPosition == position) {
-                openedPosition = -1
-            } else if (openedPosition > position) {
-                openedPosition--
-            }
+            if (openedPosition == position) openedPosition = -1
+            else if (openedPosition > position) openedPosition--
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            0 -> {
-                val binding = ItemTextTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                TextTodoViewHolder(binding)
-            }
-            1 -> {
-                val binding = ItemVoiceTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                VoiceTodoViewHolder(binding)
-            }
-            else -> throw IllegalArgumentException("Wrong Type")
-        }
+    override fun getItemViewType(position: Int) = when (todoList[position].type) {
+        TodoType.TEXT -> 0
+        TodoType.VOICE -> 1
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when (todoList[position].type) {
-            TodoType.TEXT -> 0
-            TodoType.VOICE -> 1
-        }
-    }
+    fun getItemAt(position: Int) = todoList[position]
 
-    fun getItemAt(position: Int): TodoData {
-        return todoList[position]
-    }
+    override fun getItemCount() = todoList.size
 
-    override fun getItemCount(): Int = todoList.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
+        0 -> TextTodoViewHolder(ItemTextTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        1 -> VoiceTodoViewHolder(ItemVoiceTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        else -> throw IllegalArgumentException("Wrong Type")
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         val item = todoList[position]
         val density = holder.itemView.resources.displayMetrics.density
         val isOpen = isItemOpen(position)
 
         noteViewModel.getOrUpdateColor(item.id) { getRandomBrightColor() }
-            .observe((context as androidx.lifecycle.LifecycleOwner)) { color ->
+            .observe(context as androidx.lifecycle.LifecycleOwner) { color ->
                 item.color = color
-                // Update UI with the color
                 when (holder) {
-                    is TextTodoViewHolder -> {
-                        bindTextTodo(holder, item, color, density, isOpen, position)
-                    }
-                    is VoiceTodoViewHolder -> {
-                        bindVoiceTodo(holder, item, color, density, isOpen, position)
-                    }
+                    is TextTodoViewHolder -> bindTextTodo(holder, item, color, density, isOpen, position)
+                    is VoiceTodoViewHolder -> bindVoiceTodo(holder, item, color, density, isOpen, position)
                 }
             }
 
-        // Initial bind (optional, or use placeholder)
         when (holder) {
-            is TextTodoViewHolder -> {
-                bindTextTodo(holder, item, item.color, density, isOpen, position)
-            }
-            is VoiceTodoViewHolder -> {
-                bindVoiceTodo(holder, item, item.color, density, isOpen, position)
-            }
+            is TextTodoViewHolder -> bindTextTodo(holder, item, item.color, density, isOpen, position)
+            is VoiceTodoViewHolder -> bindVoiceTodo(holder, item, item.color, density, isOpen, position)
         }
     }
 
-    private fun bindTextTodo(
-        holder: TextTodoViewHolder,
-        item: TodoData,
-        color: Int,
-        density: Float,
-        isOpen: Boolean,
-        position: Int
-    ) {
+    private fun bindTextTodo(holder: TextTodoViewHolder, item: TodoData, color: Int, density: Float, isOpen: Boolean, position: Int) {
         holder.binding.todoView.setBackgroundColor(color)
-//        holder.binding.foregroundLayout.strokeWidth = density.toInt()
-//        holder.binding.foregroundLayout.strokeColor = color
         holder.binding.todoTitle.text = item.todoTitle
         holder.binding.todoTime.text = item.todoTime
-
-        // تعيين موقع العنصر
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
 
-        // إزالة المستمعين السابقين
         holder.editBtn.setOnClickListener(null)
         holder.deleteBtn.setOnClickListener(null)
 
-        // إضافة المستمعين فقط إذا كان العنصر مفتوحاً
         if (isOpen) {
             holder.editBtn.setOnClickListener {
                 if (!isButtonClicked) {
                     isButtonClicked = true
                     onEdit?.invoke(position)
                     closeOpenedItem()
-                    // إعادة تعيين المتغير بعد تأخير قصير
                     holder.editBtn.postDelayed({ isButtonClicked = false }, 500)
                 }
             }
@@ -168,11 +129,25 @@ class TodoAdapter(
                     isButtonClicked = true
                     onDelete?.invoke(position)
                     closeOpenedItem()
-                    // إعادة تعيين المتغير بعد تأخير قصير
                     holder.deleteBtn.postDelayed({ isButtonClicked = false }, 500)
                 }
             }
         }
+    }
+
+    private fun startAudio(holder: VoiceTodoViewHolder, audioPath: String?, position: Int) {
+        if (audioPath == null) return
+
+        mediaPlayer = MediaPlayer().apply {
+            setDataSource(audioPath)
+            prepare()
+            start()
+            setOnCompletionListener { stopAudio() }
+        }
+
+        currentPlayingPosition = position
+        notifyItemChanged(position)
+        startProgressUpdate(holder)
     }
 
     private fun bindVoiceTodo(
@@ -184,27 +159,39 @@ class TodoAdapter(
         position: Int
     ) {
         holder.binding.todoView.setBackgroundColor(color)
-//        holder.binding.foregroundLayout.strokeWidth = density.toInt()
-//        holder.binding.foregroundLayout.strokeColor = color
         holder.binding.voiceTitle.text = item.todoTitle
         holder.binding.voiceTime.text = item.todoTime
         holder.binding.voiceDuration.text = formatMillisToTime(item.totalDuration)
 
-        // تعيين موقع العنصر
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
 
-        // إزالة المستمعين السابقين
-        holder.editBtn.setOnClickListener(null)
-        holder.deleteBtn.setOnClickListener(null)
+        if (!item.isWaveformProcessed && item.audioPath != null) {
+             holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
+             item.isWaveformProcessed = true
+        }
 
-        // إضافة المستمعين فقط إذا كان العنصر مفتوحاً
+        holder.binding.waveformSeekBar.progress = if (position == currentPlayingPosition) {
+            (mediaPlayer?.currentPosition?.toFloat() ?: 0f) / (mediaPlayer?.duration?.toFloat() ?: 1f)
+        } else 0f
+
+        holder.binding.playPauseBtn.setImageResource(
+            if (position == currentPlayingPosition) R.drawable.voice_pause_ico else R.drawable.play_media_ico
+        )
+
+        holder.binding.playPauseBtn.setOnClickListener {
+            if (position == currentPlayingPosition) stopAudio()
+            else {
+                stopAudio()
+                startAudio(holder, item.audioPath, position)
+            }
+        }
+
         if (isOpen) {
             holder.editBtn.setOnClickListener {
                 if (!isButtonClicked) {
                     isButtonClicked = true
                     onEdit?.invoke(position)
                     closeOpenedItem()
-                    // إعادة تعيين المتغير بعد تأخير قصير
                     holder.editBtn.postDelayed({ isButtonClicked = false }, 500)
                 }
             }
@@ -213,11 +200,50 @@ class TodoAdapter(
                     isButtonClicked = true
                     onDelete?.invoke(position)
                     closeOpenedItem()
-                    // إعادة تعيين المتغير بعد تأخير قصير
                     holder.deleteBtn.postDelayed({ isButtonClicked = false }, 500)
                 }
             }
         }
+    }
+
+
+    private fun stopAudio() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+
+        progressHandler?.removeCallbacks(progressRunnable!!)
+        progressHandler = null
+        progressRunnable = null
+
+        val oldPosition = currentPlayingPosition
+        currentPlayingPosition = -1
+
+        if (oldPosition != -1) { // Check if an item was actually playing
+            // Find the ViewHolder for the item that was playing
+//
+//            if (viewHolder is VoiceTodoViewHolder) {
+//                // Reset waveform progress for that specific ViewHolder
+//                viewHolder.binding.waveformSeekBar.progress = 0f
+//            }
+            // Notify that the item has changed to update its UI
+            notifyItemChanged(oldPosition)
+        }
+    }
+
+    private fun startProgressUpdate(holder: VoiceTodoViewHolder) {
+        progressHandler = Handler(Looper.getMainLooper())
+        progressRunnable = object : Runnable {
+            override fun run() {
+                if (mediaPlayer != null && currentPlayingPosition != -1) {
+                    val duration = mediaPlayer!!.duration
+                    val current = mediaPlayer!!.currentPosition
+                    val progress = (current * 100f) / duration
+                    holder.binding.waveformSeekBar.progress = progress
+                    progressHandler?.postDelayed(this, 300)
+                }
+            }
+        }
+        progressHandler?.post(progressRunnable!!)
     }
 
     inner class TextTodoViewHolder(val binding: ItemTextTodoBinding) : RecyclerView.ViewHolder(binding.root) {

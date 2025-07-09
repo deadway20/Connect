@@ -25,8 +25,12 @@ object DataBaseHelper {
     fun connect(context: Context, serverAddress: String, serverPort: String): Connection? {
         return try {
             val prefsHelper = SharedPrefsHelper(context)
-
             Class.forName(DRIVER_CLASS)
+            // التأكد من أن serverAddress و serverPort ليستا فارغتين
+            if (serverAddress.isBlank() || serverPort.isBlank()) {
+                Log.e(SQL_CONNECTION_TAG, "عنوان الخادم أو المنفذ فارغ.")
+                return null
+            }
             val url = "jdbc:jtds:sqlserver://$serverAddress:$serverPort/$DB_NAME"
             DriverManager.getConnection(url, prefsHelper.getUserName(), prefsHelper.getPassword())
 

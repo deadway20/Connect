@@ -13,12 +13,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.coder_x.connect.R
-import com.coder_x.connect.social.SocialFragment.Companion.fontCustomize
 import com.coder_x.connect.databinding.FragmentProfileBinding
 import com.coder_x.connect.helpers.ImageHelper
 import com.coder_x.connect.helpers.LocaleHelper
 import com.coder_x.connect.helpers.SharedPrefsHelper
 import com.coder_x.connect.main.BottomBarActivity
+import com.coder_x.connect.social.SocialFragment.Companion.fontCustomize
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -38,6 +38,7 @@ class ProfileFragment : Fragment() {
         imageHelper = ImageHelper(this)
         fragmentManager = requireActivity().supportFragmentManager
 
+
         setupViews()
         setupLanguageSpinner()
         applyClickListeners()
@@ -49,9 +50,9 @@ class ProfileFragment : Fragment() {
         // Top bar binding and font customization
         fontCustomize(requireContext(), binding.topBarTitle)
         binding.backBtn.setOnClickListener {
-            // back to Main Fragment
-            fragmentManager.popBackStack()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
         val imagePath = prefsHelper.getEmployeeImageBitmap()
         val empID = prefsHelper.getEmployeeId()
         if (imagePath != null) {
@@ -60,7 +61,7 @@ class ProfileFragment : Fragment() {
             binding.employeeImage.setImageResource(R.drawable.emp_img)
         }
         binding.employeeName.text = prefsHelper.getEmployeeName()
-        binding.employeeId.text = empID.toString()
+        binding.employeeId.text = getString(R.string.id, empID.toString())
         binding.DarkModeSwitch.isChecked = prefsHelper.getTheme()
 
     }
@@ -132,14 +133,10 @@ class ProfileFragment : Fragment() {
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, EditProfileFragment()).commit()
             }
-
             serverSettingText.setOnClickListener {
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, EditServerFragment()).commit()
-
-
             }
-
         }
     }
 

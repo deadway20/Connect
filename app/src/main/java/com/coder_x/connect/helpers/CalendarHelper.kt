@@ -31,7 +31,8 @@ class CalendarHelper(
     private lateinit var btnNext: ImageButton
 
     // حالة التقويم
-    private var isExpanded = false
+    var isExpanded = false
+    val isCalendarExpanded: Boolean get() = isExpanded
     private var currentMonth: Int = Calendar.getInstance().get(Calendar.MONTH)
     private var currentYear: Int = Calendar.getInstance().get(Calendar.YEAR)
     private var selectedDay: String = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toString()
@@ -153,6 +154,13 @@ class CalendarHelper(
     private fun toggleCalendar() {
         isExpanded = !isExpanded
         updateCalendarState()
+    }
+
+    fun collapseCalendar() {
+        if (isExpanded) {
+            isExpanded = false
+            updateCalendarState()
+        }
     }
 
     private fun updateMonthYearDisplay() {

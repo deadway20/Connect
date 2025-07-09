@@ -1,101 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:id="@+id/topToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_marginTop="8dp"
+        android:padding="4dp"
+        android:orientation="horizontal"
+        android:layoutDirection="ltr"
+        android:paddingHorizontal="16dp"
+        android:background="@color/background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- العنوان الرئيسي -->
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="back_btn"
+            android:scaleType="centerCrop"
+            android:src="@drawable/arrow_back_ico"
+            app:tint="@color/theme_color" />
+
         <TextView
-            android:id="@+id/tv_greeting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:text="صباح الخير، يا أحمد!"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:id="@+id/topBar_title"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxHeight="44dp"
+            android:text="Profile"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <!-- بطاقات الملخص باستخدام LinearLayout أفقي -->
-        <LinearLayout
-            android:id="@+id/layout_cards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal"
+        <ImageButton
+            android:id="@+id/notification_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="8dp"
+            android:backgroundTint="@color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/notifications_ico"
+            app:tint="@color/theme_color"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+    </LinearLayout>
+
+    <!-- Profile Section -->
+    <LinearLayout
+        android:id="@+id/profileSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/topToolbar">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/employee_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:elevation="10dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_greeting">
+            app:layout_constraintTop_toTopOf="@id/profile_header"
+            app:shapeAppearanceOverlay="@style/Rounded_img" />
 
-            <!-- بطاقة ساعات العمل -->
-            <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:id="@+id/employee_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="M7med Mustafa"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Coder.x50@email.com"
+            android:textColor="#687682"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/employee_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="ID: 123456789"
+            android:textColor="#687682"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Menu Items -->
+    <LinearLayout
+        android:id="@+id/menuItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/profileSection">
+
+        <!-- Edit Profile -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_edit_profile"
+                app:tint="@color/theme_color" />
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
+                android:layout_marginStart="16dp"
+                android:text="Edit Profile"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/theme_color" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="إجمالي الساعات"
-                        android:textSize="14sp" />
+        <!-- Server Configuration -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
-                    <TextView
-                        android:id="@+id/tv_total_hours"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="120"
-                        android:textColor="#0D9488"
-                        android:textSize="28sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <!-- بطاقة التأخير -->
-            <com.google.android.material.card.MaterialCardView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_server_setting"
+                app:tint="@color/theme_color" />
+
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
+                android:text="Server Configuration"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/theme_color" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="إجمالي التأخير"
-                        android:textSize="14sp" />
+        <!-- Dark Mode -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
-                    <TextView
-                        android:id="@+id/tv_total_late"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="45 د"
-                        android:textColor="#F59E0B"
-                        android:textSize="28sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_dark_mode"
+                app:tint="@color/theme_color" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="Dark Mode"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="#FFFFFF"
+                android:trackTint="#F1F2F4" />
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/theme_color" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Language -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@drawable/ic_language"
+                app:tint="@color/theme_color" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="Language"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

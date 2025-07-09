@@ -8,6 +8,7 @@ data class TodoData(
     val audioPath: String?, // Variable storing the voice note path (for audio based todos)
     val totalDuration: Long?,  // Variable storing the voice note duration (for audio based todos)
     val progress: Long?, // Variable storing the voice note progress (for audio based todos)
+    var isWaveformProcessed: Boolean = false,
     val type: TodoType, // Variable storing the todo type (text or voice)
     val selectedDate: String?, // Variable storing the selected date (for calendar based todos)
     var color: Int // Variable storing the todo color

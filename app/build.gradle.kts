@@ -79,8 +79,12 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     //sound Graph view Visualizer
-   implementation("com.github.massoudss:waveformSeekBar:5.0.2")
+    implementation(libs.waveformseekbar)
     implementation("com.github.lincollincol:amplituda:2.2.2")
+
+
+
+
 
 
     // expandable Calendar view

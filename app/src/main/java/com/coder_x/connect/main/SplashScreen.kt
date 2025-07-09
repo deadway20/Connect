@@ -21,7 +21,7 @@ class SplashScreen : AppCompatActivity() {
 
         binding.lottieConnect.apply {
             setAnimation(com.coder_x.connect.R.raw.lottie_connect)
-            speed = 1.5f
+            speed = 1.65f
             playAnimation()
             addAnimatorListener(object : Animator.AnimatorListener {
                 override fun onAnimationEnd(animation: Animator) {

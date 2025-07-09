@@ -24,3 +24,8 @@
 -dontwarn com.yalantis.ucrop**
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
+-keep class com.masoudss.lib.** { *; }
+-keep class libtech.com.amplituda.** { *; }
+-keep class linc.com.amplituda.** { *; }
+-dontwarn libtech.com.amplituda.**
+-dontwarn linc.com.amplituda.**

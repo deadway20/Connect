@@ -10,9 +10,6 @@
     android:layoutDirection="locale"
     tools:context=".profile.ProfileFragment">
 
-
-
-    <!-- صورة الهيدر -->
     <ImageView
         android:id="@+id/profile_header"
         android:layout_width="0dp"
@@ -21,12 +18,11 @@
         android:src="@drawable/profile_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+        app:layout_constraintTop_toBottomOf="@id/topToolbar" />
 
-    <!-- Toolbar -->
-    <!-- Toolbar -->
+    <!-- Header Section -->
     <LinearLayout
-        android:id="@+id/toolbar_layout"
+        android:id="@+id/topToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -38,6 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -57,25 +54,25 @@
             android:layout_weight="1"
             android:gravity="center"
             android:maxHeight="44dp"
-            android:text="BeSocial"
+            android:text="Profile"
             android:textColor="@color/text_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/notification_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginHorizontal="8dp"
             android:layout_gravity="center_vertical"
             android:backgroundTint="@color/transparent"
             android:scaleType="centerCrop"
             android:src="@drawable/notifications_ico"
-            app:tint="@color/theme_color"
+            app:tint="@color/transparent"
             tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
     </LinearLayout>
 
-    <!-- بطاقة الموظف -->
+    <!-- Profile Section -->
     <LinearLayout
         android:id="@+id/employee_info_card"
         android:layout_width="0dp"
@@ -92,13 +89,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/profile_header">
 
-        <!-- الاسم و ID -->
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -106,34 +100,27 @@
                 android:id="@+id/employee_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/emp_name"
+                android:text="Ethan Carter"
                 android:textColor="@color/text_primary"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coder.x50@email.com"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/employee_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/emp_id_txt"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="4dp"
+                android:text="ID:123456789"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp" />
         </LinearLayout>
-
-        <!-- كارت الإعدادات -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/settings_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
-            android:background="@color/card_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/employee_info_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,22 +128,19 @@
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <!-- Privacy -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="56dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="16dp">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@color/purple_500"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/edit_profile"
-                        app:shapeAppearanceOverlay="@style/CircleImageView" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_edit_profile"
+                        app:tint="@color/theme_color" />
 
                     <TextView
                         android:id="@+id/edit_profile_text"
@@ -172,29 +156,25 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <com.google.android.material.divider.MaterialDivider
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    app:dividerColor="@color/lite_gray" />
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@color/theme_color" />
 
-                <!-- Privacy -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="56dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="16dp">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.imageview.ShapeableImageView
+                    <ImageView
                         android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="#E0A907"
+                        android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/sql_setting"
-                        app:shapeAppearanceOverlay="@style/CircleImageView" />
+                        android:src="@drawable/ic_server_setting"
+                        app:tint="@color/theme_color" />
 
                     <TextView
                         android:id="@+id/server_setting_text"
@@ -210,30 +190,24 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <com.google.android.material.divider.MaterialDivider
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    app:dividerColor="@color/lite_gray" />
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@color/theme_color" />
 
-                <!-- Dark Mode -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="56dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="16dp">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.imageview.ShapeableImageView
+                    <ImageView
                         android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@color/black"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/dark_mode"
-                        app:shapeAppearanceOverlay="@style/CircleImageView"
-                        app:tint="@color/white" />
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_dark_mode"
+                        app:tint="@color/theme_color" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -252,37 +226,25 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
-                <com.google.android.material.divider.MaterialDivider
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    app:dividerColor="@color/lite_gray" />
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@color/theme_color" />
 
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    app:dividerColor="@color/text_primary" />
 
                 <!-- Language -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="56dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="16dp">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="#AD7A2F"
-                        android:scaleType="centerCrop"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/ic_language"
-                        app:shapeAppearanceOverlay="@style/CircleImageView"
-                        app:tint="@color/white" />
+                        app:tint="@color/theme_color" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -299,14 +261,10 @@
                         android:id="@+id/languageSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
-                        android:layout_marginStart="10dp"
                         style="@style/Widget.AppCompat.Spinner.DropDown"
-                        android:spinnerMode="dialog"
-                        android:paddingEnd="16dp"
-                        android:paddingStart="0dp" />
+                        android:spinnerMode="dropdown" />
                 </LinearLayout>
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
 
