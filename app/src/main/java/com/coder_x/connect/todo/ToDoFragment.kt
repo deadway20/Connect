@@ -230,7 +230,6 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         // close the opened item
         noteViewModel.setSelectedDate(selectedDate)
         observeTaskByDate(selectedDate)
-        Toast.makeText(requireContext(), "Selected: $selectedDate", Toast.LENGTH_SHORT).show()
     }
 
     private fun showTextTodoBottomSheet() {
@@ -256,6 +255,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         sheet.onVoiceTodoAdded = { title, path, duration ->
             val note = NoteEntity(
                 title = title,
+
                 isCompleted = false,
                 timestamp = System.currentTimeMillis(),
                 audioPath = path,

@@ -82,17 +82,17 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
 
     // [START Audio Functions Section]
     private fun startRecording() {
-        outputFilePath = "${requireContext().externalCacheDir?.absolutePath}/voice_todo_${System.currentTimeMillis()}.3gp"
-        startTime = System.currentTimeMillis()
+        outputFilePath = "${requireContext().externalCacheDir?.absolutePath}/voice_todo_${System.currentTimeMillis()}.m4a"
 
         mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
             setOutputFile(outputFilePath)
             prepare()
             start()
         }
+
     }
 
     private fun stopRecording() {

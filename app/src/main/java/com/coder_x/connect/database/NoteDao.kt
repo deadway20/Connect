@@ -74,6 +74,8 @@ interface NoteDao {
     @Query("SELECT color FROM notes WHERE id = :itemId")
     fun getColorLiveData(itemId: Long): Flow<Int?> // Changed to Long
 
+    // set and
+
 
 
 

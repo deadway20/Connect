@@ -7,15 +7,16 @@ import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.coder_x.connect.R
+import com.coder_x.connect.database.NoteViewModel
 import com.coder_x.connect.databinding.ItemTextTodoBinding
 import com.coder_x.connect.databinding.ItemVoiceTodoBinding
-import com.coder_x.connect.database.NoteViewModel
-
+import java.io.File
 import kotlin.random.Random
 
 class TodoAdapter(
@@ -144,11 +145,19 @@ class TodoAdapter(
             start()
             setOnCompletionListener { stopAudio() }
         }
+//        currentPlayingPosition = position
+//        notifyItemChanged(position)
 
-        currentPlayingPosition = position
-        notifyItemChanged(position)
+        // الحل الجديد: إعادة تحميل waveform بعد notify
+        val file = File(audioPath)
+        if (file.exists()) {
+            todoList[position].isWaveformProcessed = true // تأكيد المعالجة
+            holder.binding.waveformSeekBar.setSampleFrom(file)
+        }
+
         startProgressUpdate(holder)
     }
+
 
     private fun bindVoiceTodo(
         holder: VoiceTodoViewHolder,
@@ -162,13 +171,21 @@ class TodoAdapter(
         holder.binding.voiceTitle.text = item.todoTitle
         holder.binding.voiceTime.text = item.todoTime
         holder.binding.voiceDuration.text = formatMillisToTime(item.totalDuration)
-
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
 
-        if (!item.isWaveformProcessed && item.audioPath != null) {
-             holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
-             item.isWaveformProcessed = true
+        val audioPath = item.audioPath
+        val file = File(audioPath ?: "")
+        if (!file.exists()) {
+            Log.e("AUDIO_CHECK", "الملف مش موجود: $audioPath")
+        } else {
+            Log.d("AUDIO_CHECK", "الملف موجود وجاهز للتشغيل: $audioPath")
         }
+
+        if (!item.isWaveformProcessed && item.audioPath != null) {
+            holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
+            item.isWaveformProcessed = true
+        }
+
 
         holder.binding.waveformSeekBar.progress = if (position == currentPlayingPosition) {
             (mediaPlayer?.currentPosition?.toFloat() ?: 0f) / (mediaPlayer?.duration?.toFloat() ?: 1f)
@@ -218,16 +235,11 @@ class TodoAdapter(
         val oldPosition = currentPlayingPosition
         currentPlayingPosition = -1
 
-        if (oldPosition != -1) { // Check if an item was actually playing
-            // Find the ViewHolder for the item that was playing
-//
-//            if (viewHolder is VoiceTodoViewHolder) {
-//                // Reset waveform progress for that specific ViewHolder
-//                viewHolder.binding.waveformSeekBar.progress = 0f
-//            }
-            // Notify that the item has changed to update its UI
+        if (oldPosition != -1) {
+            todoList[oldPosition].isWaveformProcessed = false // Reset لو حابب تعيد المعالجة
             notifyItemChanged(oldPosition)
         }
+
     }
 
     private fun startProgressUpdate(holder: VoiceTodoViewHolder) {
