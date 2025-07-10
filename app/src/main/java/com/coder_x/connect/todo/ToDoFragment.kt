@@ -419,7 +419,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         }
     }
 
-    fun chipsInit() {
+    private fun chipsInit() {
         binding.categoryChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             if (checkedIds.isNotEmpty()) {
                 val selectedChipId = checkedIds[0] // بما أن singleSelection="true"
@@ -437,4 +437,9 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
             }
         }
     }
+    override fun onStop() {
+        super.onStop()
+        adapter.stopAudio()
+    }
+
 }

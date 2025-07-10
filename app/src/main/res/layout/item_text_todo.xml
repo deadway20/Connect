@@ -111,13 +111,6 @@
                     android:orientation="horizontal"
                     android:padding="2dp">
 
-                    <androidx.appcompat.widget.AppCompatCheckBox
-                        android:id="@+id/checkbox"
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
-                        android:button="@drawable/checkbox_custom"
-                        tools:ignore="TouchTargetSizeCheck" />
-
                     <TextView
                         android:id="@+id/todoTitle"
                         android:layout_width="0dp"
@@ -129,6 +122,13 @@
                         android:text="Buy some things from SuperMarket and some things from SuperMarket and some things from SuperMarket and some things from SuperMarket and some things from SuperMarket"
                         android:textColor="@color/text_primary"
                         android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:button="@drawable/checkbox_custom"
+                        tools:ignore="TouchTargetSizeCheck" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

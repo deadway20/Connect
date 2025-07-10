@@ -75,14 +75,13 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
             stopTimer()
             dismiss()
         }
-
         setupAddButton()
     }
-    // [END View Interaction Section]
 
-    // [START Audio Functions Section]
     private fun startRecording() {
         outputFilePath = "${requireContext().externalCacheDir?.absolutePath}/voice_todo_${System.currentTimeMillis()}.m4a"
+
+        startTime = System.currentTimeMillis()
 
         mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -92,8 +91,8 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
             prepare()
             start()
         }
-
     }
+
 
     private fun stopRecording() {
         mediaRecorder?.apply {
@@ -155,7 +154,6 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
     }
     // [END Edit Mode Setup Section]
 
-    // [START Add Button Logic Section]
     private fun setupAddButton() {
         binding.addButton.setOnClickListener {
             val title = binding.voiceTitleInput.text.toString().trim()
@@ -170,7 +168,7 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
                 return@setOnClickListener
             }
 
-            val duration = binding.recordingTimer.text.toString()
+            val duration = System.currentTimeMillis() - startTime
 
             if (currentTodoId != null) {
                 // Edit existing todo
@@ -178,23 +176,23 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
                     id = currentTodoId!!,
                     title = title,
                     audioPath = outputFilePath,
-                    audioDuration = duration.toLongOrNull() ?: 0L,
-                    timestamp = if (isRecording) startTime else System.currentTimeMillis(), // Use startTime if recording
+                    audioDuration = duration,
+                    timestamp = if (isRecording) startTime else System.currentTimeMillis(),
                     isAudio = true,
                     isCompleted = false,
                     type = TodoType.VOICE.name
-
-
                 )
                 onVoiceTodoUpdated?.invoke(updatedTodo)
             } else {
                 // Add new todo
-                onVoiceTodoAdded?.invoke(title, outputFilePath, duration)
+                onVoiceTodoAdded?.invoke(title, outputFilePath, duration.toString())
             }
+
             if (isRecording) stopTimer()
             dismiss()
         }
     }
+
 
     override fun getTheme(): Int = R.style.Theme_Connect_BottomSheet_Material3
 

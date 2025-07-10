@@ -41,11 +41,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 dependencies {
@@ -81,11 +81,6 @@ dependencies {
     //sound Graph view Visualizer
     implementation(libs.waveformseekbar)
     implementation("com.github.lincollincol:amplituda:2.2.2")
-
-
-
-
-
 
     // expandable Calendar view
     implementation(libs.view)

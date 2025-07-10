@@ -143,20 +143,23 @@ class TodoAdapter(
             setDataSource(audioPath)
             prepare()
             start()
-            setOnCompletionListener { stopAudio() }
+            setOnCompletionListener {
+                stopAudio()
+                notifyItemChanged(position) // يحدث الزر ويعيد الشكل إلى زر التشغيل
+            }
         }
-//        currentPlayingPosition = position
-//        notifyItemChanged(position)
+        currentPlayingPosition = position
 
-        // الحل الجديد: إعادة تحميل waveform بعد notify
+        holder.binding.playPauseBtn.setImageResource(R.drawable.voice_pause_ico)
+
         val file = File(audioPath)
         if (file.exists()) {
-            todoList[position].isWaveformProcessed = true // تأكيد المعالجة
+            todoList[position].isWaveformProcessed = true
             holder.binding.waveformSeekBar.setSampleFrom(file)
         }
-
         startProgressUpdate(holder)
     }
+
 
 
     private fun bindVoiceTodo(
@@ -167,41 +170,36 @@ class TodoAdapter(
         isOpen: Boolean,
         position: Int
     ) {
+
+
         holder.binding.todoView.setBackgroundColor(color)
         holder.binding.voiceTitle.text = item.todoTitle
         holder.binding.voiceTime.text = item.todoTime
-        holder.binding.voiceDuration.text = formatMillisToTime(item.totalDuration)
+        holder.binding.voiceProgress.text = formatMillisToTime(item.totalDuration)
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
 
-        val audioPath = item.audioPath
-        val file = File(audioPath ?: "")
-        if (!file.exists()) {
-            Log.e("AUDIO_CHECK", "الملف مش موجود: $audioPath")
-        } else {
-            Log.d("AUDIO_CHECK", "الملف موجود وجاهز للتشغيل: $audioPath")
-        }
 
         if (!item.isWaveformProcessed && item.audioPath != null) {
             holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
             item.isWaveformProcessed = true
         }
 
-
         holder.binding.waveformSeekBar.progress = if (position == currentPlayingPosition) {
             (mediaPlayer?.currentPosition?.toFloat() ?: 0f) / (mediaPlayer?.duration?.toFloat() ?: 1f)
         } else 0f
 
-        holder.binding.playPauseBtn.setImageResource(
-            if (position == currentPlayingPosition) R.drawable.voice_pause_ico else R.drawable.play_media_ico
-        )
+
 
         holder.binding.playPauseBtn.setOnClickListener {
-            if (position == currentPlayingPosition) stopAudio()
-            else {
+            if (position == currentPlayingPosition) {
+                stopAudio()
+            } else {
                 stopAudio()
                 startAudio(holder, item.audioPath, position)
             }
         }
+
+
 
         if (isOpen) {
             holder.editBtn.setOnClickListener {
@@ -224,7 +222,7 @@ class TodoAdapter(
     }
 
 
-    private fun stopAudio() {
+    fun stopAudio() {
         mediaPlayer?.release()
         mediaPlayer = null
 
@@ -236,8 +234,8 @@ class TodoAdapter(
         currentPlayingPosition = -1
 
         if (oldPosition != -1) {
-            todoList[oldPosition].isWaveformProcessed = false // Reset لو حابب تعيد المعالجة
-            notifyItemChanged(oldPosition)
+            todoList[oldPosition].isWaveformProcessed = true // نحتفظ بالتحليل
+            notifyItemChanged(oldPosition) // يرجّع زر التشغيل
         }
 
     }
@@ -251,6 +249,7 @@ class TodoAdapter(
                     val current = mediaPlayer!!.currentPosition
                     val progress = (current * 100f) / duration
                     holder.binding.waveformSeekBar.progress = progress
+                    holder.binding.waveformSeekBar.invalidate() // لتحديث الرسم فعليًا
                     progressHandler?.postDelayed(this, 300)
                 }
             }
