@@ -19,10 +19,9 @@
     <color name="red">#D12123</color>
     <color name="green">#23DA0D</color>
     <color name="bg_color">#ecf0f3</color>
-    <color name="lite">#4003DAC6</color>
     <color name="lite_blue">#4003DAC6</color>
     <color name="lite_pink">#40FFD0FE</color>
-    <color name="lite_red">#33D12123</color>
+    <color name="lite_red">#E49A9B</color>
     <color name="lite_orange">#80FF57</color>
     <color name="lite_gray">#333</color>
     <color name="btn_txt_color">#858281</color>

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,7 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
 
     // [START Callbacks Section]
     var onVoiceTodoUpdated: ((todo: NoteEntity) -> Unit)? = null
-    var onVoiceTodoAdded: ((title: String, audioPath: String, duration: String) -> Unit)? = null
+    var onVoiceTodoAdded: ((title: String, audioPath: String, duration: Long) -> Unit)? = null
     // [END Callbacks Section]
 
     // [START Audio Recording Section]
@@ -75,7 +76,7 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
             stopTimer()
             dismiss()
         }
-        setupAddButton()
+        todoForAdding()
     }
 
     private fun startRecording() {
@@ -103,7 +104,6 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun startTimer() {
-        binding.recordingTimer.text = "00:00"
         timerRunnable = object : Runnable {
             override fun run() {
                 if (isRecording) {
@@ -144,7 +144,7 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
     // [END Helper Functions Section]
 
     // [START Edit Mode Setup Section]
-    fun setTodoForEditing(todoId: Long, todo: NoteEntity) {
+    fun todoForEditing(todoId: Long, todo: NoteEntity) {
         currentTodoId = todoId
         if (_binding != null) {
             binding.voiceTitleInput.setText(todo.title)
@@ -154,7 +154,7 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
     }
     // [END Edit Mode Setup Section]
 
-    private fun setupAddButton() {
+    private fun todoForAdding() {
         binding.addButton.setOnClickListener {
             val title = binding.voiceTitleInput.text.toString().trim()
 
@@ -185,7 +185,8 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
                 onVoiceTodoUpdated?.invoke(updatedTodo)
             } else {
                 // Add new todo
-                onVoiceTodoAdded?.invoke(title, outputFilePath, duration.toString())
+                onVoiceTodoAdded?.invoke(title, outputFilePath, duration)
+                Log.d("DURATION_ADDING","$duration")
             }
 
             if (isRecording) stopTimer()

@@ -225,8 +225,6 @@ class MainFragment : Fragment() {
         noteViewModel.getActiveTasksCount().observe(viewLifecycleOwner) { activeNotesCount ->
             binding.uncompletedTasksCount.text =
                 getString(R.string.you_have_uncompleted_tasks, activeNotesCount.toString())
-            binding.customProgressBar.progress = 100 // This seems to be a fixed value
-            binding.progressText.text = activeNotesCount.toString()
         }
         binding.uncompletedTasksCard.setOnClickListener {
 

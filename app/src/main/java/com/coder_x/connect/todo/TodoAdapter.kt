@@ -35,6 +35,8 @@ class TodoAdapter(
     private var currentPlayingPosition = -1
     private var progressHandler: Handler? = null
     private var progressRunnable: Runnable? = null
+    private var timerRunnable: Runnable? = null
+    private var timerHandler: Handler? = null
 
     fun closeOpenedItem() {
         if (openedPosition != -1) {
@@ -161,7 +163,6 @@ class TodoAdapter(
     }
 
 
-
     private fun bindVoiceTodo(
         holder: VoiceTodoViewHolder,
         item: TodoData,
@@ -171,35 +172,42 @@ class TodoAdapter(
         position: Int
     ) {
 
-
+        val duration = item.totalDuration ?: 0L
         holder.binding.todoView.setBackgroundColor(color)
         holder.binding.voiceTitle.text = item.todoTitle
         holder.binding.voiceTime.text = item.todoTime
-        holder.binding.voiceProgress.text = formatMillisToTime(item.totalDuration)
+        if (position != currentPlayingPosition) {
+            holder.binding.audioTimer.text = formatMillisToTime(duration)
+        }
+
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
 
 
-        if (!item.isWaveformProcessed && item.audioPath != null) {
+        if (item.audioPath != null) {
             holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
-            item.isWaveformProcessed = true
         }
+
 
         holder.binding.waveformSeekBar.progress = if (position == currentPlayingPosition) {
             (mediaPlayer?.currentPosition?.toFloat() ?: 0f) / (mediaPlayer?.duration?.toFloat() ?: 1f)
         } else 0f
 
-
-
         holder.binding.playPauseBtn.setOnClickListener {
             if (position == currentPlayingPosition) {
-                stopAudio()
+                if (mediaPlayer?.isPlaying == true) {
+                    mediaPlayer?.pause()
+                    holder.binding.playPauseBtn.setImageResource(R.drawable.play_media_ico) // Change to play icon
+                } else {
+                    mediaPlayer?.start()
+                    startTimer(holder, duration)
+                    holder.binding.playPauseBtn.setImageResource(R.drawable.voice_pause_ico) // Change to pause icon
+                }
             } else {
                 stopAudio()
                 startAudio(holder, item.audioPath, position)
+                startTimer(holder, duration)
             }
         }
-
-
 
         if (isOpen) {
             holder.editBtn.setOnClickListener {
@@ -223,18 +231,29 @@ class TodoAdapter(
 
 
     fun stopAudio() {
-        mediaPlayer?.release()
-        mediaPlayer = null
+        mediaPlayer?.stop() // Use stop() instead of release() to allow resuming
+        mediaPlayer?.reset() // Reset to idle state
+        // mediaPlayer?.release() // Release only when the adapter is destroyed or audio is no longer needed
+        // mediaPlayer = null
 
-        progressHandler?.removeCallbacks(progressRunnable!!)
+        if (progressRunnable != null) {
+            progressHandler?.removeCallbacks(progressRunnable!!)
+        }
         progressHandler = null
         progressRunnable = null
+
+        if (timerRunnable != null) {
+            timerHandler?.removeCallbacks(timerRunnable!!)
+        }
+        timerHandler = null
+        timerRunnable = null
 
         val oldPosition = currentPlayingPosition
         currentPlayingPosition = -1
 
         if (oldPosition != -1) {
-            todoList[oldPosition].isWaveformProcessed = true // نحتفظ بالتحليل
+            // Optionally reset waveform or keep it, depending on desired behavior
+            // todoList[oldPosition].isWaveformProcessed = true
             notifyItemChanged(oldPosition) // يرجّع زر التشغيل
         }
 
@@ -256,6 +275,25 @@ class TodoAdapter(
         }
         progressHandler?.post(progressRunnable!!)
     }
+
+    private fun startTimer(holder: VoiceTodoViewHolder, duration: Long) {
+        timerHandler = Handler(Looper.getMainLooper())
+        timerRunnable = object : Runnable {
+            override fun run() {
+                mediaPlayer?.let {
+                    val elapsedTime = it.currentPosition.toLong()
+                    val remainingTime = duration - elapsedTime
+                    holder.binding.audioTimer.text = formatMillisToTime(remainingTime.coerceAtLeast(0))
+
+                    if (it.isPlaying) {
+                        timerHandler?.postDelayed(this, 1000)
+                    }
+                }
+            }
+        }
+        timerHandler?.post(timerRunnable!!)
+    }
+
 
     inner class TextTodoViewHolder(val binding: ItemTextTodoBinding) : RecyclerView.ViewHolder(binding.root) {
         val foreground: View = binding.root.findViewById(R.id.foreground_layout)

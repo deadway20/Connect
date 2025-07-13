@@ -119,6 +119,7 @@
     <string name="distribution_of_days">Distribution of days</string>
     <string name="you_have_uncompleted_tasks">You have %1$s uncompleted tasks.</string>
     <string name="id">ID:%1$s</string>
+    <string name="_00_00">00:00</string>
 
 
 </resources>

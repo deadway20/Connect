@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -259,7 +258,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                 isCompleted = false,
                 timestamp = System.currentTimeMillis(),
                 audioPath = path,
-                audioDuration = duration.toLongOrNull(),
+                audioDuration = duration,
                 audioProgress = 0,
                 isAudio = true,
                 type = TodoType.VOICE.name,
@@ -294,7 +293,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
 
     private fun editVoiceTodoBottomSheet(item: TodoData) {
         val sheet = VoiceTodoBottomSheet().apply {
-            setTodoForEditing(
+            todoForEditing(
                 item.id, NoteEntity(
                     id = item.id,
                     title = item.todoTitle,

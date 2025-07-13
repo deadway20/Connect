@@ -100,7 +100,7 @@
             android:background="@drawable/header_profile"
             android:text="@string/connect_to_server"
             android:textColor="@color/black"
-            app:backgroundTint="@color/lite"
+            app:backgroundTint="@color/lite_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/saveCredentialsCheckBox" />
