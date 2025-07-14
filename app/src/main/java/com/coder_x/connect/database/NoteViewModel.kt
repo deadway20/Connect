@@ -12,14 +12,14 @@ import kotlin.collections.getOrPut
 
 
 enum class TaskFilter {
-    TODAY, ALL, COMPLETED, INCOMPLETE
+    FAVORITE,TODAY, ALL, COMPLETED, INCOMPLETE
 }
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     private val noteRepository: NoteRepository
     private val _taskFilter = MutableLiveData<TaskFilter>().apply { value = TaskFilter.ALL }
 
-    val taskFilter: LiveData<TaskFilter> = _taskFilter
+    private val taskFilter: LiveData<TaskFilter> = _taskFilter
 
     private val _selectedDate = MutableLiveData<String>().apply {
         value = getCurrentDate()
@@ -34,6 +34,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
         filteredTasks = taskFilter.switchMap { filter ->
             when (filter) {
+                TaskFilter.FAVORITE -> noteRepository.getFavoriteTasks()
                 TaskFilter.ALL -> noteRepository.getAllTasks()
                 TaskFilter.COMPLETED -> noteRepository.getCompletedTasks()
                 TaskFilter.INCOMPLETE -> noteRepository.getActiveTasks()
@@ -102,6 +103,14 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getActiveTasksCount(): LiveData<Int> {
         return noteRepository.getActiveTasksCount()
+    }
+
+    fun setFavoriteTask(noteId: Long, isFavorite: Boolean) = viewModelScope.launch {
+        noteRepository.setFavoriteTask(noteId, isFavorite)
+    }
+
+    fun getFavoriteTasks(): LiveData<List<NoteEntity>> {
+        return noteRepository.getFavoriteTasks()
     }
 
 

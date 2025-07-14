@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,6 +79,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                     title = item.todoTitle,
                     timestamp = System.currentTimeMillis(),
                     isCompleted = item.isCompleted,
+                    isFavorite = item.isFavorite,
                     audioPath = item.audioPath,
                     audioDuration = item.totalDuration,
                     audioProgress = item.progress,
@@ -238,6 +240,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                 title = title,
                 timestamp = System.currentTimeMillis(),
                 isCompleted = false,
+                isFavorite = false,
                 audioPath = null,
                 audioDuration = null,
                 isAudio = false,
@@ -254,8 +257,8 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         sheet.onVoiceTodoAdded = { title, path, duration ->
             val note = NoteEntity(
                 title = title,
-
                 isCompleted = false,
+                isFavorite = false,
                 timestamp = System.currentTimeMillis(),
                 audioPath = path,
                 audioDuration = duration,
@@ -279,6 +282,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                         title = title,
                         timestamp = System.currentTimeMillis(),
                         isCompleted = item.isCompleted,
+                        isFavorite = item.isFavorite,
                         audioPath = null,
                         audioDuration = null,
                         isAudio = false,
@@ -299,6 +303,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                     title = item.todoTitle,
                     timestamp = System.currentTimeMillis(),
                     isCompleted = item.isCompleted,
+                    isFavorite = item.isFavorite,
                     audioPath = item.audioPath,
                     audioDuration = item.totalDuration,
                     audioProgress = item.progress,
@@ -378,6 +383,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                         todoTitle = note.title,
                         todoTime = getTimeAgo(note.timestamp),
                         isCompleted = note.isCompleted,
+                        isFavorite = note.isFavorite,
                         audioPath = note.audioPath,
                         totalDuration = note.audioDuration,
                         progress = note.audioProgress,
@@ -403,6 +409,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                         todoTitle = note.title,
                         todoTime = getTimeAgo(note.timestamp),
                         isCompleted = note.isCompleted,
+                        isFavorite = note.isFavorite,
                         audioPath = note.audioPath,
                         totalDuration = note.audioDuration,
                         progress = note.audioProgress,
@@ -424,8 +431,10 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
                 val selectedChipId = checkedIds[0] // بما أن singleSelection="true"
                 val selectedChip = view?.findViewById<Chip>(selectedChipId)
                 val categoryName = selectedChip?.text.toString()
+                Log.d("categoryName", "categoryName: $categoryName")
 
                 when (categoryName) {
+                    "Favorite" -> {noteViewModel.setTaskFilter(TaskFilter.FAVORITE)}
                     "Today" -> { noteViewModel.setTaskFilter(TaskFilter.TODAY); observeTaskByDate(currentSelectedDate) }
                     "All" -> { noteViewModel.setTaskFilter(TaskFilter.ALL); observeTasksByFilter() }
                     "Completed" -> { noteViewModel.setTaskFilter(TaskFilter.COMPLETED); observeTasksByFilter() }

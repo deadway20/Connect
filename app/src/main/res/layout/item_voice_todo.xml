@@ -112,17 +112,18 @@
                     <TextView
                         android:id="@+id/voice_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
                         android:paddingHorizontal="8dp"
                         android:text="Yesterday"
                         android:textColor="@color/text_primary"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/voice_title"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="end"
                         android:gravity="end"
                         android:layout_weight="1"
@@ -131,7 +132,16 @@
                         android:layout_marginStart="8dp"
                         android:text="Meeting Recording"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
+
+                    <ImageButton
+                        android:id="@+id/is_favoriteBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_outline"
+                        android:clickable="true"
+                        android:background="@color/transparent"
+                        android:layout_gravity="end"/>
 
                 </LinearLayout>
 

@@ -180,6 +180,7 @@ class VoiceTodoBottomSheet : BottomSheetDialogFragment() {
                     timestamp = if (isRecording) startTime else System.currentTimeMillis(),
                     isAudio = true,
                     isCompleted = false,
+                    isFavorite = false,
                     type = TodoType.VOICE.name
                 )
                 onVoiceTodoUpdated?.invoke(updatedTodo)

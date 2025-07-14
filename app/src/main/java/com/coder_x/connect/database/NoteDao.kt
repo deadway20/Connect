@@ -72,15 +72,12 @@ interface NoteDao {
     suspend fun setColorView(color: Int, itemId: Long) // Changed to Long
 
     @Query("SELECT color FROM notes WHERE id = :itemId")
-    fun getColorLiveData(itemId: Long): Flow<Int?> // Changed to Long
+    fun getColorLiveData(itemId: Long): Flow<Int?>
 
-    // set and
+    @Query("UPDATE notes SET isFavorite = :isFavorite WHERE id = :noteId")
+    suspend fun setFavoriteTask(noteId: Long, isFavorite: Boolean)
 
-
-
-
-
-
-
+    @Query("SELECT * FROM notes WHERE isFavorite = 1")
+    fun getFavoriteTasks(): Flow<List<NoteEntity>>
 
 }

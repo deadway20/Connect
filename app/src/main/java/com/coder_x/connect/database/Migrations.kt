@@ -28,8 +28,11 @@ object Migration1To2 : Migration(1, 2) {
     }
 }
 
-object Migration5To6 : Migration(5, 6) {
+object Migration6To7 : Migration(6, 7) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        db.execSQL("ALTER TABLE notes ADD COLUMN color INTEGER NOT NULL DEFAULT 0")
+        db.execSQL("ALTER TABLE notes ADD COLUMN isFavorite INTEGER NOT NULL DEFAULT 0")
+
+
+
     }
 }

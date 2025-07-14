@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.coder_x.connect.R
 import com.coder_x.connect.database.NoteViewModel
 import com.coder_x.connect.databinding.ItemTextTodoBinding
 import com.coder_x.connect.databinding.ItemVoiceTodoBinding
+import com.masoudss.lib.SeekBarOnProgressChanged
 import java.io.File
 import kotlin.random.Random
 
@@ -118,6 +118,19 @@ class TodoAdapter(
         holder.editBtn.setOnClickListener(null)
         holder.deleteBtn.setOnClickListener(null)
 
+        // Set initial star icon based on isFavorite status
+        if (item.isFavorite) {
+            holder.binding.isFavoriteBtn.setImageResource(R.drawable.ic_star_filled)
+        } else {
+            holder.binding.isFavoriteBtn.setImageResource(R.drawable.ic_star_outline)
+        }
+
+        holder.binding.isFavoriteBtn.setOnClickListener {
+            item.isFavorite = !item.isFavorite // Toggle the favorite status
+            noteViewModel.setFavoriteTask(item.id, item.isFavorite)
+            holder.binding.isFavoriteBtn.setImageResource(if (item.isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star_outline)
+        }
+
         if (isOpen) {
             holder.editBtn.setOnClickListener {
                 if (!isButtonClicked) {
@@ -179,13 +192,18 @@ class TodoAdapter(
         if (position != currentPlayingPosition) {
             holder.binding.audioTimer.text = formatMillisToTime(duration)
         }
+        if (!item.isWaveformProcessed && item.audioPath != null) {
+            holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
+            item.isWaveformProcessed = true
+        }
+
 
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
 
 
-        if (item.audioPath != null) {
-            holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
-        }
+//        if (item.audioPath != null) {
+//            holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
+//        }
 
 
         holder.binding.waveformSeekBar.progress = if (position == currentPlayingPosition) {
@@ -208,6 +226,33 @@ class TodoAdapter(
                 startTimer(holder, duration)
             }
         }
+
+        holder.binding.waveformSeekBar.onProgressChanged = object : SeekBarOnProgressChanged {
+            override fun onProgressChanged(
+                waveformSeekBar: com.masoudss.lib.WaveformSeekBar,
+                progress: Float,
+                fromUser: Boolean,
+            ) {
+                if (fromUser && position == currentPlayingPosition && mediaPlayer != null) {
+                    val seekPosition = ((mediaPlayer!!.duration * progress) / 100).toInt()
+                    mediaPlayer!!.seekTo(seekPosition)
+                }
+            }
+        }
+
+        // Set initial star icon based on isFavorite status
+        if (item.isFavorite) {
+            holder.binding.isFavoriteBtn.setImageResource(R.drawable.ic_star_filled)
+        } else {
+            holder.binding.isFavoriteBtn.setImageResource(R.drawable.ic_star_outline)
+        }
+
+        holder.binding.isFavoriteBtn.setOnClickListener {
+            item.isFavorite = !item.isFavorite // Toggle the favorite status
+            noteViewModel.setFavoriteTask(item.id, item.isFavorite)
+            holder.binding.isFavoriteBtn.setImageResource(if (item.isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star_outline)
+        }
+
 
         if (isOpen) {
             holder.editBtn.setOnClickListener {
@@ -268,7 +313,6 @@ class TodoAdapter(
                     val current = mediaPlayer!!.currentPosition
                     val progress = (current * 100f) / duration
                     holder.binding.waveformSeekBar.progress = progress
-                    holder.binding.waveformSeekBar.invalidate() // لتحديث الرسم فعليًا
                     progressHandler?.postDelayed(this, 300)
                 }
             }
@@ -321,4 +365,5 @@ class TodoAdapter(
         val blue = Random.nextInt(128, 256)
         return Color.rgb(red, green, blue)
     }
+
 }

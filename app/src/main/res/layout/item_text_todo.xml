@@ -96,14 +96,39 @@
                 android:orientation="vertical"
                 android:padding="6dp">
 
-                <TextView
-                    android:id="@+id/todoTime"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:text="Yesterday"
-                    android:textColor="@color/text_primary"
-                    android:textSize="10sp" />
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/todoTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingHorizontal="16dp"
+                        android:text="Yesterday"
+                        android:textColor="@color/text_primary"
+                        android:textSize="10sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"/>
+
+
+                    <ImageButton
+                        android:id="@+id/isFavoriteBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:background="@color/transparent"
+                        android:clickable="true"
+                        android:src="@drawable/ic_star_outline" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -128,6 +153,7 @@
                         android:id="@+id/checkbox"
                         android:layout_width="30dp"
                         android:layout_height="40dp"
+                        android:layout_gravity="end|bottom"
                         android:button="@drawable/checkbox_custom"
                         tools:ignore="TouchTargetSizeCheck" />
                 </LinearLayout>

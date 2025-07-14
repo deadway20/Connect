@@ -34,13 +34,9 @@ class NoteRepository(private val noteDao: NoteDao) {
     }
 
     fun getAllTasks(): LiveData<List<NoteEntity>> = noteDao.getAllTasks().asLiveData()
-
-    fun getCompletedTasks(): LiveData<List<NoteEntity>> =
-        noteDao.getTasksByCompletion(true).asLiveData()
-
-    fun getActiveTasks(): LiveData<List<NoteEntity>> =
-        noteDao.getTasksByCompletion(false).asLiveData()
-
+    fun getFavoriteTasks(): LiveData<List<NoteEntity>> = noteDao.getFavoriteTasks().asLiveData()
+    fun getActiveTasks(): LiveData<List<NoteEntity>> = noteDao.getTasksByCompletion(false).asLiveData()
+    fun getCompletedTasks(): LiveData<List<NoteEntity>> = noteDao.getTasksByCompletion(true).asLiveData()
 
     fun getActiveTasksByDate(date: String): LiveData<List<NoteEntity>> {
         return noteDao.getActiveTasksByDate(date).asLiveData()
@@ -90,5 +86,8 @@ class NoteRepository(private val noteDao: NoteDao) {
         return noteDao.getColorLiveData(itemId).asLiveData()
     }
 
+    suspend fun setFavoriteTask(noteId: Long, isFavorite: Boolean) {
+        noteDao.setFavoriteTask(noteId, isFavorite)
+    }
 
 }
