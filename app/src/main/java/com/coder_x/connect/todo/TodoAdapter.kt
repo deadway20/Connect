@@ -4,12 +4,16 @@ package com.coder_x.connect.todo
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Paint
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.coder_x.connect.R
 import com.coder_x.connect.database.NoteViewModel
@@ -114,7 +118,6 @@ class TodoAdapter(
         holder.binding.todoTitle.text = item.todoTitle
         holder.binding.todoTime.text = item.todoTime
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
-
         holder.editBtn.setOnClickListener(null)
         holder.deleteBtn.setOnClickListener(null)
 
@@ -148,6 +151,19 @@ class TodoAdapter(
                     holder.deleteBtn.postDelayed({ isButtonClicked = false }, 500)
                 }
             }
+        }
+
+        applyCompletionStyle(
+            holder.binding.todoTitle,
+            holder.binding.checkbox,
+            holder.foreground,
+            item.isCompleted,
+            context
+        )
+        holder.binding.checkbox.setOnClickListener {
+            item.isCompleted = !item.isCompleted
+            noteViewModel.setTaskCompleted(item.id)
+            notifyItemChanged(position)
         }
     }
 
@@ -187,7 +203,7 @@ class TodoAdapter(
 
         val duration = item.totalDuration ?: 0L
         holder.binding.todoView.setBackgroundColor(color)
-        holder.binding.voiceTitle.text = item.todoTitle
+        holder.binding.todoTitle.text = item.todoTitle
         holder.binding.voiceTime.text = item.todoTime
         if (position != currentPlayingPosition) {
             holder.binding.audioTimer.text = formatMillisToTime(duration)
@@ -199,13 +215,6 @@ class TodoAdapter(
 
 
         holder.foreground.translationX = if (isOpen) -150f * density else 0f
-
-
-//        if (item.audioPath != null) {
-//            holder.binding.waveformSeekBar.setSampleFrom(item.audioPath)
-//        }
-
-
         holder.binding.waveformSeekBar.progress = if (position == currentPlayingPosition) {
             (mediaPlayer?.currentPosition?.toFloat() ?: 0f) / (mediaPlayer?.duration?.toFloat() ?: 1f)
         } else 0f
@@ -240,6 +249,7 @@ class TodoAdapter(
             }
         }
 
+
         // Set initial star icon based on isFavorite status
         if (item.isFavorite) {
             holder.binding.isFavoriteBtn.setImageResource(R.drawable.ic_star_filled)
@@ -252,6 +262,21 @@ class TodoAdapter(
             noteViewModel.setFavoriteTask(item.id, item.isFavorite)
             holder.binding.isFavoriteBtn.setImageResource(if (item.isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star_outline)
         }
+
+        applyCompletionStyle(
+            holder.binding.todoTitle,
+            holder.binding.checkbox,
+            holder.foreground,
+            item.isCompleted,
+            context
+        )
+        holder.binding.checkbox.setOnClickListener {
+            item.isCompleted = !item.isCompleted
+            noteViewModel.setTaskCompleted(item.id)
+            notifyItemChanged(position)
+        }
+
+
 
 
         if (isOpen) {
@@ -338,18 +363,26 @@ class TodoAdapter(
         timerHandler?.post(timerRunnable!!)
     }
 
-
-    inner class TextTodoViewHolder(val binding: ItemTextTodoBinding) : RecyclerView.ViewHolder(binding.root) {
-        val foreground: View = binding.root.findViewById(R.id.foreground_layout)
-        val editBtn: View = binding.root.findViewById(R.id.edit_button)
-        val deleteBtn: View = binding.root.findViewById(R.id.delete_button)
+    private fun applyCompletionStyle(
+        title: TextView,
+        checkbox: CheckBox,
+        foreground: View,
+        isCompleted: Boolean,
+        context: Context,
+    ) {
+        if (isCompleted) {
+            title.paintFlags = title.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            title.setTextColor(Color.GRAY)
+            checkbox.isChecked = true
+            foreground.animate().alpha(0.6f).setDuration(250).start()
+        } else {
+            title.paintFlags = title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            title.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+            checkbox.isChecked = false
+            foreground.animate().alpha(1f).setDuration(250).start()
+        }
     }
 
-    inner class VoiceTodoViewHolder(val binding: ItemVoiceTodoBinding) : RecyclerView.ViewHolder(binding.root) {
-        val foreground: View = binding.root.findViewById(R.id.foreground_layout)
-        val editBtn: View = binding.root.findViewById(R.id.edit_button)
-        val deleteBtn: View = binding.root.findViewById(R.id.delete_button)
-    }
 
     private fun formatMillisToTime(millis: Long?): String {
         if (millis == null) return "00:00"
@@ -366,4 +399,18 @@ class TodoAdapter(
         return Color.rgb(red, green, blue)
     }
 
+
+    inner class TextTodoViewHolder(val binding: ItemTextTodoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val foreground: View = binding.root.findViewById(R.id.foreground_layout)
+        val editBtn: View = binding.root.findViewById(R.id.edit_button)
+        val deleteBtn: View = binding.root.findViewById(R.id.delete_button)
+    }
+
+    inner class VoiceTodoViewHolder(val binding: ItemVoiceTodoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val foreground: View = binding.root.findViewById(R.id.foreground_layout)
+        val editBtn: View = binding.root.findViewById(R.id.edit_button)
+        val deleteBtn: View = binding.root.findViewById(R.id.delete_button)
+    }
 }

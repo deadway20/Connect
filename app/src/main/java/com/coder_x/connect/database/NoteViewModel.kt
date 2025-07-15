@@ -18,9 +18,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     private val noteRepository: NoteRepository
     private val _taskFilter = MutableLiveData<TaskFilter>().apply { value = TaskFilter.ALL }
-
     private val taskFilter: LiveData<TaskFilter> = _taskFilter
-
     private val _selectedDate = MutableLiveData<String>().apply {
         value = getCurrentDate()
     }
@@ -132,5 +130,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+
 }
 

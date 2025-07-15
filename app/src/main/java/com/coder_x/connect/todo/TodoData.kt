@@ -4,7 +4,7 @@ data class TodoData(
     val id: Long, // Unique identifier for the todo item
     val todoTitle: String, // Variable storing the todo text (text or voice)
     val todoTime: String, // Variable storing the todo creation time
-    val isCompleted: Boolean, // Variable storing the todo completion status
+    var isCompleted: Boolean, // Variable storing the todo completion status
     var isFavorite: Boolean, // Variable storing the todo favorite status
     val audioPath: String?, // Variable storing the voice note path (for audio based todos)
     val totalDuration: Long?,  // Variable storing the voice note duration (for audio based todos)
