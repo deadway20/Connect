@@ -4,6 +4,8 @@ package com.coder_x.connect.todo
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.media.MediaPlayer
 import android.os.Handler
@@ -12,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +23,7 @@ import com.coder_x.connect.database.NoteViewModel
 import com.coder_x.connect.databinding.ItemTextTodoBinding
 import com.coder_x.connect.databinding.ItemVoiceTodoBinding
 import com.masoudss.lib.SeekBarOnProgressChanged
+import com.masoudss.lib.WaveformSeekBar
 import java.io.File
 import kotlin.random.Random
 
@@ -154,17 +158,15 @@ class TodoAdapter(
         }
 
         applyCompletionStyle(
-            holder.binding.todoTitle,
-            holder.binding.checkbox,
-            holder.foreground,
-            item.isCompleted,
-            context
+            title = holder.binding.todoTitle,
+            checkbox = holder.binding.checkbox,
+            waveformSeekBar = null,
+            playPauseBtn = null,
+            foreground = holder.foreground,
+            isCompleted = item.isCompleted,
+            context = context,
         )
-        holder.binding.checkbox.setOnClickListener {
-            item.isCompleted = !item.isCompleted
-            noteViewModel.setTaskCompleted(item.id)
-            notifyItemChanged(position)
-        }
+        setTaskCompleted(holder.binding.checkbox, item, position, this)
     }
 
     private fun startAudio(holder: VoiceTodoViewHolder, audioPath: String?, position: Int) {
@@ -200,7 +202,6 @@ class TodoAdapter(
         isOpen: Boolean,
         position: Int
     ) {
-
         val duration = item.totalDuration ?: 0L
         holder.binding.todoView.setBackgroundColor(color)
         holder.binding.todoTitle.text = item.todoTitle
@@ -264,17 +265,19 @@ class TodoAdapter(
         }
 
         applyCompletionStyle(
-            holder.binding.todoTitle,
-            holder.binding.checkbox,
-            holder.foreground,
-            item.isCompleted,
-            context
+            title = holder.binding.todoTitle,
+            checkbox = holder.binding.checkbox,
+            waveformSeekBar = holder.binding.waveformSeekBar,
+            playPauseBtn = holder.binding.playPauseBtn,
+            foreground = holder.foreground,
+            isCompleted = item.isCompleted,
+            context = context,
         )
-        holder.binding.checkbox.setOnClickListener {
-            item.isCompleted = !item.isCompleted
-            noteViewModel.setTaskCompleted(item.id)
-            notifyItemChanged(position)
-        }
+        setTaskCompleted(
+            holder.binding.checkbox,
+            item, position, this
+        )
+
 
 
 
@@ -324,7 +327,7 @@ class TodoAdapter(
         if (oldPosition != -1) {
             // Optionally reset waveform or keep it, depending on desired behavior
             // todoList[oldPosition].isWaveformProcessed = true
-            notifyItemChanged(oldPosition) // يرجّع زر التشغيل
+            notifyItemChanged(oldPosition)
         }
 
     }
@@ -366,20 +369,54 @@ class TodoAdapter(
     private fun applyCompletionStyle(
         title: TextView,
         checkbox: CheckBox,
+        waveformSeekBar: WaveformSeekBar?,
+        playPauseBtn: ImageButton?,
         foreground: View,
         isCompleted: Boolean,
         context: Context,
     ) {
         if (isCompleted) {
-            title.paintFlags = title.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            // ✅ Add text and waveform effect
+            title.paintFlags = title.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
             title.setTextColor(Color.GRAY)
+            waveformSeekBar?.waveBackgroundColor = Color.GRAY
+            playPauseBtn?.setColorFilter(Color.GRAY)
+            playPauseBtn?.isEnabled = false
             checkbox.isChecked = true
-            foreground.animate().alpha(0.6f).setDuration(250).start()
+
+            // ✅ تأثير رمادي (desaturation)
+            val matrix = ColorMatrix().apply { setSaturation(0f) }
+            val filter = ColorMatrixColorFilter(matrix)
+            foreground.background.colorFilter = filter
+
         } else {
-            title.paintFlags = title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            // ✅ Remove text and waveform effect
+            title.paintFlags = title.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
             title.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+            waveformSeekBar?.waveBackgroundColor = ContextCompat.getColor(context, R.color.text_primary)
+            playPauseBtn?.clearColorFilter()
+            playPauseBtn?.isEnabled = true
             checkbox.isChecked = false
-            foreground.animate().alpha(1f).setDuration(250).start()
+
+            // ✅ إزالة الفلتر
+            foreground.background.clearColorFilter()
+        }
+        }
+
+    private fun setTaskCompleted(
+        checkbox: CheckBox,
+        item: TodoData,
+        position: Int,
+        adapter: TodoAdapter
+    ) {
+        checkbox.setOnClickListener {
+            item.isCompleted = !item.isCompleted
+            if (item.isCompleted) {
+                adapter.noteViewModel.setTaskCompleted(item.id)
+            } else {
+                adapter.noteViewModel.setTaskUncompleted(item.id)
+            }
+            adapter.notifyItemChanged(position)
         }
     }
 
