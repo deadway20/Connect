@@ -428,18 +428,31 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
     private fun chipsInit() {
         binding.categoryChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             if (checkedIds.isNotEmpty()) {
-                val selectedChipId = checkedIds[0] // بما أن singleSelection="true"
-                val selectedChip = view?.findViewById<Chip>(selectedChipId)
-                val categoryName = selectedChip?.text.toString()
-                Log.d("categoryName", "categoryName: $categoryName")
+                val selectedChipId = checkedIds[0]
 
-                when (categoryName) {
-                    "Favorite" -> {noteViewModel.setTaskFilter(TaskFilter.FAVORITE)}
-                    "Today" -> { noteViewModel.setTaskFilter(TaskFilter.TODAY); observeTaskByDate(currentSelectedDate) }
-                    "All" -> { noteViewModel.setTaskFilter(TaskFilter.ALL); observeTasksByFilter() }
-                    "Completed" -> { noteViewModel.setTaskFilter(TaskFilter.COMPLETED); observeTasksByFilter() }
-                    "Incomplete" -> { noteViewModel.setTaskFilter(TaskFilter.INCOMPLETE); observeTasksByFilter() }
+                when (selectedChipId) {
+                    R.id.chipFavorite -> {
+                        noteViewModel.setTaskFilter(TaskFilter.FAVORITE)
+                        observeTasksByFilter()
+                    }
+                    R.id.chipToday -> {
+                        noteViewModel.setTaskFilter(TaskFilter.TODAY)
+                        observeTaskByDate(currentSelectedDate)
+                    }
+                    R.id.chipAll -> {
+                        noteViewModel.setTaskFilter(TaskFilter.ALL)
+                        observeTasksByFilter()
+                    }
+                    R.id.chipCompleted -> {
+                        noteViewModel.setTaskFilter(TaskFilter.COMPLETED)
+                        observeTasksByFilter()
+                    }
+                    R.id.chipActive -> {
+                        noteViewModel.setTaskFilter(TaskFilter.INCOMPLETE)
+                        observeTasksByFilter()
+                    }
                 }
+
             } else {
                 observeTaskByDate(currentSelectedDate)
             }
