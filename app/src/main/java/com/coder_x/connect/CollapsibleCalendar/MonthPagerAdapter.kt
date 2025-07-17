@@ -1,5 +1,4 @@
 package com.coder_x.connect.CollapsibleCalendar
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import com.coder_x.connect.R
 import java.util.Calendar
 
 class MonthPagerAdapter(
-    private val context: Context,
     private val listener: CalendarInteractionListener
 ) : RecyclerView.Adapter<MonthPagerAdapter.MonthViewHolder>() {
 

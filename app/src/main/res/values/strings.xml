@@ -112,14 +112,17 @@
     <string name="update_button_text">update</string>
     <string name="title_required">Title required</string>
     <string name="record_required">record required</string>
-    <string name="tasks_count">You have %1$s tasks today</string>
+    <string name="tasks_count">You have %1$s active tasks </string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="performance_analytics">Performance Analytics</string>
     <string name="distribution_of_days">Distribution of days</string>
-    <string name="you_have_uncompleted_tasks">You have %1$s uncompleted tasks.</string>
+    <string name="you_have_uncompleted_tasks">You have %1$s active tasks.</string>
     <string name="id">ID:%1$s</string>
     <string name="_00_00">00:00</string>
+    <string name="all">All</string>
+    <string name="today">Today</string>
+    <string name="active">Active</string>
+    <string name="completed">Completed</string>
 
 
 </resources>

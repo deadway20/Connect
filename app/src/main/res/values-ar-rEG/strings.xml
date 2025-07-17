@@ -110,10 +110,14 @@
     <string name="update_button_text">تحديث</string>
     <string name="title_required">مطلوب العنوان</string>
     <string name="record_required">مطلوب تسجيل الصوت</string>
-    <string name="tasks_count">لديك %1$s مهمة اليوم</string>
+    <string name="tasks_count">لديك %1$s مهام نشطة</string>
     <string name="performance_analytics">تحليلات الأداء</string>
     <string name="distribution_of_days">توزيع ايام الشهر</string>
     <string name="you_have_uncompleted_tasks">لديك %1$s مهمة غير منتهية</string>
     <string name="id">ID:%1$s</string>
     <string name="_00_00">..:..</string>
+    <string name="all">الكل</string>
+    <string name="today">اليوم</string>
+    <string name="active">نشطة</string>
+    <string name="completed">مكتملة</string>
 </resources>

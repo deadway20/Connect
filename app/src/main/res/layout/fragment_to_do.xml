@@ -217,7 +217,7 @@
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="All"
+                        android:text="@string/all"
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeWidth="0dp"
                         android:textColor="@color/chip_text_color_selector" />
@@ -227,7 +227,7 @@
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Today"
+                        android:text="@string/today"
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeWidth="0dp"
                         android:textColor="@color/chip_text_color_selector" />
@@ -237,7 +237,7 @@
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Active"
+                        android:text="@string/active"
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeWidth="0dp"
                         android:textColor="@color/chip_text_color_selector" />
@@ -247,7 +247,7 @@
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Completed"
+                        android:text="@string/completed"
                         app:chipBackgroundColor="@color/chip_background_selector"
                         app:chipStrokeWidth="0dp"
                         android:textColor="@color/chip_text_color_selector" />

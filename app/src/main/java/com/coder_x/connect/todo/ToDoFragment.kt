@@ -23,7 +23,6 @@ import com.coder_x.connect.helpers.SharedPrefsHelper
 import com.coder_x.connect.helpers.SwipeHelper
 import com.coder_x.connect.main.MainFragment
 import com.coder_x.connect.social.SocialFragment.Companion.fontCustomize
-import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -40,19 +39,28 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var adapter: TodoAdapter
     private lateinit var prefsHelper: SharedPrefsHelper
-    private var currentSelectedDate: String = LocalDate.now().toString()
+    private var currentSelectedDate: String = getTodayDateFormatted()
     private lateinit var swipeHelper: SwipeHelper
     private val todoList = mutableListOf<TodoData>()
     private var isOpen = false
     private val animationDuration = 300L
     private val fabOffset = 150f
 
+    private val chipIdToFilterMap = mapOf(
+        R.id.chipFavorite to TaskFilter.FAVORITE,
+        R.id.chipToday to TaskFilter.TODAY,
+        R.id.chipAll to TaskFilter.ALL,
+        R.id.chipCompleted to TaskFilter.COMPLETED,
+        R.id.chipActive to TaskFilter.INCOMPLETE
+    )
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java] // Initialize noteViewModel first
+        noteViewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         binding = FragmentToDoBinding.inflate(inflater, container, false)
         binding.notesRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.notesRecycler.clipChildren = false
@@ -104,8 +112,9 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
         itemTouchHelper.attachToRecyclerView(binding.notesRecycler)
 
         // Observer for the list of notes
-        currentSelectedDate = LocalDate.now().toString()
         observeTasksByFilter()
+
+
         CalendarHelper(
             requireContext(),
             binding.calendarContainer,
@@ -220,18 +229,25 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
     }
 
     override fun onDayClicked(day: String, month: Int, year: Int) {
-
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day.toInt())
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val selectedDate = dateFormat.format(calendar.time)
-        binding.chipToday.isChecked = false
-        currentSelectedDate = selectedDate
+        Log.d("SelectedDate", "Selected Date: $selectedDate")
 
-        // close the opened item
+        // فك تحديد شيب Today (لو متعلم)
+        binding.chipToday.isChecked = false
+
+        // حدّث التاريخ في الفيو موديل
+        currentSelectedDate = selectedDate
         noteViewModel.setSelectedDate(selectedDate)
-        observeTaskByDate(selectedDate)
+
+        // شغّل نفس الأوبزيرفر الموحد
+        observeTasksByFilter()
+        Log.d("AfterObserve", "Selected Date: $selectedDate")
     }
+
 
     private fun showTextTodoBottomSheet() {
         val sheet = TextTodoBottomSheet()
@@ -335,7 +351,7 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
             days == 1L -> "منذ يوم"
             days < 7 -> "منذ ${days} أيام"
             else -> {
-                val sdf = java.text.SimpleDateFormat("dd MMM", Locale("us"))
+                val sdf = java.text.SimpleDateFormat("dd MMM", Locale.getDefault())
                 sdf.format(Date(time))
             }
         }
@@ -375,89 +391,56 @@ class ToDoFragment : Fragment(), View.OnClickListener, CalendarHelper.CalendarIn
     private fun observeTasksByFilter() {
         noteViewModel.setSelectedDate(currentSelectedDate) // Ensure ViewModel date is current
 
-        noteViewModel.filteredTasks.observe(viewLifecycleOwner) { tasks ->
-            val newTodoList = tasks.mapNotNull { note ->
-                if (note.type.isNotEmpty()) {
-                    TodoData(
-                        id = note.id,
-                        todoTitle = note.title,
-                        todoTime = getTimeAgo(note.timestamp),
-                        isCompleted = note.isCompleted,
-                        isFavorite = note.isFavorite,
-                        audioPath = note.audioPath,
-                        totalDuration = note.audioDuration,
-                        progress = note.audioProgress,
-                        type = TodoType.valueOf(note.type),
-                        selectedDate = note.selectedDate,
-                        color = note.color
-                    )
-                } else null
-            }
-            adapter.updateList(newTodoList)
-            // Update task count based on the filtered list
-            binding.tasksCount.text = getString(R.string.tasks_count, newTodoList.size.toString())
+    noteViewModel.filteredTasks.observe(viewLifecycleOwner) { tasks ->
+        val newTodoList = tasks.mapNotNull { note ->
+            if (note.type.isNotEmpty()) {
+                TodoData(
+                    id = note.id,
+                    todoTitle = note.title,
+                    todoTime = getTimeAgo(note.timestamp),
+                    isCompleted = note.isCompleted,
+                    isFavorite = note.isFavorite,
+                    audioPath = note.audioPath,
+                    totalDuration = note.audioDuration,
+                    progress = note.audioProgress,
+                    type = TodoType.valueOf(note.type),
+                    selectedDate = note.selectedDate,
+                    color = note.color
+                )
+            } else null
         }
-    }
 
-    private fun observeTaskByDate(dateString: String) {
-        noteViewModel.getActiveTasksByDate(dateString).observe(viewLifecycleOwner) { activeNotes ->
-            // This block seems to duplicate the logic of observeTaskByFilter for a specific date.
-            val newTodoList = activeNotes.mapNotNull { note ->
-                if (note.type.isNotEmpty()) {
-                    TodoData(
-                        id = note.id,
-                        todoTitle = note.title,
-                        todoTime = getTimeAgo(note.timestamp),
-                        isCompleted = note.isCompleted,
-                        isFavorite = note.isFavorite,
-                        audioPath = note.audioPath,
-                        totalDuration = note.audioDuration,
-                        progress = note.audioProgress,
-                        type = TodoType.valueOf(note.type),
-                        selectedDate = note.selectedDate,
-                        color = note.color
-                    )
-                } else null
-            }
-            adapter.updateList(newTodoList)
-            // Update task count based on the filtered list for the specific date
-            binding.tasksCount.text = getString(R.string.tasks_count, newTodoList.size.toString())
+        // استخدم دالة الترتيب بس لو الفلتر مش المهام المكتملة
+        if (noteViewModel.getCurrentFilter() != TaskFilter.COMPLETED) {
+            adapter.updateList(newTodoList) // ترتيب مع نقل المكتملة للأسفل
+        } else {
+            adapter.updateListWithoutSorting(newTodoList) // بدون ترتيب
         }
+
+        binding.tasksCount.text = getString(R.string.tasks_count, newTodoList.size.toString())
     }
+}
+
 
     private fun chipsInit() {
         binding.categoryChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
-            if (checkedIds.isNotEmpty()) {
-                val selectedChipId = checkedIds[0]
+            val selectedChipId = checkedIds.firstOrNull()
+            val selectedFilter = chipIdToFilterMap[selectedChipId]
 
-                when (selectedChipId) {
-                    R.id.chipFavorite -> {
-                        noteViewModel.setTaskFilter(TaskFilter.FAVORITE)
-                        observeTasksByFilter()
-                    }
-                    R.id.chipToday -> {
-                        noteViewModel.setTaskFilter(TaskFilter.TODAY)
-                        observeTaskByDate(currentSelectedDate)
-                    }
-                    R.id.chipAll -> {
-                        noteViewModel.setTaskFilter(TaskFilter.ALL)
-                        observeTasksByFilter()
-                    }
-                    R.id.chipCompleted -> {
-                        noteViewModel.setTaskFilter(TaskFilter.COMPLETED)
-                        observeTasksByFilter()
-                    }
-                    R.id.chipActive -> {
-                        noteViewModel.setTaskFilter(TaskFilter.INCOMPLETE)
-                        observeTasksByFilter()
-                    }
-                }
-
-            } else {
-                observeTaskByDate(currentSelectedDate)
+            selectedFilter?.let {
+                noteViewModel.setTaskFilter(it)
+                noteViewModel.setSelectedDate(currentSelectedDate)
+                observeTasksByFilter()
             }
         }
     }
+
+    // استخدم الدالة الموحدة لتنسيق التاريخ
+    private fun getTodayDateFormatted(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        return sdf.format(Date())
+    }
+
     override fun onStop() {
         super.onStop()
         adapter.stopAudio()

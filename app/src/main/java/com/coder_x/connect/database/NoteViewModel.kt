@@ -42,6 +42,10 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+    fun getCurrentFilter(): TaskFilter {
+        return _taskFilter.value ?: TaskFilter.ALL
+    }
+
 
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
@@ -52,7 +56,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun getCurrentDate(): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         return sdf.format(Date())
     }
 

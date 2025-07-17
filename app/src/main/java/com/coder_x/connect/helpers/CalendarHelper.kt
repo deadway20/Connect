@@ -60,7 +60,7 @@ class CalendarHelper(
     }
 
     private fun setupMonthPager() {
-        monthViewPager.adapter = MonthPagerAdapter(context, object : MonthPagerAdapter.CalendarInteractionListener {
+        monthViewPager.adapter = MonthPagerAdapter(object : MonthPagerAdapter.CalendarInteractionListener {
             override fun onDayClicked(day: String) {
                 selectedDay = day
                 listener.onDayClicked(day, currentMonth, currentYear)

@@ -38,7 +38,6 @@ class TodoAdapter(
     private var openedPosition: Int = -1
     private var isButtonClicked = false
     private val noteViewModel = NoteViewModel(context.applicationContext as Application)
-
     private var mediaPlayer: MediaPlayer? = null
     private var currentPlayingPosition = -1
     private var progressHandler: Handler? = null
@@ -67,9 +66,16 @@ class TodoAdapter(
 
     fun updateList(newList: List<TodoData>) {
         todoList.clear()
+        todoList.addAll(newList.sortedBy { it.isCompleted })
+        notifyDataSetChanged()
+    }
+
+    fun updateListWithoutSorting(newList: List<TodoData>) {
+        todoList.clear()
         todoList.addAll(newList)
         notifyDataSetChanged()
     }
+
 
     fun removeItem(position: Int) {
         if (position == currentPlayingPosition) stopAudio()
@@ -379,10 +385,14 @@ class TodoAdapter(
             // ✅ Add text and waveform effect
             title.paintFlags = title.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
             title.setTextColor(Color.GRAY)
-            waveformSeekBar?.waveBackgroundColor = Color.GRAY
             playPauseBtn?.setColorFilter(Color.GRAY)
             playPauseBtn?.isEnabled = false
             checkbox.isChecked = true
+
+            waveformSeekBar?.apply{
+                waveBackgroundColor = Color.GRAY
+                isClickable = false
+            }
 
             // ✅ تأثير رمادي (desaturation)
             val matrix = ColorMatrix().apply { setSaturation(0f) }
@@ -393,10 +403,14 @@ class TodoAdapter(
             // ✅ Remove text and waveform effect
             title.paintFlags = title.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
             title.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
-            waveformSeekBar?.waveBackgroundColor = ContextCompat.getColor(context, R.color.text_primary)
             playPauseBtn?.clearColorFilter()
             playPauseBtn?.isEnabled = true
             checkbox.isChecked = false
+
+            waveformSeekBar?.apply{
+                waveBackgroundColor = ContextCompat.getColor(context, R.color.text_primary)
+                isClickable = true
+            }
 
             // ✅ إزالة الفلتر
             foreground.background.clearColorFilter()
@@ -428,6 +442,7 @@ class TodoAdapter(
         val seconds = totalSeconds % 60
         return String.format("%02d:%02d", minutes, seconds)
     }
+
 
     private fun getRandomBrightColor(): Int {
         val red = Random.nextInt(128, 256)
